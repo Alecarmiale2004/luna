@@ -1,0 +1,97 @@
+/* Regole di base: reset, comportamento "da app" su iPhone. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--label);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 22px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* La pagina non "rimbalza": scorrono solo le schermate */
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  /* Niente evidenziazione blu al tocco, niente menu del tasto lungo, niente zoom col doppio tocco */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+#app {
+  height: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  /* 16px o più: Safari non fa lo zoom quando tocchi un campo */
+  font-size: 17px;
+  color: inherit;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+h1,
+h2,
+h3,
+p {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

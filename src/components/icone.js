@@ -1,0 +1,44 @@
+// Tutte le icone dell'app, in un solo punto: stile lineare Lucide con tratto uniforme (2).
+// Per cambiare un'icona basta sostituire l'import qui.
+import { createLucideIcon } from 'lucide-preact'
+
+export {
+  SunMoon,
+  Utensils,
+  ShoppingCart,
+  Moon,
+  Sun,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsUpDown,
+  Check,
+  X,
+  Share,
+  FileDown,
+  FileUp,
+  ArchiveRestore,
+  AlarmClock,
+  Beef,
+  Palette,
+  Info,
+  HardDrive,
+  ShieldCheck,
+  BookOpen,
+  CalendarDays,
+  Bell,
+  RefreshCw,
+  CircleAlert,
+  Minus,
+  Plus,
+  Database,
+} from 'lucide-preact'
+
+// Figura che corre (Lucide non ce l'ha): disegnata sulla stessa griglia 24×24, stesso tratto.
+export const Corsa = createLucideIcon('corsa', [
+  ['circle', { cx: '15', cy: '4.5', r: '2', key: 'testa' }],
+  ['path', { d: 'm10.5 14 2.5-6 3.5 3 3-.5', key: 'busto-braccio' }],
+  ['path', { d: 'M13 8 9.5 8.5 7 11', key: 'braccio' }],
+  ['path', { d: 'm10.5 14 3 2.5-1.5 5', key: 'gamba-avanti' }],
+  ['path', { d: 'M10.5 14 8 18H4', key: 'gamba-dietro' }],
+])

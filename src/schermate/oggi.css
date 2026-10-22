@@ -1,0 +1,176 @@
+/* Stili della schermata Oggi */
+
+/* ---------- Turno di stanotte ---------- */
+.turno-oggi {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  width: 100%;
+  text-align: left;
+  border-radius: var(--r-small);
+  transition: transform var(--dur-fast) var(--ease-ios);
+}
+.turno-oggi:active {
+  transform: scale(0.98);
+}
+
+.turno-icona {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  animation: icona-cambia 0.4s var(--ease-spring);
+}
+.turno-icona.lavoro {
+  background: var(--indigo);
+  color: #fff;
+}
+.turno-icona.libero {
+  background: color-mix(in srgb, var(--yellow) 22%, transparent);
+  color: var(--orange);
+}
+.turno-icona.vuoto {
+  border: 2px dashed var(--gray-3);
+}
+
+.turno-testi {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.turno-titolo {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 700;
+  letter-spacing: -0.26px;
+}
+.turno-sottotitolo {
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.23px;
+  color: var(--label-2);
+}
+
+/* ---------- Mini-settimana ---------- */
+.settimana-testa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: -6px -10px 6px;
+}
+.settimana-freccia {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: var(--blue);
+  border-radius: 50%;
+}
+.settimana-freccia:active {
+  opacity: 0.35;
+}
+.settimana-etichetta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.settimana-nome {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: -0.23px;
+}
+.settimana-conto {
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: -0.08px;
+  color: var(--label-2);
+}
+
+.settimana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin: 0 -6px;
+}
+
+.giorno {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  min-height: 44px;
+}
+.giorno.passato {
+  opacity: 0.5;
+}
+.giorno-iniziale {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--label-2);
+}
+.giorno-icona {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: transform var(--dur-fast) var(--ease-ios);
+  animation: icona-cambia 0.4s var(--ease-spring);
+}
+.giorno:active .giorno-icona {
+  transform: scale(0.88);
+}
+.giorno-icona.lavoro {
+  background: var(--indigo);
+  color: #fff;
+}
+.giorno-icona.libero {
+  background: color-mix(in srgb, var(--yellow) 22%, transparent);
+  color: var(--orange);
+}
+.giorno-icona.vuoto {
+  border: 1.5px dashed var(--gray-3);
+  animation: none;
+}
+.giorno-numero {
+  min-width: 26px;
+  height: 22px;
+  padding: 0 4px;
+  border-radius: 11px;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 600;
+  text-align: center;
+}
+.giorno.oggi .giorno-numero {
+  background: var(--tint);
+  color: #fff;
+}
+.giorno.oggi .giorno-iniziale {
+  color: var(--tint);
+}
+
+.settimana-aiuto {
+  margin-top: var(--sp-3);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--label-2);
+  text-align: center;
+}
+
+@keyframes icona-cambia {
+  0% { transform: scale(0.7); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- Varie ---------- */
+.riga-pulsanti {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+}
