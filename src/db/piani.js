@@ -121,7 +121,7 @@ export function frequenzeRicette(piani) {
 export function salvaSettimanaTipo(nome, voci) {
   const record = {
     id: nuovoId(),
-    nome: nome.trim() || 'Settimana tipo',
+    nome: nome.trim() || 'Saved week',
     voci: voci.map(({ ricetta, volte, scambi }) => ({ ricetta, volte, scambi: { ...scambi } })),
     creata: new Date().toISOString(),
   }

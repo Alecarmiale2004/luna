@@ -58,11 +58,11 @@ export function useSuggerimentoOrario() {
   const adesso = useAdesso(30_000)
   const colazione = giorni[giornata]?.pasti?.colazione
   const lavoro = giorni[oggi]?.tipo === 'lavoro'
-  const entro = lavoro ? ` · stanotte lavori: finisci entro le ${FINIRE_ENTRO}` : ''
-  if (!colazione) return `Dopo colazione aspetta ${ATTESA_COLAZIONE}–60 minuti${entro}`
+  const entro = lavoro ? ` · working tonight: finish by ${FINIRE_ENTRO}` : ''
+  if (!colazione) return `After breakfast, wait ${ATTESA_COLAZIONE}–60 minutes${entro}`
   const minuti = ATTESA_COLAZIONE - Math.floor((adesso - Date.parse(colazione)) / 60000)
-  if (minuti > 0) return `Puoi allenarti tra ${minuti} min${entro}`
-  return `Puoi allenarti ora${entro}`
+  if (minuti > 0) return `You can train in ${minuti} min${entro}`
+  return `You can train now${entro}`
 }
 
 /** Card Allenamento nella schermata Oggi */
@@ -77,17 +77,17 @@ export function CardAllenamentoOggi() {
   let titolo = nomeTipo(tipo)
   let sotto = PROGRAMMA.giornate[tipo].durata
   if (inCorso) {
-    titolo = `${nomeTipo(inCorso.tipo)} in corso`
-    sotto = `${inCorso.indice} di ${inCorso.passi.length} passi fatti`
+    titolo = `${nomeTipo(inCorso.tipo)} in progress`
+    sotto = `${inCorso.indice} of ${inCorso.passi.length} steps done`
   } else if (fattaOggi) {
-    titolo = fattaOggi.tipo === 'pausa' ? 'Pausa' : `${nomeTipo(fattaOggi.tipo)} fatta`
-    sotto = fattaOggi.tipo === 'pausa' ? 'Giornata di riposo segnata' : `${minutiSeduta(fattaOggi)} minuti di allenamento`
+    titolo = fattaOggi.tipo === 'pausa' ? 'Rest' : `${nomeTipo(fattaOggi.tipo)} done`
+    sotto = fattaOggi.tipo === 'pausa' ? 'Rest day marked' : `${minutiSeduta(fattaOggi)} minutes of training`
   }
 
   return (
     <div class={`sezione ${tinta}`}>
       <Card onClick={() => nav.vaiATab('allenamento')}>
-        <CardTesta icona={Icona} titolo={inCorso || fattaOggi ? 'Allenamento' : 'Allenamento di oggi'} freccia />
+        <CardTesta icona={Icona} titolo={inCorso || fattaOggi ? 'Training' : 'Today’s training'} freccia />
         <div class="allenamento-oggi">
           <span class="tipo-icona piccola">{fattaOggi ? <Check size={22} strokeWidth={3} /> : <Icona size={22} />}</span>
           <div>
@@ -104,7 +104,7 @@ export function CardAllenamentoOggi() {
         {inCorso && (
           <p class="suggerimento-orario">
             <Play size={18} color="var(--tint)" />
-            Tocca per riprendere da dove eri
+            Tap to pick up where you left off
           </p>
         )}
       </Card>

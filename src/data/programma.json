@@ -6,17 +6,17 @@
   "finireEntro": "18:30",
   "giornate": {
     "forte": {
-      "nome": "Forte",
+      "nome": "Strength",
       "durata": "~40–45 min",
       "minuti": 45,
-      "descrizione": "Riscaldamento, gli 8 esercizi di forza (3 serie) e defaticamento.",
+      "descrizione": "Warm-up, the 8 strength exercises (3 sets) and cool-down.",
       "blocchi": [
         {
           "id": "riscaldamento",
-          "nome": "Riscaldamento",
+          "nome": "Warm-up",
           "voci": [
             { "esercizio": "marcia-sul-posto", "secondi": 60 },
-            { "esercizio": "circonduzioni-braccia", "secondi": 60, "nota": "30 s avanti + 30 s indietro" },
+            { "esercizio": "circonduzioni-braccia", "secondi": 60, "nota": "30 s forwards + 30 s backwards" },
             { "esercizio": "rotazioni-bacino", "secondi": 30 },
             { "esercizio": "rotazioni-polsi-spalle", "secondi": 30 },
             { "esercizio": "squat-meta-ampiezza", "ripetizioni": 10 },
@@ -25,46 +25,46 @@
         },
         {
           "id": "allenamento",
-          "nome": "Allenamento",
+          "nome": "Workout",
           "voci": [
-            { "esercizio": "flessioni-verticale-muro", "serie": 3, "min": 3, "max": 8, "nota": "quante ne fai bene, lasciandone 1–2 in canna", "progressione": "1 ripetizione in più a serie, oppure scendi più lentamente" },
-            { "esercizio": "squat", "serie": 3, "min": 12, "max": 15, "progressione": "Squat con pausa di 2 s in basso" },
-            { "esercizio": "push-up", "serie": 3, "min": 8, "max": 12, "nota": "sulle ginocchia se serve", "progressione": "Dai push-up sulle ginocchia ai push-up classici" },
-            { "esercizio": "affondi-indietro", "serie": 3, "min": 8, "max": 10, "perLato": true, "progressione": "Più ripetizioni e discesa lenta" },
-            { "esercizio": "superman", "serie": 3, "min": 10, "max": 12, "progressione": "1–2 ripetizioni in più" },
-            { "esercizio": "ponte-glutei", "serie": 3, "min": 12, "max": 15, "progressione": "1–2 ripetizioni in più" },
-            { "esercizio": "crunch", "serie": 3, "min": 15, "max": 20, "progressione": "Più ripetizioni, fino a 25" },
-            { "esercizio": "plank", "serie": 3, "minSecondi": 20, "maxSecondi": 40, "progressione": "+10 s a settimana, fino a 60 s" }
+            { "esercizio": "flessioni-verticale-muro", "serie": 3, "min": 3, "max": 8, "nota": "as many as you can do well, leaving 1–2 in the tank", "progressione": "1 more rep per set, or lower yourself more slowly" },
+            { "esercizio": "squat", "serie": 3, "min": 12, "max": 15, "progressione": "Squat with a 2-second pause at the bottom" },
+            { "esercizio": "push-up", "serie": 3, "min": 8, "max": 12, "nota": "on your knees if needed", "progressione": "From knee push-ups to full push-ups" },
+            { "esercizio": "affondi-indietro", "serie": 3, "min": 8, "max": 10, "perLato": true, "progressione": "More reps and a slower descent" },
+            { "esercizio": "superman", "serie": 3, "min": 10, "max": 12, "progressione": "1–2 more reps" },
+            { "esercizio": "ponte-glutei", "serie": 3, "min": 12, "max": 15, "progressione": "1–2 more reps" },
+            { "esercizio": "crunch", "serie": 3, "min": 15, "max": 20, "progressione": "More reps, up to 25" },
+            { "esercizio": "plank", "serie": 3, "minSecondi": 20, "maxSecondi": 40, "progressione": "+10 s per week, up to 60 s" }
           ]
         },
         {
           "id": "defaticamento",
-          "nome": "Defaticamento",
+          "nome": "Cool-down",
           "voci": [
-            { "esercizio": "stretching-quadricipiti", "secondi": 60, "nota": "30 s per gamba" },
+            { "esercizio": "stretching-quadricipiti", "secondi": 60, "nota": "30 s per leg" },
             { "esercizio": "stretching-femorali", "secondi": 30 },
-            { "esercizio": "stretching-petto-muro", "secondi": 60, "nota": "30 s per lato" },
-            { "esercizio": "stretching-dorsali", "secondi": 60, "nota": "30 s per lato" },
-            { "esercizio": "stretching-glutei", "secondi": 60, "nota": "30 s per lato" }
+            { "esercizio": "stretching-petto-muro", "secondi": 60, "nota": "30 s per side" },
+            { "esercizio": "stretching-dorsali", "secondi": 60, "nota": "30 s per side" },
+            { "esercizio": "stretching-glutei", "secondi": 60, "nota": "30 s per side" }
           ]
         }
       ]
     },
     "leggera": {
-      "nome": "Leggera",
+      "nome": "Light",
       "durata": "~40 min",
       "minuti": 40,
-      "descrizione": "Camminata veloce all'aperto e 10 minuti di mobilità.",
+      "descrizione": "A brisk walk outdoors and 10 minutes of mobility.",
       "blocchi": [
-        { "id": "camminata", "nome": "Camminata", "voci": [{ "esercizio": "camminata-veloce", "secondi": 1800, "nota": "riesci a parlare ma non a cantare" }] },
+        { "id": "camminata", "nome": "Walk", "voci": [{ "esercizio": "camminata-veloce", "secondi": 1800, "nota": "you can talk but not sing" }] },
         {
           "id": "mobilita",
-          "nome": "Mobilità",
+          "nome": "Mobility",
           "voci": [
-            { "esercizio": "gatto-mucca", "ripetizioni": 10, "nota": "10 lente" },
-            { "esercizio": "rotazioni-anche", "ripetizioni": 8, "nota": "8 per lato" },
-            { "esercizio": "affondo-rotazione", "ripetizioni": 5, "nota": "5 per lato" },
-            { "esercizio": "flessori-anca", "secondi": 60, "nota": "30 s per lato" },
+            { "esercizio": "gatto-mucca", "ripetizioni": 10, "nota": "10 slow ones" },
+            { "esercizio": "rotazioni-anche", "ripetizioni": 8, "nota": "8 per side" },
+            { "esercizio": "affondo-rotazione", "ripetizioni": 5, "nota": "5 per side" },
+            { "esercizio": "flessori-anca", "secondi": 60, "nota": "30 s per side" },
             { "esercizio": "apertura-petto", "secondi": 60 },
             { "esercizio": "posizione-bambino", "secondi": 60 }
           ]
@@ -72,19 +72,19 @@
       ]
     },
     "mobilita": {
-      "nome": "Mobilità",
+      "nome": "Mobility",
       "durata": "~15 min",
       "minuti": 15,
-      "descrizione": "Solo mobilità e stretching: al posto della Leggera quando sei stanco o piove.",
+      "descrizione": "Mobility and stretching only: instead of Light when you're tired or it's raining.",
       "blocchi": [
         {
           "id": "mobilita",
-          "nome": "Mobilità",
+          "nome": "Mobility",
           "voci": [
-            { "esercizio": "gatto-mucca", "ripetizioni": 10, "nota": "10 lente" },
-            { "esercizio": "rotazioni-anche", "ripetizioni": 8, "nota": "8 per lato" },
-            { "esercizio": "affondo-rotazione", "ripetizioni": 5, "nota": "5 per lato" },
-            { "esercizio": "flessori-anca", "secondi": 60, "nota": "30 s per lato" },
+            { "esercizio": "gatto-mucca", "ripetizioni": 10, "nota": "10 slow ones" },
+            { "esercizio": "rotazioni-anche", "ripetizioni": 8, "nota": "8 per side" },
+            { "esercizio": "affondo-rotazione", "ripetizioni": 5, "nota": "5 per side" },
+            { "esercizio": "flessori-anca", "secondi": 60, "nota": "30 s per side" },
             { "esercizio": "apertura-petto", "secondi": 60 },
             { "esercizio": "posizione-bambino", "secondi": 60 }
           ]
@@ -93,19 +93,19 @@
           "id": "stretching",
           "nome": "Stretching",
           "voci": [
-            { "esercizio": "stretching-quadricipiti", "secondi": 60, "nota": "30 s per gamba" },
+            { "esercizio": "stretching-quadricipiti", "secondi": 60, "nota": "30 s per leg" },
             { "esercizio": "stretching-femorali", "secondi": 30 },
-            { "esercizio": "stretching-dorsali", "secondi": 60, "nota": "30 s per lato" },
+            { "esercizio": "stretching-dorsali", "secondi": 60, "nota": "30 s per side" },
             { "esercizio": "stretching-glutei", "secondi": 30 }
           ]
         }
       ]
     },
     "pausa": {
-      "nome": "Pausa",
+      "nome": "Rest",
       "durata": "—",
       "minuti": 0,
-      "descrizione": "Riposo: i muscoli crescono mentre recuperi. Il lavoro di stanotte basta.",
+      "descrizione": "Rest day: muscles grow while you recover. Tonight's shift is enough.",
       "blocchi": []
     }
   }

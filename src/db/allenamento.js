@@ -31,7 +31,7 @@ export const immagineEsercizio = (id) => `${import.meta.env.BASE_URL}immagini/es
 export function testoVoce(v) {
   if (v.serie) {
     if (v.minSecondi != null) return `${v.serie} × ${v.minSecondi}–${v.maxSecondi} s`
-    return `${v.serie} × ${v.min === v.max ? v.min : `${v.min}–${v.max}`}${v.perLato ? ' per gamba' : ''}`
+    return `${v.serie} × ${v.min === v.max ? v.min : `${v.min}–${v.max}`}${v.perLato ? ' per leg' : ''}`
   }
   if (v.secondi) return v.secondi >= 120 ? `${Math.round(v.secondi / 60)} min` : `${v.secondi} s`
   return `${v.ripetizioni}`
@@ -337,7 +337,7 @@ export function suggerimenti(seduta) {
   })
   for (const [id, elenco] of Object.entries(perEsercizio)) {
     const tutteAlMassimo = elenco.every(({ p, r }) => r && !r.saltato && r.valore >= p.max)
-    if (tutteAlMassimo) out.push({ esercizio: id, testo: elenco[0].p.progressione || 'La prossima volta 1–2 ripetizioni in più.' })
+    if (tutteAlMassimo) out.push({ esercizio: id, testo: elenco[0].p.progressione || 'Next time, 1–2 more reps.' })
   }
   return out
 }

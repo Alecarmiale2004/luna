@@ -27,15 +27,15 @@ export function GestioneRicette() {
 
   return (
     <Pagina
-      titolo="Ricette"
-      sinistra={<PulsanteIndietro etichetta="Impostazioni" onClick={nav.indietro} />}
+      titolo="Recipes"
+      sinistra={<PulsanteIndietro etichetta="Settings" onClick={nav.indietro} />}
       destra={
-        <button class="nav-pulsante" aria-label="Nuova ricetta" onClick={crea}>
+        <button class="nav-pulsante" aria-label="New recipe" onClick={crea}>
           <Plus size={26} />
         </button>
       }
     >
-      <Sezione piede="Le ricette nascoste non compaiono nel ricettario né nei suggerimenti, ma lo storico resta com’è.">
+      <Sezione piede="Hidden recipes don’t appear in the recipe list or in suggestions, but your history stays as it is.">
         <Lista>
           {ricette.map((r) => {
             const vietati = ingredientiEsclusi(r.ingredienti, impostazioni.cibiEsclusi, perId)
@@ -44,8 +44,8 @@ export function GestioneRicette() {
                 key={r.id}
                 classe={r.nascosta ? 'nascosta' : ''}
                 titolo={r.nome}
-                sottotitolo={vietati.length ? `Contiene ${vietati.map((i) => perId[i.prodotto]?.it.toLowerCase()).join(', ')}` : `~${r.proteinePorzione} g di proteine · ${r.minuti} min`}
-                valore={r.nascosta ? 'Nascosta' : r.mia ? 'Mia' : undefined}
+                sottotitolo={vietati.length ? `Contains ${vietati.map((i) => perId[i.prodotto]?.nome.toLowerCase()).join(', ')}` : `~${r.proteinePorzione} g of protein · ${r.minuti} min`}
+                valore={r.nascosta ? 'Hidden' : r.mia ? 'Mine' : undefined}
                 destra={vietati.length ? <TriangleAlert size={16} color="var(--red)" /> : undefined}
                 freccia
                 onClick={() => nav.apri(EditorRicetta, { id: r.id })}
@@ -61,10 +61,10 @@ export function GestioneRicette() {
 // ---------------------------------------------------------------------------
 
 const OPZIONI_UNITA = [
-  { valore: 'g', etichetta: 'grammi' },
-  { valore: 'pz', etichetta: 'pezzi' },
-  { valore: 'cucchiai', etichetta: 'cucchiai' },
-  { valore: '', etichetta: 'q.b.' },
+  { valore: 'g', etichetta: 'grams' },
+  { valore: 'pz', etichetta: 'pieces' },
+  { valore: 'cucchiai', etichetta: 'tablespoons' },
+  { valore: '', etichetta: 'to taste' },
 ]
 const OPZIONI_BLOCCO = BLOCCHI.map((b) => ({ valore: b.id, etichetta: b.nome }))
 
@@ -74,7 +74,7 @@ function EditorRicetta({ id }) {
   const catalogo = useCatalogo()
   const [indice, setIndice] = useState(null) // ingrediente aperto
   const ricetta = ricette.find((r) => r.id === id)
-  if (!ricetta) return <Pagina titolo="Ricetta" sinistra={<PulsanteIndietro etichetta="Ricette" onClick={nav.indietro} />} />
+  if (!ricetta) return <Pagina titolo="Recipe" sinistra={<PulsanteIndietro etichetta="Recipes" onClick={nav.indietro} />} />
 
   const perId = Object.fromEntries(catalogo.map((p) => [p.id, p]))
   const cambia = (modifiche) => salvaRicetta(id, modifiche)
@@ -84,9 +84,9 @@ function EditorRicetta({ id }) {
 
   const ripristina = async () => {
     const ok = await chiediConferma({
-      titolo: 'Ripristinare la ricetta originale?',
-      testo: 'Le tue modifiche a questa ricetta vengono tolte.',
-      conferma: 'Ripristina',
+      titolo: 'Restore the original recipe?',
+      testo: 'Your changes to this recipe will be removed.',
+      conferma: 'Restore',
       distruttiva: true,
     })
     if (!ok) return
@@ -96,16 +96,16 @@ function EditorRicetta({ id }) {
       return { ...s, ricetteMie }
     })
     scrivi((db) => db.delete('ricette', id))
-    mostraMessaggio('Ricetta originale ripristinata')
+    mostraMessaggio('Original recipe restored')
   }
 
   return (
-    <Pagina titolo={ricetta.nome || 'Ricetta'} titoloBarra="Ricetta" sinistra={<PulsanteIndietro etichetta="Ricette" onClick={nav.indietro} />}>
+    <Pagina titolo={ricetta.nome || 'Recipe'} titoloBarra="Recipe" sinistra={<PulsanteIndietro etichetta="Recipes" onClick={nav.indietro} />}>
       <div class="tint-cibo">
         <Sezione>
           <Lista>
             <Riga
-              titolo="Nome"
+              titolo="Name"
               destra={
                 <input
                   class="riga-campo"
@@ -115,7 +115,7 @@ function EditorRicetta({ id }) {
               }
             />
             <Riga
-              titolo="Tempo"
+              titolo="Time"
               destra={
                 <>
                   <span class="riga-valore num">{ricetta.minuti}′</span>
@@ -124,7 +124,7 @@ function EditorRicetta({ id }) {
               }
             />
             <Riga
-              titolo="Proteine a porzione"
+              titolo="Protein per portion"
               destra={
                 <>
                   <span class="riga-valore num">{ricetta.proteinePorzione} g</span>
@@ -135,20 +135,20 @@ function EditorRicetta({ id }) {
           </Lista>
         </Sezione>
 
-        <Sezione titolo="Ingredienti · per 2 porzioni" piede="Tocca un ingrediente per cambiarlo. Base, proteina e verdura si possono poi scambiare dalla scheda della ricetta.">
+        <Sezione titolo="Ingredients · for 2 portions" piede="Tap an ingredient to change it. Base, protein and vegetables can then be swapped from the recipe card.">
           <Lista>
             {ricetta.ingredienti.map((ing, i) => (
               <Riga
                 key={i}
-                titolo={perId[ing.prodotto]?.it || ing.prodotto}
-                sottotitolo={[BLOCCHI.find((b) => b.id === ing.blocco)?.nome, ing.facoltativo && 'facoltativo', ing.nota].filter(Boolean).join(' · ')}
+                titolo={perId[ing.prodotto]?.nome || ing.prodotto}
+                sottotitolo={[BLOCCHI.find((b) => b.id === ing.blocco)?.nome, ing.facoltativo && 'optional', ing.nota].filter(Boolean).join(' · ')}
                 valore={testoQuantita(ing, perId[ing.prodotto])}
                 freccia
                 onClick={() => setIndice(i)}
               />
             ))}
             <Riga
-              titolo="Aggiungi ingrediente"
+              titolo="Add ingredient"
               tipo="azione"
               onClick={() => {
                 cambia({ ingredienti: [...ricetta.ingredienti, { prodotto: 'sale', blocco: 'condimento' }] })
@@ -158,11 +158,11 @@ function EditorRicetta({ id }) {
           </Lista>
         </Sezione>
 
-        <Sezione titolo="Procedimento">
+        <Sezione titolo="Method">
           <textarea
             class="campo-lungo"
             value={ricetta.procedimento || ''}
-            placeholder="Scrivi i passaggi in breve"
+            placeholder="Write the steps briefly"
             onInput={(e) => cambia({ procedimento: e.currentTarget.value })}
           />
         </Sezione>
@@ -170,14 +170,14 @@ function EditorRicetta({ id }) {
         <Sezione>
           <Lista>
             <Riga
-              titolo={ricetta.nascosta ? 'Mostra di nuovo la ricetta' : 'Nascondi la ricetta'}
+              titolo={ricetta.nascosta ? 'Show the recipe again' : 'Hide the recipe'}
               tipo={ricetta.nascosta ? 'azione' : 'distruttiva'}
               onClick={() => {
                 cambia({ nascosta: !ricetta.nascosta })
-                mostraMessaggio(ricetta.nascosta ? 'Ricetta di nuovo visibile' : 'Ricetta nascosta')
+                mostraMessaggio(ricetta.nascosta ? 'Recipe visible again' : 'Recipe hidden')
               }}
             />
-            {base && !ricetta.mia && <Riga titolo="Ripristina la ricetta originale" tipo="azione" onClick={ripristina} />}
+            {base && !ricetta.mia && <Riga titolo="Restore the original recipe" tipo="azione" onClick={ripristina} />}
           </Lista>
         </Sezione>
       </div>
@@ -203,17 +203,17 @@ function FoglioIngrediente({ ingrediente, catalogo, onCambia, onTogli, onChiudi 
   const visibili = catalogo.filter((p) => !p.nascosto || p.id === ing?.prodotto)
 
   return (
-    <Foglio aperto={!!ingrediente} onChiudi={onChiudi} titolo="Ingrediente">
+    <Foglio aperto={!!ingrediente} onChiudi={onChiudi} titolo="Ingredient">
       {ing && (
         <div class="tint-cibo">
           <Sezione>
             <Lista>
               <Riga
-                titolo="Prodotto"
-                destra={<MenuValore valore={ing.prodotto} opzioni={visibili.map((p) => ({ valore: p.id, etichetta: p.it }))} onChange={(v) => onCambia({ prodotto: v })} />}
+                titolo="Product"
+                destra={<MenuValore valore={ing.prodotto} opzioni={visibili.map((p) => ({ valore: p.id, etichetta: p.nome }))} onChange={(v) => onCambia({ prodotto: v })} />}
               />
               <Riga
-                titolo="Quantità"
+                titolo="Quantity"
                 destra={
                   <input
                     class="riga-campo"
@@ -231,7 +231,7 @@ function FoglioIngrediente({ ingrediente, catalogo, onCambia, onTogli, onChiudi 
                 }
               />
               <Riga
-                titolo="Unità"
+                titolo="Unit"
                 destra={
                   <MenuValore
                     valore={ing.unita || ''}
@@ -240,29 +240,29 @@ function FoglioIngrediente({ ingrediente, catalogo, onCambia, onTogli, onChiudi 
                   />
                 }
               />
-              <Riga titolo="Blocco" destra={<MenuValore valore={ing.blocco} opzioni={OPZIONI_BLOCCO} onChange={(v) => onCambia({ blocco: v })} />} />
+              <Riga titolo="Part" destra={<MenuValore valore={ing.blocco} opzioni={OPZIONI_BLOCCO} onChange={(v) => onCambia({ blocco: v })} />} />
               <Riga
-                titolo="Facoltativo"
+                titolo="Optional"
                 destra={
                   <MenuValore
                     valore={ing.facoltativo ? 'si' : 'no'}
                     opzioni={[
                       { valore: 'no', etichetta: 'No' },
-                      { valore: 'si', etichetta: 'Sì' },
+                      { valore: 'si', etichetta: 'Yes' },
                     ]}
                     onChange={(v) => onCambia({ facoltativo: v === 'si' })}
                   />
                 }
               />
               <Riga
-                titolo="Nota"
-                destra={<input class="riga-campo" placeholder="es. a cubetti" value={ing.nota || ''} onInput={(e) => onCambia({ nota: e.currentTarget.value })} />}
+                titolo="Note"
+                destra={<input class="riga-campo" placeholder="e.g. diced" value={ing.nota || ''} onInput={(e) => onCambia({ nota: e.currentTarget.value })} />}
               />
             </Lista>
           </Sezione>
           <div class="foglio-azioni">
             <button class="pulsante grigio" style={{ color: 'var(--red)' }} onClick={onTogli}>
-              Togli ingrediente
+              Remove ingredient
             </button>
           </div>
         </div>

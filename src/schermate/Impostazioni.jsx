@@ -38,7 +38,7 @@ import { tempoFa } from '../lib/giornata.js'
 import { FoglioEsporta, FoglioImporta, FoglioCopie } from './Backup.jsx'
 import { AnteprimaStile } from './AnteprimaStile.jsx'
 
-const OGNI_GIORNI = [7, 14, 21, 28].map((g) => ({ valore: g, etichetta: `Ogni ${g} giorni` }))
+const OGNI_GIORNI = [7, 14, 21, 28].map((g) => ({ valore: g, etichetta: `Every ${g} days` }))
 
 export function Impostazioni() {
   const nav = useNav()
@@ -53,13 +53,13 @@ export function Impostazioni() {
   const chiudi = () => setFoglio(null)
 
   return (
-    <Pagina titolo="Impostazioni" sinistra={<PulsanteIndietro etichetta="Oggi" onClick={nav.indietro} />}>
-      <Sezione titolo="La mia giornata">
+    <Pagina titolo="Settings" sinistra={<PulsanteIndietro etichetta="Today" onClick={nav.indietro} />}>
+      <Sezione titolo="My day">
         <Lista>
           <Riga
             icona={AlarmClock}
             coloreIcona="var(--orange)"
-            titolo="Risveglio abituale"
+            titolo="Usual wake-up time"
             destra={
               <input
                 type="time"
@@ -72,7 +72,7 @@ export function Impostazioni() {
           <Riga
             icona={Moon}
             coloreIcona="var(--indigo)"
-            titolo="Notti a settimana"
+            titolo="Work nights a week"
             destra={
               <>
                 <span class="riga-valore num">{impostazioni.nottiSettimana}</span>
@@ -88,12 +88,12 @@ export function Impostazioni() {
         </Lista>
       </Sezione>
 
-      <Sezione titolo="Obiettivi" piede="Per tonificarti: circa 95–120 g di proteine al giorno.">
+      <Sezione titolo="Goals" piede="To tone up: about 95–120 g of protein a day.">
         <Lista>
           <Riga
             icona={Beef}
             coloreIcona="var(--orange)"
-            titolo="Proteine"
+            titolo="Protein"
             destra={
               <>
                 <span class="riga-valore num">{impostazioni.obiettivoProteine} g</span>
@@ -112,21 +112,21 @@ export function Impostazioni() {
 
       <Sezione
         titolo="Backup"
-        piede="Il backup è un file con tutti i tuoi dati. Salvalo in File (meglio su iCloud Drive): se cambi telefono o Safari cancella i dati, lo reimporti da qui."
+        piede="A backup is a file with all your data. Save it to Files (iCloud Drive is best): if you change phone or Safari clears its data, import it back from here."
       >
         <Lista>
           <Riga
             icona={ShieldCheck}
             coloreIcona="var(--blue)"
-            titolo="Ultimo backup"
-            valore={meta.ultimoBackup ? tempoFa(meta.ultimoBackup) : 'Mai'}
+            titolo="Last backup"
+            valore={meta.ultimoBackup ? tempoFa(meta.ultimoBackup) : 'Never'}
           />
-          <Riga icona={FileUp} coloreIcona="var(--blue)" titolo="Esporta backup" tipo="azione" onClick={() => setFoglio('esporta')} />
-          <Riga icona={FileDown} coloreIcona="var(--green)" titolo="Importa backup" tipo="azione" onClick={() => setFoglio('importa')} />
+          <Riga icona={FileUp} coloreIcona="var(--blue)" titolo="Export backup" tipo="azione" onClick={() => setFoglio('esporta')} />
+          <Riga icona={FileDown} coloreIcona="var(--green)" titolo="Import backup" tipo="azione" onClick={() => setFoglio('importa')} />
           <Riga
             icona={Bell}
             coloreIcona="var(--red)"
-            titolo="Promemoria"
+            titolo="Reminder"
             destra={
               <MenuValore
                 valore={impostazioni.promemoriaBackupGiorni}
@@ -139,34 +139,34 @@ export function Impostazioni() {
       </Sezione>
 
       <Sezione
-        titolo="Sicurezza dei dati"
-        piede="I dati restano solo su questo telefono. Con la memoria persistente attiva, iOS non li cancella per fare spazio."
+        titolo="Data safety"
+        piede="Your data stays on this phone only. With persistent storage on, iOS won’t delete it to free up space."
       >
         <Lista>
           <Riga
             icona={ArchiveRestore}
             coloreIcona="var(--gray)"
-            titolo="Copie automatiche"
+            titolo="Automatic copies"
             freccia
             onClick={() => setFoglio('copie')}
           />
           <Riga
             icona={HardDrive}
             coloreIcona="var(--gray)"
-            titolo="Memoria persistente"
-            valore={memoriaPersistente === null ? 'Non disponibile' : memoriaPersistente ? 'Attiva' : 'Non attiva'}
+            titolo="Persistent storage"
+            valore={memoriaPersistente === null ? 'Not available' : memoriaPersistente ? 'On' : 'Off'}
           />
         </Lista>
       </Sezione>
 
-      <Sezione titolo="Contenuti">
+      <Sezione titolo="Content">
         <Lista>
-          <Riga icona={BookOpen} coloreIcona="var(--orange)" titolo="Ricette" freccia onClick={() => nav.apri(GestioneRicette)} />
-          <Riga icona={Dumbbell} coloreIcona="var(--pink)" titolo="Esercizi" freccia onClick={() => nav.apri(GestioneEsercizi)} />
+          <Riga icona={BookOpen} coloreIcona="var(--orange)" titolo="Recipes" freccia onClick={() => nav.apri(GestioneRicette)} />
+          <Riga icona={Dumbbell} coloreIcona="var(--pink)" titolo="Exercises" freccia onClick={() => nav.apri(GestioneEsercizi)} />
           <Riga
             icona={Ban}
             coloreIcona="var(--red)"
-            titolo="Cibi esclusi"
+            titolo="Excluded foods"
             valore={String(impostazioni.cibiEsclusi.length)}
             freccia
             onClick={() => nav.apri(CibiEsclusi)}
@@ -174,47 +174,47 @@ export function Impostazioni() {
           <Riga
             icona={ShoppingBasket}
             coloreIcona="var(--green)"
-            titolo="Prodotti della spesa"
+            titolo="Shopping products"
             freccia
             onClick={() => nav.apri(Prodotti)}
           />
         </Lista>
       </Sezione>
 
-      <Sezione titolo="Storico">
+      <Sezione titolo="History">
         <Lista>
           <Riga
             icona={Archive}
             coloreIcona="var(--green)"
-            titolo="Spese"
+            titolo="Shopping lists"
             freccia
-            onClick={() => nav.apri(StoricoSpese, { indietro: 'Impostazioni' })}
+            onClick={() => nav.apri(StoricoSpese, { indietro: 'Settings' })}
           />
-          <Riga icona={CookingPot} coloreIcona="var(--orange)" titolo="Settimane di ricette" freccia onClick={() => nav.apri(StoricoSettimane)} />
-          <Riga icona={CalendarDays} coloreIcona="var(--pink)" titolo="Allenamenti" freccia onClick={() => nav.apri(StoricoAllenamenti)} />
+          <Riga icona={CookingPot} coloreIcona="var(--orange)" titolo="Recipe weeks" freccia onClick={() => nav.apri(StoricoSettimane)} />
+          <Riga icona={CalendarDays} coloreIcona="var(--pink)" titolo="Workouts" freccia onClick={() => nav.apri(StoricoAllenamenti)} />
         </Lista>
       </Sezione>
 
-      <Sezione titolo="Aspetto">
+      <Sezione titolo="Appearance">
         <Lista>
           <Riga
             icona={Palette}
             coloreIcona="var(--indigo)"
-            titolo="Anteprima dello stile"
+            titolo="Style preview"
             freccia
             onClick={() => nav.apri(AnteprimaStile)}
           />
         </Lista>
       </Sezione>
 
-      <Sezione titolo="Informazioni">
+      <Sezione titolo="About">
         <Lista>
-          <Riga icona={Info} coloreIcona="var(--gray)" titolo="Versione dell’app" valore={__APP_VERSION__} />
-          <Riga icona={Database} coloreIcona="var(--gray)" titolo="Versione dei dati" valore={String(VERSIONE_DATI)} />
+          <Riga icona={Info} coloreIcona="var(--gray)" titolo="App version" valore={__APP_VERSION__} />
+          <Riga icona={Database} coloreIcona="var(--gray)" titolo="Data version" valore={String(VERSIONE_DATI)} />
           <Riga
             icona={HardDrive}
             coloreIcona="var(--gray)"
-            titolo="Spazio usato"
+            titolo="Storage used"
             valore={spazio === null ? '—' : formatoDimensione(spazio)}
           />
         </Lista>

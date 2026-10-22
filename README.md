@@ -1,6 +1,7 @@
 # Luna
 
 App personale per iPhone (PWA) per gestire **spesa, cibo e allenamento**, pensata per il turno di notte.
+Interfaccia in **inglese**; i prodotti della spesa mostrano anche il nome danese.
 Il contesto completo (profilo, ricette, prodotti, programma, stile) è nella cartella superiore `../`.
 
 ## Comandi

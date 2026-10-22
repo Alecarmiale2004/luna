@@ -51,17 +51,17 @@ export async function leggiBackup(file) {
   try {
     contenuto = JSON.parse(await file.text())
   } catch {
-    throw new Error('Il file non è un backup valido (non riesco a leggerlo).')
+    throw new Error('This file is not a valid backup (it can’t be read).')
   }
   if (contenuto?.tipo !== 'backup' || typeof contenuto.versioneDati !== 'number' || !contenuto.dati) {
-    throw new Error(`Il file non sembra un backup di ${APP_NAME}.`)
+    throw new Error(`This file doesn’t look like a ${APP_NAME} backup.`)
   }
   let dati
   try {
     dati = migra(contenuto.dati, contenuto.versioneDati)
   } catch (errore) {
     if (errore instanceof DatiTroppoNuovi) {
-      throw new Error('Il backup arriva da una versione più nuova dell’app. Aggiorna l’app e riprova.')
+      throw new Error('This backup comes from a newer version of the app. Update the app and try again.')
     }
     throw errore
   }
@@ -72,11 +72,11 @@ export async function leggiBackup(file) {
 
 /** Sostituisce i dati attuali con quelli del backup (dopo una copia di sicurezza). */
 export function importaBackup(backup) {
-  return sostituisciDati(backup.dati, 'Prima dell’importazione di un backup')
+  return sostituisciDati(backup.dati, 'Before importing a backup')
 }
 
 export function formatoDimensione(byte) {
-  if (byte < 1024) return `${byte} byte`
-  if (byte < 1024 * 1024) return `${(byte / 1024).toFixed(1).replace('.', ',')} KB`
-  return `${(byte / 1024 / 1024).toFixed(1).replace('.', ',')} MB`
+  if (byte < 1024) return `${byte} bytes`
+  if (byte < 1024 * 1024) return `${(byte / 1024).toFixed(1)} KB`
+  return `${(byte / 1024 / 1024).toFixed(1)} MB`
 }

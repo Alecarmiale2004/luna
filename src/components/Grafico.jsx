@@ -68,7 +68,7 @@ export function GraficoLinea({ punti, unita = '', record = null, etichetta }) {
           <rect key={i} class="bersaglio" x={x(i) - larghezzaBersaglio / 2} y={0} width={larghezzaBersaglio} height={A} onClick={() => setScelto(i)} />
         ))}
       </svg>
-      <p class="grafico-dettaglio">{scelto != null ? punti[scelto].dettaglio : 'Tocca un punto per vedere il dettaglio'}</p>
+      <p class="grafico-dettaglio">{scelto != null ? punti[scelto].dettaglio : 'Tap a point to see the details'}</p>
     </>
   )
 }
@@ -117,12 +117,12 @@ export function GraficoBarre({ barre, unita = '', riferimento = null, etichetta 
           <>
             <line class="riferimento" x1={M.sx} x2={L - M.dx} y1={y(riferimento)} y2={y(riferimento)} />
             <text class="etichetta-tenue" x={L - M.dx} y={y(riferimento) - 5} text-anchor="end">
-              {riferimento} {unita} consigliati
+              {riferimento} {unita} recommended
             </text>
           </>
         )}
       </svg>
-      <p class="grafico-dettaglio">{scelta != null ? barre[scelta].dettaglio : 'Tocca una barra per vedere il dettaglio'}</p>
+      <p class="grafico-dettaglio">{scelta != null ? barre[scelta].dettaglio : 'Tap a bar to see the details'}</p>
     </>
   )
 }

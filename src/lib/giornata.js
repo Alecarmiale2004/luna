@@ -2,7 +2,7 @@
 // Le date sono stringhe locali "AAAA-MM-GG" (mai toISOString, che usa l'ora UTC).
 import { useEffect, useState } from 'preact/hooks'
 
-const locale = 'it-IT'
+const locale = 'en-GB'
 
 /** Date → "2026-10-22" (ora locale) */
 export function dataISO(d) {
@@ -34,7 +34,7 @@ export function settimanaDi(iso) {
   return Array.from({ length: 7 }, (_, i) => aggiungiGiorni(lun, i))
 }
 
-export const INIZIALI_GIORNI = ['L', 'M', 'M', 'G', 'V', 'S', 'D']
+export const INIZIALI_GIORNI = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
 /** Giorni di calendario tra due date ISO (b − a) */
 export function giorniTra(a, b) {
@@ -65,9 +65,9 @@ export function formatoMomento(timestamp) {
 /** "Questa settimana", "Prossima settimana", oppure "3 – 9 nov" */
 export function etichettaSettimana(lunedi, oggi) {
   const diff = giorniTra(lunediDi(oggi), lunedi) / 7
-  if (diff === 0) return 'Questa settimana'
-  if (diff === 1) return 'Prossima settimana'
-  if (diff === -1) return 'Settimana scorsa'
+  if (diff === 0) return 'This week'
+  if (diff === 1) return 'Next week'
+  if (diff === -1) return 'Last week'
   const dom = aggiungiGiorni(lunedi, 6)
   const a = daISO(lunedi)
   const b = daISO(dom)
@@ -81,9 +81,9 @@ export function etichettaSettimana(lunedi, oggi) {
 /** "oggi", "ieri", "23 giorni fa" a partire da un timestamp */
 export function tempoFa(timestamp, adesso = new Date()) {
   const giorni = giorniTra(dataISO(new Date(timestamp)), dataISO(adesso))
-  if (giorni <= 0) return 'oggi'
-  if (giorni === 1) return 'ieri'
-  return `${giorni} giorni fa`
+  if (giorni <= 0) return 'today'
+  if (giorni === 1) return 'yesterday'
+  return `${giorni} days ago`
 }
 
 /**

@@ -24,7 +24,7 @@ export function catalogoDa(prodottiMiei) {
     ...Object.values(prodottiMiei)
       .filter((p) => !idBase.has(p.id))
       .map((p) => ({ ...p, mio: true })),
-  ].sort((a, b) => posizioneReparto(a.reparto) - posizioneReparto(b.reparto) || a.it.localeCompare(b.it, 'it'))
+  ].sort((a, b) => posizioneReparto(a.reparto) - posizioneReparto(b.reparto) || a.nome.localeCompare(b.nome, 'en'))
   cache = { miei: prodottiMiei, elenco }
   return elenco
 }
@@ -41,17 +41,17 @@ export function normalizza(testo) {
     .replaceAll('ø', 'o')
     .replaceAll('å', 'a')
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .trim()
 }
 
-/** Prodotti visibili che contengono il testo nel nome italiano o danese */
+/** Prodotti visibili che contengono il testo nel nome (inglese o danese) */
 export function cerca(catalogo, testo) {
   const t = normalizza(testo)
   if (!t) return []
   return catalogo
-    .filter((p) => !p.nascosto && (normalizza(p.it).includes(t) || normalizza(p.dk || '').includes(t)))
-    .sort((a, b) => Number(!normalizza(a.it).startsWith(t)) - Number(!normalizza(b.it).startsWith(t)))
+    .filter((p) => !p.nascosto && (normalizza(p.nome).includes(t) || normalizza(p.dk || '').includes(t)))
+    .sort((a, b) => Number(!normalizza(a.nome).startsWith(t)) - Number(!normalizza(b.nome).startsWith(t)))
 }
 
 /** Salva le modifiche a un prodotto (di base o mio). */
@@ -63,9 +63,9 @@ export function salvaProdotto(id, modifiche) {
 }
 
 /** Crea un prodotto nuovo, ricordato per le volte successive. */
-export function nuovoProdotto({ it, dk = '', reparto = 'altro' }) {
-  const id = `mio-${normalizza(it).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'prodotto'}-${Date.now().toString(36)}`
-  const prodotto = { id, it: it.trim(), dk: dk.trim(), reparto, tipo: 'fresco', creato: new Date().toISOString() }
+export function nuovoProdotto({ nome, dk = '', reparto = 'altro' }) {
+  const id = `mio-${normalizza(nome).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'prodotto'}-${Date.now().toString(36)}`
+  const prodotto = { id, nome: nome.trim(), dk: dk.trim(), reparto, tipo: 'fresco', creato: new Date().toISOString() }
   salvaProdotto(id, prodotto)
   return { ...prodotto, mio: true }
 }

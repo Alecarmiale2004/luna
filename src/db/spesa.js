@@ -2,7 +2,7 @@
 //
 // Formato (archivio IndexedDB "spese"):
 // lista = { id, stato: "aperta" | "fatta", data: "2026-10-22", creata, fatta, voci: [voce] }
-// voce  = { id, prodotto, it, dk, reparto, quantita, spuntato, aggiunto }
+// voce  = { id, prodotto, nome, dk, reparto, quantita, spuntato, aggiunto }
 // Ogni voce conserva nome e reparto del prodotto: lo storico resta leggibile
 // anche se in futuro il prodotto viene rinominato o nascosto.
 import { useDati, datiCorrenti, modificaStato, scrivi, scriviMeta } from './dati.js'
@@ -51,7 +51,7 @@ function creaVoce(prodotto, quantita = '') {
   return {
     id: nuovoId(),
     prodotto: prodotto.id,
-    it: prodotto.it,
+    nome: prodotto.nome,
     dk: prodotto.dk || '',
     reparto: prodotto.reparto,
     quantita,
@@ -151,7 +151,7 @@ export function segnaDispensa(idProdotto, finito) {
 export function ripeti(spesaPassata) {
   return aggiungi(
     spesaPassata.voci.map((v) => ({
-      prodotto: { id: v.prodotto, it: v.it, dk: v.dk, reparto: v.reparto },
+      prodotto: { id: v.prodotto, nome: v.nome, dk: v.dk, reparto: v.reparto },
       quantita: v.quantita,
     })),
   )

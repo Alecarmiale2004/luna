@@ -1,6 +1,6 @@
 {
   "name": "luna",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Luna Ã¢â‚¬â€ app personale per spesa, cibo e allenamento (PWA per iPhone)",
   "type": "module",

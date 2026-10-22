@@ -1,10 +1,10 @@
 [
-  { "id": "frutta-verdura", "it": "Frutta e verdura", "dk": "Frugt og grønt" },
-  { "id": "pane", "it": "Pane", "dk": "Brød" },
-  { "id": "carne", "it": "Carne e pollo", "dk": "Kød og fjerkræ" },
-  { "id": "latticini", "it": "Latticini e uova", "dk": "Mejeri og æg" },
-  { "id": "dispensa", "it": "Dispensa", "dk": "Kolonial" },
-  { "id": "spezie", "it": "Spezie e condimenti", "dk": "Krydderier" },
-  { "id": "altro", "it": "Casa e altro", "dk": "Husholdning" },
-  { "id": "surgelati", "it": "Surgelati", "dk": "Frost" }
+  { "id": "frutta-verdura", "nome": "Fruit & vegetables", "dk": "Frugt og grønt" },
+  { "id": "pane", "nome": "Bread", "dk": "Brød" },
+  { "id": "carne", "nome": "Meat & poultry", "dk": "Kød og fjerkræ" },
+  { "id": "latticini", "nome": "Dairy & eggs", "dk": "Mejeri og æg" },
+  { "id": "dispensa", "nome": "Pantry", "dk": "Kolonial" },
+  { "id": "spezie", "nome": "Spices & condiments", "dk": "Krydderier" },
+  { "id": "altro", "nome": "Household & other", "dk": "Husholdning" },
+  { "id": "surgelati", "nome": "Frozen", "dk": "Frost" }
 ]

@@ -26,29 +26,29 @@ const TESTI = [
 ]
 
 const COLORI = [
-  ['Oggi', 'var(--c-oggi)'],
-  ['Cibo', 'var(--c-cibo)'],
-  ['Spesa', 'var(--c-spesa)'],
-  ['Allenamento', 'var(--c-allenamento)'],
-  ['Accento', 'var(--blue)'],
-  ['Errore', 'var(--red)'],
+  ['Today', 'var(--c-oggi)'],
+  ['Food', 'var(--c-cibo)'],
+  ['Shopping', 'var(--c-spesa)'],
+  ['Training', 'var(--c-allenamento)'],
+  ['Accent', 'var(--blue)'],
+  ['Error', 'var(--red)'],
 ]
 
 const PRODOTTI = [
-  ['Pomodorini', 'Cherrytomater'],
-  ['Petto di pollo', 'Kyllingebryst'],
-  ['Yogurt bianco', 'Yoghurt naturel'],
+  ['Cherry tomatoes', 'Cherrytomater'],
+  ['Chicken breast', 'Kyllingebryst'],
+  ['Plain yoghurt', 'Yoghurt naturel'],
 ]
 
 export function AnteprimaStile() {
   const nav = useNav()
-  const [spunte, setSpunte] = useState({ Pomodorini: true })
+  const [spunte, setSpunte] = useState({ 'Cherry tomatoes': true })
   const [foglio, setFoglio] = useState(false)
   const [proteine, setProteine] = useState(72)
 
   return (
-    <Pagina titolo="Stile" sinistra={<PulsanteIndietro etichetta="Impostazioni" onClick={nav.indietro} />}>
-      <Sezione titolo="Testi">
+    <Pagina titolo="Style" sinistra={<PulsanteIndietro etichetta="Settings" onClick={nav.indietro} />}>
+      <Sezione titolo="Text">
         <Card>
           {TESTI.map(([classe, nome]) => (
             <p key={classe} class={classe} style={{ marginBottom: 4 }}>
@@ -63,7 +63,7 @@ export function AnteprimaStile() {
         </Card>
       </Sezione>
 
-      <Sezione titolo="Colori delle sezioni">
+      <Sezione titolo="Section colours">
         <Card>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
             {COLORI.map(([nome, colore]) => (
@@ -78,25 +78,25 @@ export function AnteprimaStile() {
         </Card>
       </Sezione>
 
-      <Sezione titolo="Card con anello" piede="Tocca la card per far avanzare l’anello.">
+      <Sezione titolo="Card with ring" piede="Tap the card to move the ring forward.">
         <div class="tint-cibo">
           <Card onClick={() => setProteine((p) => (p >= 100 ? 20 : p + 20))}>
-            <CardTesta icona={Beef} titolo="Proteine" dettaglio="oggi" freccia />
+            <CardTesta icona={Beef} titolo="Protein" dettaglio="today" freccia />
             <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-              <Anello valore={proteine / 100} dimensione={96} spessore={13} etichetta={`${proteine} grammi di 100`} />
+              <Anello valore={proteine / 100} dimensione={96} spessore={13} etichetta={`${proteine} grams of 100`} />
               <div>
                 <p>
                   <span class="t-title1 num">{proteine}</span>
                   <span class="t-headline c-label-2"> / 100 g</span>
                 </p>
-                <p class="t-subheadline c-label-2">Ancora {Math.max(0, 100 - proteine)} g per l’obiettivo</p>
+                <p class="t-subheadline c-label-2">{Math.max(0, 100 - proteine)} g to reach the goal</p>
               </div>
             </div>
           </Card>
         </div>
       </Sezione>
 
-      <Sezione titolo="Cerchi di spunta">
+      <Sezione titolo="Check circles">
         <div class="tint-spesa">
           <Lista>
             {PRODOTTI.map(([it, dk]) => (
@@ -116,43 +116,43 @@ export function AnteprimaStile() {
         </div>
       </Sezione>
 
-      <Sezione titolo="Pulsanti">
+      <Sezione titolo="Buttons">
         <div class="tint-allenamento" style={{ display: 'grid', gap: 12, padding: '0 16px' }}>
           <button class="pulsante pieno" onClick={() => setFoglio(true)}>
-            <Corsa size={22} /> Apri un foglio dal basso
+            <Corsa size={22} /> Open a bottom sheet
           </button>
-          <button class="pulsante tinta" onClick={() => mostraMessaggio('Fatto!')}>
-            Mostra un messaggio
+          <button class="pulsante tinta" onClick={() => mostraMessaggio('Done!')}>
+            Show a message
           </button>
-          <button class="pulsante grigio">Pulsante grigio</button>
-          <button class="pulsante distruttivo">Elimina</button>
+          <button class="pulsante grigio">Grey button</button>
+          <button class="pulsante distruttivo">Delete</button>
         </div>
       </Sezione>
 
-      <Sezione titolo="Lista">
+      <Sezione titolo="List">
         <Lista>
-          <Riga icona={ShoppingCart} coloreIcona="var(--green)" titolo="Riga con icona" valore="Valore" freccia onClick={() => {}} />
-          <Riga titolo="Riga con sottotitolo" sottotitolo="Dettaglio secondario" />
-          <Riga titolo="Azione" tipo="azione" onClick={() => {}} />
-          <Riga titolo="Azione distruttiva" tipo="distruttiva" onClick={() => {}} />
+          <Riga icona={ShoppingCart} coloreIcona="var(--green)" titolo="Row with icon" valore="Value" freccia onClick={() => {}} />
+          <Riga titolo="Row with subtitle" sottotitolo="Secondary detail" />
+          <Riga titolo="Action" tipo="azione" onClick={() => {}} />
+          <Riga titolo="Destructive action" tipo="distruttiva" onClick={() => {}} />
         </Lista>
       </Sezione>
 
-      <Foglio aperto={foglio} onChiudi={() => setFoglio(false)} titolo="Giornata Forte">
+      <Foglio aperto={foglio} onChiudi={() => setFoglio(false)} titolo="Strength day">
         <div class="tint-allenamento">
           <p class="foglio-spiegazione">
-            Esempio di foglio dal basso. Si chiude con la X, toccando fuori o trascinandolo verso il basso.
+            Example bottom sheet. Close it with the X, by tapping outside or by dragging it down.
           </p>
-          <Sezione titolo="Esercizi">
+          <Sezione titolo="Exercises">
             <Lista>
-              <Riga titolo="Flessioni in verticale al muro" valore="3 × 5" />
-              <Riga titolo="Squat a corpo libero" valore="3 × 12–15" />
+              <Riga titolo="Wall handstand push-ups" valore="3 × 5" />
+              <Riga titolo="Bodyweight squats" valore="3 × 12–15" />
               <Riga titolo="Plank" valore="3 × 30 s" />
             </Lista>
           </Sezione>
           <div class="foglio-azioni">
             <button class="pulsante pieno" onClick={() => setFoglio(false)}>
-              Inizia
+              Start
             </button>
           </div>
         </div>

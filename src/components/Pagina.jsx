@@ -41,7 +41,7 @@ export function Pagina({ titolo, titoloBarra, sopratitolo, sinistra, destra, chi
 }
 
 /** Pulsante "‹ Indietro" della barra in alto */
-export function PulsanteIndietro({ etichetta = 'Indietro', onClick }) {
+export function PulsanteIndietro({ etichetta = 'Back', onClick }) {
   return (
     <button class="nav-pulsante indietro" onClick={onClick}>
       <ChevronLeft size={30} strokeWidth={2.2} style={{ marginRight: -4 }} />

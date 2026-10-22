@@ -9,7 +9,7 @@ import { useCatalogo, cerca, normalizza, nuovoProdotto, REPARTI } from '../db/ca
 import { listaAperta, aggiungi, rimuoviProdotto, frequenze } from '../db/spesa.js'
 import { vibra } from '../lib/tocco.js'
 
-const OPZIONI_REPARTO = REPARTI.map((r) => ({ valore: r.id, etichetta: r.it }))
+const OPZIONI_REPARTO = REPARTI.map((r) => ({ valore: r.id, etichetta: r.nome }))
 const MAX_FREQUENTI = 8
 
 export function FoglioAggiungi({ aperto, onChiudi }) {
@@ -37,7 +37,7 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
   }, [spese, catalogo])
 
   const risultati = cerca(catalogo, testo)
-  const esisteGia = visibili.some((p) => normalizza(p.it) === normalizza(testo))
+  const esisteGia = visibili.some((p) => normalizza(p.nome) === normalizza(testo))
 
   const alterna = (prodotto) => {
     vibra()
@@ -46,7 +46,7 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
   }
 
   const creaEAggiungi = () => {
-    if (!nuovo.it.trim()) return
+    if (!nuovo.nome.trim()) return
     const prodotto = nuovoProdotto(nuovo)
     aggiungi([{ prodotto }])
     vibra()
@@ -57,7 +57,7 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
   const riga = (p) => (
     <Riga
       key={p.id}
-      titolo={p.it}
+      titolo={p.nome}
       sottotitolo={p.dk || undefined}
       destra={
         <span class={`aggiungi-stato${inLista.has(p.id) ? ' aggiunto' : ''}`} key={String(inLista.has(p.id))}>
@@ -69,14 +69,14 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
   )
 
   return (
-    <Foglio aperto={aperto} onChiudi={onChiudi} titolo="Aggiungi prodotti" grande>
+    <Foglio aperto={aperto} onChiudi={onChiudi} titolo="Add items" grande>
       <div class="tint-spesa">
         <div class="aggiungi-ricerca">
           <label class="ricerca">
             <Search size={18} />
             <input
               type="search"
-              placeholder="Cerca o scrivi un prodotto nuovo"
+              placeholder="Search or type a new item"
               value={testo}
               enterKeyHint="done"
               autoComplete="off"
@@ -86,7 +86,7 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
               }}
             />
             {testo && (
-              <button aria-label="Cancella" onClick={() => setTesto('')}>
+              <button aria-label="Clear" onClick={() => setTesto('')}>
                 <CircleX size={18} fill="currentColor" color="var(--bg)" />
               </button>
             )}
@@ -96,44 +96,44 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
         {testo.trim() ? (
           <>
             {risultati.length > 0 && (
-              <Sezione titolo="Nel catalogo">
+              <Sezione titolo="In the catalogue">
                 <Lista>{risultati.map(riga)}</Lista>
               </Sezione>
             )}
             {!esisteGia && !nuovo && (
-              <Sezione piede="Verrà ricordato e suggerito le prossime volte.">
+              <Sezione piede="It will be remembered and suggested next time.">
                 <Lista>
                   <Riga
-                    titolo={`Aggiungi «${testo.trim()}»`}
+                    titolo={`Add “${testo.trim()}”`}
                     tipo="azione"
-                    onClick={() => setNuovo({ it: testo.trim(), dk: '', reparto: 'altro' })}
+                    onClick={() => setNuovo({ nome: testo.trim(), dk: '', reparto: 'altro' })}
                   />
                 </Lista>
               </Sezione>
             )}
             {nuovo && (
               <>
-                <Sezione titolo="Nuovo prodotto" piede="Il nome danese ti aiuta a riconoscerlo sullo scaffale.">
+                <Sezione titolo="New item" piede="The Danish name helps you spot it on the shelf.">
                   <Lista>
                     <Riga
-                      titolo="Italiano"
+                      titolo="Name"
                       destra={
-                        <input class="riga-campo" value={nuovo.it} onInput={(e) => setNuovo({ ...nuovo, it: e.currentTarget.value })} />
+                        <input class="riga-campo" value={nuovo.nome} onInput={(e) => setNuovo({ ...nuovo, nome: e.currentTarget.value })} />
                       }
                     />
                     <Riga
-                      titolo="Danese"
+                      titolo="Danish"
                       destra={
                         <input
                           class="riga-campo"
-                          placeholder="facoltativo"
+                          placeholder="optional"
                           value={nuovo.dk}
                           onInput={(e) => setNuovo({ ...nuovo, dk: e.currentTarget.value })}
                         />
                       }
                     />
                     <Riga
-                      titolo="Reparto"
+                      titolo="Aisle"
                       destra={
                         <MenuValore valore={nuovo.reparto} opzioni={OPZIONI_REPARTO} onChange={(r) => setNuovo({ ...nuovo, reparto: r })} />
                       }
@@ -141,8 +141,8 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
                   </Lista>
                 </Sezione>
                 <div class="foglio-azioni">
-                  <button class="pulsante pieno" disabled={!nuovo.it.trim()} onClick={creaEAggiungi}>
-                    Aggiungi alla lista
+                  <button class="pulsante pieno" disabled={!nuovo.nome.trim()} onClick={creaEAggiungi}>
+                    Add to the list
                   </button>
                 </div>
               </>
@@ -151,7 +151,7 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
         ) : (
           <>
             {frequenti.length > 0 && (
-              <Sezione titolo="Usati spesso">
+              <Sezione titolo="Used often">
                 <Lista>{frequenti.map(riga)}</Lista>
               </Sezione>
             )}
@@ -159,7 +159,7 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
               const prodotti = visibili.filter((p) => p.reparto === r.id)
               if (!prodotti.length) return null
               return (
-                <Sezione key={r.id} titolo={r.it}>
+                <Sezione key={r.id} titolo={r.nome}>
                   <Lista>{prodotti.map(riga)}</Lista>
                 </Sezione>
               )

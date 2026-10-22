@@ -10,19 +10,43 @@
 // quindi un backup vecchio si può sempre reimportare.
 // Prima di ogni migrazione l'app salva da sola una copia di sicurezza.
 
-export const VERSIONE_DATI = 1
+export const VERSIONE_DATI = 2
+
+// Cibi esclusi predefiniti della versione italiana → inglese (migrazione 2)
+const ESCLUSI_IN_INGLESE = {
+  Spinaci: 'Spinach',
+  Ceci: 'Chickpeas',
+  Noci: 'Walnuts',
+  Mandorle: 'Almonds',
+  Mais: 'Corn',
+  Carote: 'Carrots',
+  Cipollotto: 'Spring onions',
+  Spaghetti: 'Spaghetti',
+  Skyr: 'Skyr',
+  'Yogurt greco': 'Greek yoghurt',
+  Salmone: 'Salmon',
+}
+
+/** Rinomina il campo `it` in `nome` (se c'è) */
+const conNome = ({ it, ...resto }) => (it === undefined ? resto : { nome: it, ...resto })
 
 export const MIGRAZIONI = {
-  // Esempio:
-  // 2: (dati) => {
-  //   dati.giorni = dati.giorni.map((g) => ({ ...g, note: '' }))
-  //   return dati
-  // },
+  // 2 — L'app passa all'inglese. Il nome dei prodotti non è più "italiano": il campo `it`
+  // diventa `nome` (prodotti miei e voci delle liste della spesa) e i cibi esclusi
+  // predefiniti vengono tradotti. I nomi scritti da me restano come li ho scritti.
+  2: (dati) => {
+    dati.prodotti = (dati.prodotti || []).map(conNome)
+    dati.spese = (dati.spese || []).map((l) => ({ ...l, voci: (l.voci || []).map(conNome) }))
+    dati.impostazioni = (dati.impostazioni || []).map((i) =>
+      Array.isArray(i.cibiEsclusi) ? { ...i, cibiEsclusi: i.cibiEsclusi.map((c) => ESCLUSI_IN_INGLESE[c] || c) } : i,
+    )
+    return dati
+  },
 }
 
 export class DatiTroppoNuovi extends Error {
   constructor(versione) {
-    super(`I dati sono in formato ${versione}, questa versione dell'app arriva al ${VERSIONE_DATI}.`)
+    super(`Data is in format ${versione}, this version of the app supports up to ${VERSIONE_DATI}.`)
     this.versione = versione
   }
 }

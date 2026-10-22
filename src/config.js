@@ -1,8 +1,9 @@
 // Impostazioni fisse dell'app, tutte in un solo punto.
 // Per cambiare nome all'app basta modificare APP_NAME (e rigenerare l'icona se serve).
+// L'interfaccia è in inglese; i prodotti della spesa hanno anche il nome danese.
 
 export const APP_NAME = 'Luna'
-export const APP_DESCRIPTION = 'Spesa, cibo e allenamento, al ritmo del turno di notte.'
+export const APP_DESCRIPTION = 'Shopping, food and training, in step with the night shift.'
 
 // Valori predefiniti delle Impostazioni (usati al primo avvio).
 // L'utente li cambia dall'app: i valori salvati hanno sempre la precedenza.
@@ -15,16 +16,16 @@ export const IMPOSTAZIONI_PREDEFINITE = {
   promemoriaBackupGiorni: 14,
   // Cibi da non suggerire mai (02-alimentazione/preferenze.md), modificabili dalle Impostazioni
   cibiEsclusi: [
-    'Spinaci',
-    'Ceci',
-    'Noci',
-    'Mandorle',
-    'Mais',
-    'Carote',
-    'Cipollotto',
+    'Spinach',
+    'Chickpeas',
+    'Walnuts',
+    'Almonds',
+    'Corn',
+    'Carrots',
+    'Spring onions',
     'Spaghetti',
     'Skyr',
-    'Yogurt greco',
-    'Salmone',
+    'Greek yoghurt',
+    'Salmon',
   ],
 }
