@@ -30,15 +30,22 @@ src/
     base.css         regole di base da "app" su iPhone
     components.css   card, liste, tab bar, fogli dal basso, anelli, cerchi di spunta…
   components/        componenti riutilizzabili (Pagina, Card, Lista, Foglio, Anello, Spunta, Avvisi, icone)
-  schermate/         Oggi, Spesa (+ Aggiungi, Storico, Prodotti), Impostazioni, Backup, Anteprima dello stile
-  data/              CONTENUTI modificabili: prodotti.json, reparti.json, spesa-base.json
+  schermate/         Oggi, Spesa (+ Aggiungi, Storico, Prodotti), Cibo (+ Ricetta, Settimana, GestioneRicette,
+                     CibiEsclusi, StoricoSettimane), Impostazioni, Backup, Anteprima dello stile
+  data/              CONTENUTI modificabili: prodotti.json (con confezioni e proteine), reparti.json,
+                     ricette.json, blocchi.json (cosa si può scambiare), pasti.json (schema dal risveglio),
+                     spesa-base.json
   db/
     database.js      archivi di IndexedDB (VERSIONE_STRUTTURA)
     migrazioni.js    formato dei dati (VERSIONE_DATI) e migrazioni
     dati.js          lettura/scrittura immediata, copie di sicurezza automatiche
     backup.js        esporta / importa il file JSON
     catalogo.js      prodotti di base + i miei prodotti/modifiche
-    spesa.js         lista aperta, "Spesa fatta", storico, "Ripeti"
+    spesa.js         lista aperta, "Spesa fatta", storico, "Ripeti", dispensa finita
+    ricette.js       ricette di base + le mie, scambio dei blocchi, cibi esclusi
+    piani.js         settimana di ricette, cucinate, settimane tipo
+  lib/pasti.js       schema dei pasti dal risveglio e dal turno, proteine del giorno
+  lib/generaSpesa.js dalla settimana alla lista: somma, colazione ×7, confezioni, dispensa, 2 giri
   lib/               date, piccoli strumenti
 public/              icone (e in futuro immagini/esercizi/)
 ```

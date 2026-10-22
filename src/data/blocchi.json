@@ -1,0 +1,6 @@
+{
+  "_nota": "Prodotti che si possono scambiare tra loro dentro una ricetta, per blocco. Le quantità si convertono da sole (es. 300 g di pollo = 2 scatolette di tonno).",
+  "base": ["penne", "fusilli", "riso"],
+  "proteina": ["petto-pollo", "tacchino-macinato", "macinato-manzo", "tonno", "uova"],
+  "verdura": ["pomodorini", "zucchine", "fagiolini", "broccoli", "peperoni", "piselli"]
+}

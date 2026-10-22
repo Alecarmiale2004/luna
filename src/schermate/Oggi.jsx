@@ -1,6 +1,6 @@
 // Schermata "Oggi": il riepilogo della giornata, dal risveglio.
-// Turno di stanotte + mini-settimana, spesa da fare, promemoria backup.
-// Le card Colazione, Allenamento, Da cucinare e Proteine arrivano nelle fasi successive.
+// Nell'ordine della giornata: turno + mini-settimana, colazione, da cucinare, proteine,
+// spesa da fare, promemoria backup. La card Allenamento arriva con la Fase 4.
 import { useState } from 'preact/hooks'
 import { Pagina } from '../components/Pagina.jsx'
 import { Card, CardTesta } from '../components/Card.jsx'
@@ -24,6 +24,7 @@ import { usePressione } from '../lib/pressione.js'
 import { vibra } from '../lib/tocco.js'
 import { Impostazioni } from './Impostazioni.jsx'
 import { FoglioEsporta } from './Backup.jsx'
+import { CardColazione, CardDaCucinare, CardProteine } from './ciboComune.jsx'
 import './oggi.css'
 
 export function Oggi() {
@@ -43,6 +44,9 @@ export function Oggi() {
       <div class="sezione">
         <CardTurni oggi={oggi} />
       </div>
+      <CardColazione />
+      <CardDaCucinare />
+      <CardProteine />
       <CardSpesa />
       <PromemoriaBackup />
     </Pagina>
@@ -70,7 +74,8 @@ function segna(data, tipo) {
 function CardTurni({ oggi }) {
   const { giorni, impostazioni } = useDati()
   const [scarto, setScarto] = useState(0) // settimane rispetto a quella in corso
-  const tipo = giorni[oggi] || 'vuoto'
+  const tipoDi = (data) => giorni[data]?.tipo
+  const tipo = tipoDi(oggi) || 'vuoto'
   const testi = TESTI_TURNO[tipo]
   const sottotitolo =
     tipo === 'lavoro'
@@ -80,12 +85,12 @@ function CardTurni({ oggi }) {
         : 'Tocca per segnare il turno'
 
   const pressione = usePressione({
-    onTocco: () => segna(oggi, prossimoTipo(giorni[oggi])),
-    onPressioneLunga: () => giorni[oggi] && segna(oggi, null),
+    onTocco: () => segna(oggi, prossimoTipo(tipoDi(oggi))),
+    onPressioneLunga: () => tipoDi(oggi) && segna(oggi, null),
   })
 
   const settimana = settimanaDi(aggiungiGiorni(oggi, scarto * 7))
-  const notti = settimana.filter((d) => giorni[d] === 'lavoro').length
+  const notti = settimana.filter((d) => tipoDi(d) === 'lavoro').length
 
   return (
     <Card class="card-turni">
@@ -124,7 +129,7 @@ function CardTurni({ oggi }) {
             key={data}
             data={data}
             iniziale={INIZIALI_GIORNI[i]}
-            tipo={giorni[data]}
+            tipo={tipoDi(data)}
             oggi={data === oggi}
             passato={data < oggi}
           />

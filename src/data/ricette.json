@@ -1,0 +1,138 @@
+[
+  {
+    "id": "pasta-pollo-pomodorini-zucchine",
+    "nome": "Pasta pollo, pomodorini e zucchine",
+    "minuti": 25,
+    "proteinePorzione": 40,
+    "ingredienti": [
+      { "prodotto": "penne", "quantita": 170, "unita": "g", "blocco": "base" },
+      { "prodotto": "petto-pollo", "quantita": 300, "unita": "g", "blocco": "proteina", "nota": "a cubetti" },
+      { "prodotto": "pomodorini", "quantita": 150, "unita": "g", "blocco": "verdura" },
+      { "prodotto": "zucchine", "quantita": 150, "unita": "g", "blocco": "verdura" },
+      { "prodotto": "olio", "quantita": 2, "unita": "cucchiai", "blocco": "condimento" },
+      { "prodotto": "aglio", "blocco": "condimento" },
+      { "prodotto": "sale", "blocco": "condimento" },
+      { "prodotto": "pepe", "blocco": "condimento" },
+      { "prodotto": "parmigiano", "blocco": "condimento" }
+    ],
+    "procedimento": "Rosolare il pollo con olio e aglio; aggiungere le zucchine a rondelle e poi i pomodorini tagliati a metà; cuocere la pasta e mantecare tutto in padella."
+  },
+  {
+    "id": "riso-pollo-fagiolini-soia",
+    "nome": "Riso, pollo e fagiolini alla soia",
+    "minuti": 25,
+    "proteinePorzione": 40,
+    "ingredienti": [
+      { "prodotto": "riso", "quantita": 170, "unita": "g", "blocco": "base" },
+      { "prodotto": "petto-pollo", "quantita": 300, "unita": "g", "blocco": "proteina", "nota": "a straccetti" },
+      { "prodotto": "fagiolini", "quantita": 300, "unita": "g", "blocco": "verdura", "nota": "freschi o surgelati" },
+      { "prodotto": "olio", "quantita": 2, "unita": "cucchiai", "blocco": "condimento" },
+      { "prodotto": "aglio", "blocco": "condimento" },
+      { "prodotto": "salsa-soia", "blocco": "condimento" },
+      { "prodotto": "zenzero", "blocco": "condimento", "facoltativo": true, "nota": "un pizzico" }
+    ],
+    "procedimento": "Bollire i fagiolini 5 minuti; saltare il pollo in padella, aggiungere i fagiolini e sfumare con la salsa di soia; servire sul riso."
+  },
+  {
+    "id": "pasta-ragu-manzo",
+    "nome": "Pasta al ragù veloce di manzo",
+    "minuti": 30,
+    "proteinePorzione": 40,
+    "ingredienti": [
+      { "prodotto": "fusilli", "quantita": 170, "unita": "g", "blocco": "base" },
+      { "prodotto": "macinato-manzo", "quantita": 300, "unita": "g", "blocco": "proteina", "nota": "magro, 5–10% di grassi" },
+      { "prodotto": "passata", "quantita": 300, "unita": "g", "blocco": "verdura" },
+      { "prodotto": "piselli", "quantita": 100, "unita": "g", "blocco": "verdura", "nota": "surgelati" },
+      { "prodotto": "olio", "quantita": 2, "unita": "cucchiai", "blocco": "condimento" },
+      { "prodotto": "cipolla", "blocco": "condimento", "nota": "o aglio" },
+      { "prodotto": "sale", "blocco": "condimento" },
+      { "prodotto": "origano", "blocco": "condimento" },
+      { "prodotto": "parmigiano", "blocco": "condimento" }
+    ],
+    "procedimento": "Rosolare il macinato con la cipolla, aggiungere passata e piselli e cuocere 15 minuti; condire la pasta."
+  },
+  {
+    "id": "pasta-tonno-pomodorini",
+    "nome": "Pasta tonno e pomodorini",
+    "minuti": 15,
+    "proteinePorzione": 35,
+    "ingredienti": [
+      { "prodotto": "fusilli", "quantita": 170, "unita": "g", "blocco": "base" },
+      { "prodotto": "tonno", "quantita": 2, "unita": "pz", "blocco": "proteina", "nota": "al naturale, ~240 g sgocciolato" },
+      { "prodotto": "pomodorini", "quantita": 300, "unita": "g", "blocco": "verdura" },
+      { "prodotto": "olio", "quantita": 2, "unita": "cucchiai", "blocco": "condimento" },
+      { "prodotto": "aglio", "blocco": "condimento" },
+      { "prodotto": "prezzemolo-basilico", "blocco": "condimento" },
+      { "prodotto": "olive", "blocco": "condimento", "facoltativo": true }
+    ],
+    "procedimento": "Saltare i pomodorini con olio e aglio, aggiungere il tonno a fuoco spento; condire la pasta. È la più veloce."
+  },
+  {
+    "id": "riso-pollo-paprika-broccoli",
+    "nome": "Riso, pollo al forno alla paprika e broccoli",
+    "minuti": 30,
+    "proteinePorzione": 40,
+    "ingredienti": [
+      { "prodotto": "riso", "quantita": 170, "unita": "g", "blocco": "base" },
+      { "prodotto": "petto-pollo", "quantita": 300, "unita": "g", "blocco": "proteina", "nota": "a pezzi" },
+      { "prodotto": "broccoli", "quantita": 300, "unita": "g", "blocco": "verdura" },
+      { "prodotto": "olio", "quantita": 2, "unita": "cucchiai", "blocco": "condimento" },
+      { "prodotto": "paprika", "blocco": "condimento" },
+      { "prodotto": "aglio-polvere", "blocco": "condimento" },
+      { "prodotto": "limone", "quantita": 1, "unita": "pz", "blocco": "condimento" },
+      { "prodotto": "sale", "blocco": "condimento" },
+      { "prodotto": "pepe", "blocco": "condimento" }
+    ],
+    "procedimento": "Pollo condito e broccoli sulla stessa teglia, in forno a 200 °C per 20–25 minuti; servire sul riso. Quasi tutto in forno, senza stare ai fornelli."
+  },
+  {
+    "id": "bowl-riso-tacchino",
+    "nome": "Bowl di riso con tacchino, peperoni e zucchine",
+    "minuti": 25,
+    "proteinePorzione": 38,
+    "ingredienti": [
+      { "prodotto": "riso", "quantita": 170, "unita": "g", "blocco": "base" },
+      { "prodotto": "tacchino-macinato", "quantita": 300, "unita": "g", "blocco": "proteina" },
+      { "prodotto": "peperoni", "quantita": 150, "unita": "g", "blocco": "verdura" },
+      { "prodotto": "zucchine", "quantita": 150, "unita": "g", "blocco": "verdura" },
+      { "prodotto": "olio", "quantita": 2, "unita": "cucchiai", "blocco": "condimento" },
+      { "prodotto": "paprika", "blocco": "condimento" },
+      { "prodotto": "cumino", "blocco": "condimento" },
+      { "prodotto": "sale", "blocco": "condimento" }
+    ],
+    "procedimento": "Rosolare il tacchino con le spezie, aggiungere peperoni e zucchine a listarelle; servire sul riso."
+  },
+  {
+    "id": "riso-saltato-uova-pollo",
+    "nome": "Riso saltato con uova, pollo e piselli",
+    "minuti": 20,
+    "proteinePorzione": 38,
+    "ingredienti": [
+      { "prodotto": "riso", "quantita": 170, "unita": "g", "blocco": "base", "nota": "ottimo già cotto del giorno prima" },
+      { "prodotto": "petto-pollo", "quantita": 200, "unita": "g", "blocco": "proteina" },
+      { "prodotto": "uova", "quantita": 3, "unita": "pz", "blocco": "proteina" },
+      { "prodotto": "piselli", "quantita": 150, "unita": "g", "blocco": "verdura" },
+      { "prodotto": "zucchine", "quantita": 150, "unita": "g", "blocco": "verdura" },
+      { "prodotto": "olio", "quantita": 2, "unita": "cucchiai", "blocco": "condimento" },
+      { "prodotto": "aglio", "blocco": "condimento" },
+      { "prodotto": "salsa-soia", "blocco": "condimento" }
+    ],
+    "procedimento": "Saltare il pollo a cubetti, aggiungere le verdure, poi il riso; rompere le uova in padella e mescolare; sfumare con la soia."
+  },
+  {
+    "id": "pasta-pollo-curry",
+    "nome": "Pasta pollo al curry e zucchine",
+    "minuti": 25,
+    "proteinePorzione": 42,
+    "ingredienti": [
+      { "prodotto": "penne", "quantita": 170, "unita": "g", "blocco": "base" },
+      { "prodotto": "petto-pollo", "quantita": 300, "unita": "g", "blocco": "proteina" },
+      { "prodotto": "zucchine", "quantita": 300, "unita": "g", "blocco": "verdura" },
+      { "prodotto": "olio", "quantita": 2, "unita": "cucchiai", "blocco": "condimento" },
+      { "prodotto": "curry", "blocco": "condimento" },
+      { "prodotto": "yogurt-bianco", "quantita": 2, "unita": "cucchiai", "blocco": "condimento", "nota": "per la cremina" },
+      { "prodotto": "sale", "blocco": "condimento" }
+    ],
+    "procedimento": "Rosolare il pollo con il curry, aggiungere le zucchine; a fuoco spento unire lo yogurt e la pasta."
+  }
+]

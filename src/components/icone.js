@@ -42,6 +42,14 @@ export {
   Package,
   ShoppingBasket,
   Clock,
+  CookingPot,
+  Egg,
+  Timer,
+  Bookmark,
+  ArrowLeftRight,
+  TriangleAlert,
+  Ban,
+  CircleMinus,
 } from 'lucide-preact'
 
 // Figura che corre (Lucide non ce l'ha): disegnata sulla stessa griglia 24×24, stesso tratto.

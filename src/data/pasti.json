@@ -1,0 +1,40 @@
+{
+  "_nota": "Schema pasti dal risveglio (vedi 02-alimentazione/strategia-pasti.md). Gli orari sono calcolati dall'app: 'dopoRisveglio' in ore dal risveglio, 'dopoInizioTurno'/'dopoFineTurno' in ore dall'inizio/fine del turno.",
+  "colazione": {
+    "nome": "Colazione",
+    "descrizione": "2 uova, 2 fette di pane tostato, yogurt alla vaniglia, frutta",
+    "proteine": 25,
+    "dopoRisveglio": 0,
+    "ingredienti": [
+      { "prodotto": "uova", "quantita": 2, "unita": "pz" },
+      { "prodotto": "pane-toast", "quantita": 2, "unita": "pz" },
+      { "prodotto": "yogurt-vaniglia", "quantita": 150, "unita": "g" },
+      { "prodotto": "banane", "quantita": 1, "unita": "pz" }
+    ]
+  },
+  "principale": {
+    "nome": "Pasto principale",
+    "descrizione": "Ricetta completa, porzione normale",
+    "dopoRisveglio": 4
+  },
+  "schiscetta": {
+    "nome": "Schiscetta",
+    "descrizione": "Stessa ricetta, porzione più leggera",
+    "dopoInizioTurno": 3.5,
+    "riduzioneBaseGrammi": 30
+  },
+  "secondoPasto": {
+    "nome": "Secondo pasto",
+    "descrizione": "Stessa ricetta, a casa",
+    "dopoRisveglio": 9,
+    "riduzioneBaseGrammi": 30
+  },
+  "spuntino": {
+    "nome": "Spuntino prima di dormire",
+    "descrizione": "Yogurt bianco, eventualmente con frutta",
+    "proteine": 7,
+    "dopoFineTurno": 0.5,
+    "ingredienti": [{ "prodotto": "yogurt-bianco", "quantita": 150, "unita": "g" }]
+  },
+  "giorniColazione": 7
+}

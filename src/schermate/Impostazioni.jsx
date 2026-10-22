@@ -19,7 +19,12 @@ import {
   ShieldCheck,
   ShoppingBasket,
   Archive,
+  Ban,
+  CookingPot,
 } from '../components/icone.js'
+import { GestioneRicette } from './GestioneRicette.jsx'
+import { CibiEsclusi } from './CibiEsclusi.jsx'
+import { StoricoSettimane } from './StoricoSettimane.jsx'
 import { Prodotti } from './Prodotti.jsx'
 import { StoricoSpese } from './StoricoSpese.jsx'
 import { useNav } from '../navigazione.jsx'
@@ -151,8 +156,17 @@ export function Impostazioni() {
         </Lista>
       </Sezione>
 
-      <Sezione titolo="Contenuti" piede="Ricette, cibi esclusi ed esercizi arriveranno con le prossime fasi.">
+      <Sezione titolo="Contenuti" piede="La gestione degli esercizi arriverà con la sezione Allenamento.">
         <Lista>
+          <Riga icona={BookOpen} coloreIcona="var(--orange)" titolo="Ricette" freccia onClick={() => nav.apri(GestioneRicette)} />
+          <Riga
+            icona={Ban}
+            coloreIcona="var(--red)"
+            titolo="Cibi esclusi"
+            valore={String(impostazioni.cibiEsclusi.length)}
+            freccia
+            onClick={() => nav.apri(CibiEsclusi)}
+          />
           <Riga
             icona={ShoppingBasket}
             coloreIcona="var(--green)"
@@ -160,7 +174,6 @@ export function Impostazioni() {
             freccia
             onClick={() => nav.apri(Prodotti)}
           />
-          <Riga icona={BookOpen} coloreIcona="var(--orange)" titolo="Ricette e cibi esclusi" valore="Presto" disattivata />
         </Lista>
       </Sezione>
 
@@ -173,7 +186,8 @@ export function Impostazioni() {
             freccia
             onClick={() => nav.apri(StoricoSpese, { indietro: 'Impostazioni' })}
           />
-          <Riga icona={CalendarDays} coloreIcona="var(--pink)" titolo="Settimane e allenamenti" valore="Presto" disattivata />
+          <Riga icona={CookingPot} coloreIcona="var(--orange)" titolo="Settimane di ricette" freccia onClick={() => nav.apri(StoricoSettimane)} />
+          <Riga icona={CalendarDays} coloreIcona="var(--pink)" titolo="Allenamenti" valore="Presto" disattivata />
         </Lista>
       </Sezione>
 

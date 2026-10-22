@@ -63,12 +63,15 @@ export function Riga({
   )
 }
 
-/** Valore scelto da un menu nativo dell'iPhone (select invisibile sopra il testo). */
-export function MenuValore({ valore, opzioni, onChange }) {
+/**
+ * Valore scelto da un menu nativo dell'iPhone (select invisibile sopra il testo).
+ * soloIcona: mostra solo le freccette (il valore è già scritto altrove nella riga).
+ */
+export function MenuValore({ valore, opzioni, onChange, soloIcona = false }) {
   const scelta = opzioni.find((o) => o.valore === valore)
   return (
     <span class="riga-menu">
-      {scelta?.etichetta}
+      {!soloIcona && scelta?.etichetta}
       <ChevronsUpDown size={16} strokeWidth={2.2} />
       <select value={String(valore)} onChange={(e) => onChange(opzioni[e.currentTarget.selectedIndex].valore)}>
         {opzioni.map((o) => (

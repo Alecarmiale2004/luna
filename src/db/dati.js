@@ -1,8 +1,8 @@
 // Accesso ai dati per tutta l'app.
 //
-// I dati piccoli e usati spesso (impostazioni, meta, giorni segnati) sono tenuti anche
-// in memoria: l'interfaccia li legge all'istante e ogni modifica viene scritta SUBITO
-// su IndexedDB, senza pulsante "Salva".
+// Tutti i dati dell'app sono pochi (anche dopo mesi: qualche centinaio di record), quindi
+// sono tenuti anche in memoria: l'interfaccia li legge all'istante e ogni modifica viene
+// scritta SUBITO su IndexedDB, senza pulsante "Salva".
 import { useSegnale, creaSegnale } from '../lib/segnale.js'
 import { IMPOSTAZIONI_PREDEFINITE } from '../config.js'
 import { apriDatabase, database, leggiTutto, scriviTutto } from './database.js'
@@ -14,9 +14,13 @@ const stato = creaSegnale({
   pronto: false,
   impostazioni: { ...IMPOSTAZIONI_PREDEFINITE },
   meta: {},
-  giorni: {}, // { "2026-10-22": "lavoro" | "libero" }
+  // { "2026-10-22": { data, tipo: "lavoro" | "libero", pasti: { colazione: true, … } } }
+  giorni: {},
   spese: [], // liste della spesa: una "aperta" + quelle archiviate (vedi spesa.js)
   prodottiMiei: {}, // prodotti aggiunti o modificati da me, per id (vedi catalogo.js)
+  ricetteMie: {}, // ricette aggiunte, modificate o nascoste da me, per id (vedi ricette.js)
+  piani: [], // settimane pianificate (vedi piani.js)
+  settimaneTipo: [], // settimane salvate da riusare
   memoriaPersistente: null, // true / false / null (non disponibile)
 })
 
@@ -75,12 +79,15 @@ async function primoAvvio() {
 /** Ricarica in memoria i dati dal database (dopo avvio, importazione, ripristino). */
 export async function ricarica() {
   const db = database()
-  const [meta, impostazioni, giorni, spese, prodotti] = await Promise.all([
+  const [meta, impostazioni, giorni, spese, prodotti, ricette, piani, settimaneTipo] = await Promise.all([
     db.getAll('meta'),
     db.get('impostazioni', 'utente'),
     db.getAll('giorni'),
     db.getAll('spese'),
     db.getAll('prodotti'),
+    db.getAll('ricette'),
+    db.getAll('piani'),
+    db.getAll('settimaneTipo'),
   ])
   // I valori predefiniti riempiono le impostazioni aggiunte in versioni nuove dell'app;
   // quelle non più usate vengono ignorate (e spariscono al prossimo salvataggio).
@@ -92,9 +99,12 @@ export async function ricarica() {
     pronto: true,
     impostazioni: { ...IMPOSTAZIONI_PREDEFINITE, ...salvate },
     meta: Object.fromEntries(meta.map((m) => [m.chiave, m.valore])),
-    giorni: Object.fromEntries(giorni.map((g) => [g.data, g.tipo])),
+    giorni: Object.fromEntries(giorni.map((g) => [g.data, g])),
     spese,
     prodottiMiei: Object.fromEntries(prodotti.map((p) => [p.id, p])),
+    ricetteMie: Object.fromEntries(ricette.map((r) => [r.id, r])),
+    piani,
+    settimaneTipo,
   }))
 }
 
@@ -134,19 +144,33 @@ export function scriviMeta(chiave, valore) {
   return scrivi((db) => db.put('meta', { chiave, valore }))
 }
 
-/** tipo: "lavoro", "libero" oppure null per togliere il segno */
-export function segnaGiorno(data, tipo) {
+/** Aggiorna il record di un giorno (tipo, pasti…); se resta vuoto lo elimina. */
+function aggiornaGiorno(data, modifica) {
+  const prima = stato.get().giorni[data] || { data }
+  const record = modifica({ ...prima })
+  record.aggiornato = new Date().toISOString()
+  const vuoto = !record.tipo && !Object.values(record.pasti || {}).some(Boolean)
   stato.set((s) => {
     const giorni = { ...s.giorni }
-    if (tipo) giorni[data] = tipo
-    else delete giorni[data]
+    if (vuoto) delete giorni[data]
+    else giorni[data] = record
     return { ...s, giorni }
   })
-  return scrivi((db) =>
-    tipo
-      ? db.put('giorni', { data, tipo, aggiornato: new Date().toISOString() })
-      : db.delete('giorni', data),
-  )
+  return scrivi((db) => (vuoto ? db.delete('giorni', data) : db.put('giorni', record)))
+}
+
+/** tipo: "lavoro", "libero" oppure null per togliere il segno */
+export function segnaGiorno(data, tipo) {
+  return aggiornaGiorno(data, (g) => {
+    if (tipo) g.tipo = tipo
+    else delete g.tipo
+    return g
+  })
+}
+
+/** Segna un pasto come fatto (o no). pasto: "colazione" | "principale" | "schiscetta" | … */
+export function segnaPasto(data, pasto, fatto) {
+  return aggiornaGiorno(data, (g) => ({ ...g, pasti: { ...g.pasti, [pasto]: fatto } }))
 }
 
 function impostaMeta(dati, chiave, valore) {
@@ -199,7 +223,7 @@ export async function sostituisciDati(nuovi, motivo) {
 // ---------------------------------------------------------------------------
 
 const ETICHETTE = {
-  giorni: ['giorno segnato', 'giorni segnati'],
+  giorni: ['giorno', 'giorni'],
   spese: ['spesa', 'spese'],
   piani: ['settimana pianificata', 'settimane pianificate'],
   sedute: ['allenamento', 'allenamenti'],

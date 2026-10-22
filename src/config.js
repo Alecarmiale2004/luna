@@ -13,4 +13,18 @@ export const IMPOSTAZIONI_PREDEFINITE = {
   fineTurno: '07:00',
   obiettivoProteine: 100, // grammi al giorno
   promemoriaBackupGiorni: 14,
+  // Cibi da non suggerire mai (02-alimentazione/preferenze.md), modificabili dalle Impostazioni
+  cibiEsclusi: [
+    'Spinaci',
+    'Ceci',
+    'Noci',
+    'Mandorle',
+    'Mais',
+    'Carote',
+    'Cipollotto',
+    'Spaghetti',
+    'Skyr',
+    'Yogurt greco',
+    'Salmone',
+  ],
 }

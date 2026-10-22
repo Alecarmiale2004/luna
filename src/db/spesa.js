@@ -5,7 +5,7 @@
 // voce  = { id, prodotto, it, dk, reparto, quantita, spuntato, aggiunto }
 // Ogni voce conserva nome e reparto del prodotto: lo storico resta leggibile
 // anche se in futuro il prodotto viene rinominato o nascosto.
-import { useDati, datiCorrenti, modificaStato, scrivi } from './dati.js'
+import { useDati, datiCorrenti, modificaStato, scrivi, scriviMeta } from './dati.js'
 import { dataISO } from '../lib/giornata.js'
 import { nuovoId } from '../lib/id.js'
 
@@ -62,9 +62,11 @@ function creaVoce(prodotto, quantita = '') {
 
 /**
  * Aggiunge prodotti alla lista aperta. Un prodotto già presente non viene duplicato
- * (se era già spuntato torna "da prendere"). Restituisce quanti prodotti sono stati aggiunti.
+ * (se era già spuntato torna "da prendere"). Con aggiornaQuantita (lista generata dalle
+ * ricette) la quantità calcolata sostituisce quella già scritta.
+ * Restituisce quanti prodotti sono stati aggiunti.
  */
-export function aggiungi(elementi) {
+export function aggiungi(elementi, { aggiornaQuantita = false } = {}) {
   const lista = apertaOppureNuova()
   const voci = [...lista.voci]
   let aggiunti = 0
@@ -73,9 +75,14 @@ export function aggiungi(elementi) {
     if (i === -1) {
       voci.push(creaVoce(prodotto, quantita))
       aggiunti++
-    } else if (voci[i].spuntato) {
-      voci[i] = { ...voci[i], spuntato: false }
-      aggiunti++
+    } else {
+      const aggiornata = { ...voci[i] }
+      if (aggiornata.spuntato) {
+        aggiornata.spuntato = false
+        aggiunti++
+      }
+      if (aggiornaQuantita && quantita) aggiornata.quantita = quantita
+      voci[i] = aggiornata
     }
   }
   salvaLista({ ...lista, voci })
@@ -121,7 +128,23 @@ export function spesaFatta() {
     if (rimasti.length) tx.store.put(prossima)
     await tx.done
   })
+
+  // La dispensa appena ricomprata non è più "finita"
+  const finita = { ...datiCorrenti().meta.dispensaFinita }
+  const comprati = lista.voci.filter((v) => v.spuntato && finita[v.prodotto])
+  if (comprati.length) {
+    for (const v of comprati) delete finita[v.prodotto]
+    scriviMeta('dispensaFinita', finita)
+  }
   return { presi: lista.voci.length - rimasti.length, rimasti: rimasti.length }
+}
+
+/** Segna un prodotto di dispensa come finito (entra nella prossima lista generata) o no */
+export function segnaDispensa(idProdotto, finito) {
+  const finita = { ...datiCorrenti().meta.dispensaFinita }
+  if (finito) finita[idProdotto] = true
+  else delete finita[idProdotto]
+  return scriviMeta('dispensaFinita', finita)
 }
 
 /** Rimette in lista tutti i prodotti di una spesa passata (con le stesse quantità). */
