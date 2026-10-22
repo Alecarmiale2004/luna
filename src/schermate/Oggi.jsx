@@ -1,6 +1,6 @@
 // Schermata "Oggi": il riepilogo della giornata, dal risveglio.
-// Nell'ordine della giornata: turno + mini-settimana, colazione, da cucinare, proteine,
-// spesa da fare, promemoria backup. La card Allenamento arriva con la Fase 4.
+// Nell'ordine della giornata: turno + mini-settimana, colazione, allenamento (con il conto
+// alla rovescia dopo la colazione), da cucinare, proteine, spesa da fare, promemoria backup.
 import { useState } from 'preact/hooks'
 import { Pagina } from '../components/Pagina.jsx'
 import { Card, CardTesta } from '../components/Card.jsx'
@@ -25,6 +25,7 @@ import { vibra } from '../lib/tocco.js'
 import { Impostazioni } from './Impostazioni.jsx'
 import { FoglioEsporta } from './Backup.jsx'
 import { CardColazione, CardDaCucinare, CardProteine } from './ciboComune.jsx'
+import { CardAllenamentoOggi } from './allenamentoComune.jsx'
 import './oggi.css'
 
 export function Oggi() {
@@ -45,6 +46,7 @@ export function Oggi() {
         <CardTurni oggi={oggi} />
       </div>
       <CardColazione />
+      <CardAllenamentoOggi />
       <CardDaCucinare />
       <CardProteine />
       <CardSpesa />

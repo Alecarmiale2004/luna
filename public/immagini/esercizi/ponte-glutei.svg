@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 250" role="img" aria-label="ponte-glutei">
+<style>
+.sfondo{fill:#F2F2F7}.terra{stroke:#C7C7CC}.corpo{stroke:#8E8E93;fill:#8E8E93}.lontano{stroke:#C7C7CC;fill:#C7C7CC}
+.muscolo{stroke:#FF3B30;fill:#FF3B30}line,path{stroke-linecap:round;stroke-linejoin:round}line.corpo,line.lontano,line.muscolo,path.corpo{fill:none}
+.pieno{stroke:none}.freccia{fill:none;stroke:#007AFF;stroke-width:3.5}.tappetino{fill:#B9CBE4}.muro{fill:#D1D1D6}
+.num{fill:#FFFFFF;font:700 15px -apple-system,system-ui,sans-serif}.bollo{fill:#1C1C1E}.tra{fill:none;stroke:#AEAEB2;stroke-width:4}
+.etichetta{fill:#636366;font:600 13px -apple-system,system-ui,sans-serif}
+@media (prefers-color-scheme:dark){.sfondo{fill:#2C2C2E}.terra{stroke:#48484A}.corpo{stroke:#AEAEB2;fill:#AEAEB2}.lontano{stroke:#636366;fill:#636366}
+.muscolo{stroke:#FF453A;fill:#FF453A}.freccia{stroke:#0A84FF}.tappetino{fill:#3A4A63}.muro{fill:#48484A}.bollo{fill:#F2F2F7}.num{fill:#1C1C1E}
+.tra{stroke:#636366}.etichetta{fill:#AEAEB2}}</style>
+<g>
+<rect x="0" y="0" width="200" height="250" rx="18" class="sfondo"/>
+<line x1="10" y1="234" x2="190" y2="234" stroke-width="2" class="terra"/>
+<rect x="27.5" y="229" width="153" height="5" rx="2.5" class="tappetino"/><line x1="56.5" y1="216.6" x2="85.5" y2="216.6" stroke-width="10" class="lontano"/><line x1="85.5" y1="216.6" x2="111.5" y2="216.6" stroke-width="8" class="lontano"/><circle cx="111.5" cy="216.6" r="4.5" class="lontano pieno"/><line x1="106.5" y1="216.6" x2="138.4" y2="187.8" stroke-width="14" class="lontano"/><line x1="138.4" y1="187.8" x2="157.7" y2="224" stroke-width="10" class="lontano"/><line x1="157.7" y1="224" x2="170.5" y2="221.7" stroke-width="6" class="lontano"/><line x1="106.5" y1="216.6" x2="56.5" y2="216.6" stroke-width="21" class="corpo"/><line x1="56.5" y1="216.6" x2="48.5" y2="216.3" stroke-width="8" class="corpo"/><circle cx="37.5" cy="215.9" r="11" class="corpo pieno"/><line x1="106.5" y1="216.6" x2="136.9" y2="186.2" stroke-width="14" class="corpo"/><line x1="136.9" y1="186.2" x2="157.4" y2="221.7" stroke-width="10" class="corpo"/><line x1="157.4" y1="221.7" x2="170.2" y2="219.4" stroke-width="6" class="corpo"/><line x1="56.5" y1="216.6" x2="85.5" y2="215.6" stroke-width="10" class="corpo"/><line x1="85.5" y1="215.6" x2="111.5" y2="214.7" stroke-width="8" class="corpo"/><circle cx="111.5" cy="214.7" r="4.5" class="corpo pieno"/><circle cx="106.5" cy="221.6" r="7.5" class="muscolo pieno"/><line x1="111.3" y1="212.3" x2="133.7" y2="192.1" stroke-width="8" class="muscolo"/><line x1="111.1" y1="212" x2="132.3" y2="190.7" stroke-width="8" class="muscolo"/><path d="M123.4 215.1 Q127.4 202.7 121.4 191.2" class="freccia"/><path d="M127 198.7 L121.4 191.2 L117.1 199.6" class="freccia"/>
+<circle cx="22" cy="22" r="13" class="bollo"/><text x="22" y="27.5" text-anchor="middle" class="num">1</text>
+</g>
+<path d="M212 113 L226 125 L212 137" class="tra"/>
+<g>
+<rect x="240" y="0" width="200" height="250" rx="18" class="sfondo"/>
+<line x1="250" y1="234" x2="430" y2="234" stroke-width="2" class="terra"/>
+<rect x="269.7" y="229" width="148.6" height="5" rx="2.5" class="tappetino"/><line x1="298.3" y1="214" x2="327" y2="210" stroke-width="10" class="lontano"/><line x1="327" y1="210" x2="352.9" y2="207.3" stroke-width="8" class="lontano"/><circle cx="352.9" cy="207.3" r="4.5" class="lontano pieno"/><line x1="344.7" y1="195.3" x2="386" y2="183.5" stroke-width="14" class="lontano"/><line x1="386" y1="183.5" x2="394.5" y2="223.6" stroke-width="10" class="lontano"/><line x1="394.5" y1="223.6" x2="407.3" y2="221.3" stroke-width="6" class="lontano"/><line x1="344.7" y1="195.3" x2="298.3" y2="214" stroke-width="21" class="corpo"/><line x1="298.3" y1="214" x2="290.5" y2="215.7" stroke-width="8" class="corpo"/><circle cx="279.7" cy="218" r="11" class="corpo pieno"/><line x1="344.7" y1="195.3" x2="385.6" y2="182" stroke-width="14" class="corpo"/><line x1="385.6" y1="182" x2="395.5" y2="221.8" stroke-width="10" class="corpo"/><line x1="395.5" y1="221.8" x2="408.3" y2="219.6" stroke-width="6" class="corpo"/><line x1="298.3" y1="214" x2="326.9" y2="209" stroke-width="10" class="corpo"/><line x1="326.9" y1="209" x2="352.6" y2="205.4" stroke-width="8" class="corpo"/><circle cx="352.6" cy="205.4" r="4.5" class="corpo pieno"/><circle cx="346.5" cy="200" r="7.5" class="muscolo pieno"/><line x1="350.9" y1="193.5" x2="379.8" y2="185.2" stroke-width="8" class="muscolo"/><line x1="350.8" y1="193.3" x2="379.4" y2="184" stroke-width="8" class="muscolo"/>
+<circle cx="262" cy="22" r="13" class="bollo"/><text x="262" y="27.5" text-anchor="middle" class="num">2</text>
+</g>
+</svg>

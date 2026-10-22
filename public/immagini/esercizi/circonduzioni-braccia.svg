@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 250" role="img" aria-label="circonduzioni-braccia">
+<style>
+.sfondo{fill:#F2F2F7}.terra{stroke:#C7C7CC}.corpo{stroke:#8E8E93;fill:#8E8E93}.lontano{stroke:#C7C7CC;fill:#C7C7CC}
+.muscolo{stroke:#FF3B30;fill:#FF3B30}line,path{stroke-linecap:round;stroke-linejoin:round}line.corpo,line.lontano,line.muscolo,path.corpo{fill:none}
+.pieno{stroke:none}.freccia{fill:none;stroke:#007AFF;stroke-width:3.5}.tappetino{fill:#B9CBE4}.muro{fill:#D1D1D6}
+.num{fill:#FFFFFF;font:700 15px -apple-system,system-ui,sans-serif}.bollo{fill:#1C1C1E}.tra{fill:none;stroke:#AEAEB2;stroke-width:4}
+.etichetta{fill:#636366;font:600 13px -apple-system,system-ui,sans-serif}
+@media (prefers-color-scheme:dark){.sfondo{fill:#2C2C2E}.terra{stroke:#48484A}.corpo{stroke:#AEAEB2;fill:#AEAEB2}.lontano{stroke:#636366;fill:#636366}
+.muscolo{stroke:#FF453A;fill:#FF453A}.freccia{stroke:#0A84FF}.tappetino{fill:#3A4A63}.muro{fill:#48484A}.bollo{fill:#F2F2F7}.num{fill:#1C1C1E}
+.tra{stroke:#636366}.etichetta{fill:#AEAEB2}}</style>
+<g>
+<rect x="0" y="0" width="200" height="250" rx="18" class="sfondo"/>
+<line x1="10" y1="234" x2="190" y2="234" stroke-width="2" class="terra"/>
+<line x1="92.8" y1="93" x2="100.3" y2="121" stroke-width="10" class="lontano"/><line x1="100.3" y1="121" x2="109.2" y2="145.4" stroke-width="8" class="lontano"/><circle cx="109.2" cy="145.4" r="4.5" class="lontano pieno"/><line x1="92.8" y1="143" x2="94.3" y2="186" stroke-width="14" class="lontano"/><line x1="94.3" y1="186" x2="94.3" y2="227" stroke-width="10" class="lontano"/><line x1="94.3" y1="227" x2="107.3" y2="227" stroke-width="6" class="lontano"/><line x1="92.8" y1="143" x2="92.8" y2="93" stroke-width="21" class="corpo"/><line x1="92.8" y1="93" x2="92.8" y2="85" stroke-width="8" class="corpo"/><circle cx="92.8" cy="74" r="11" class="corpo pieno"/><line x1="92.8" y1="143" x2="92.8" y2="186" stroke-width="14" class="corpo"/><line x1="92.8" y1="186" x2="92.8" y2="227" stroke-width="10" class="corpo"/><line x1="92.8" y1="227" x2="105.8" y2="227" stroke-width="6" class="corpo"/><line x1="92.8" y1="93" x2="102.7" y2="120.3" stroke-width="10" class="corpo"/><line x1="102.7" y1="120.3" x2="113.7" y2="143.8" stroke-width="8" class="corpo"/><circle cx="113.7" cy="143.8" r="4.5" class="corpo pieno"/><circle cx="92.8" cy="93" r="7" class="muscolo pieno"/><path d="M105.8 70.5 A26 26 0 1 1 72.9 76.3" class="freccia"/><path d="M71.6 85.6 L72.9 76.3 L63.9 79.2" class="freccia"/>
+<circle cx="22" cy="22" r="13" class="bollo"/><text x="22" y="27.5" text-anchor="middle" class="num">1</text>
+</g>
+<path d="M212 113 L226 125 L212 137" class="tra"/>
+<g>
+<rect x="240" y="0" width="200" height="250" rx="18" class="sfondo"/>
+<line x1="250" y1="234" x2="430" y2="234" stroke-width="2" class="terra"/>
+<line x1="335.6" y1="93" x2="344.6" y2="65.4" stroke-width="10" class="lontano"/><line x1="344.6" y1="65.4" x2="350.9" y2="40.2" stroke-width="8" class="lontano"/><circle cx="350.9" cy="40.2" r="4.5" class="lontano pieno"/><line x1="335.6" y1="143" x2="337.1" y2="186" stroke-width="14" class="lontano"/><line x1="337.1" y1="186" x2="337.1" y2="227" stroke-width="10" class="lontano"/><line x1="337.1" y1="227" x2="350.1" y2="227" stroke-width="6" class="lontano"/><line x1="335.6" y1="143" x2="335.6" y2="93" stroke-width="21" class="corpo"/><line x1="335.6" y1="93" x2="335.6" y2="85" stroke-width="8" class="corpo"/><circle cx="335.6" cy="74" r="11" class="corpo pieno"/><line x1="335.6" y1="143" x2="335.6" y2="186" stroke-width="14" class="corpo"/><line x1="335.6" y1="186" x2="335.6" y2="227" stroke-width="10" class="corpo"/><line x1="335.6" y1="227" x2="348.6" y2="227" stroke-width="6" class="corpo"/><line x1="335.6" y1="93" x2="341.7" y2="64.6" stroke-width="10" class="corpo"/><line x1="341.7" y1="64.6" x2="345.3" y2="38.9" stroke-width="8" class="corpo"/><circle cx="345.3" cy="38.9" r="4.5" class="corpo pieno"/><circle cx="335.6" cy="93" r="7" class="muscolo pieno"/>
+<circle cx="262" cy="22" r="13" class="bollo"/><text x="262" y="27.5" text-anchor="middle" class="num">2</text>
+</g>
+</svg>

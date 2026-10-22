@@ -12,6 +12,12 @@ Il contesto completo (profilo, ricette, prodotti, programma, stile) è nella car
 | `npm run build` | Crea la versione da pubblicare nella cartella `dist/` |
 | `npm run preview` | Prova la versione pubblicabile (con offline) su http://localhost:4173 |
 | `npm run icone` | Rigenera tutte le icone da `public/icona.svg` |
+| `npm run esercizi` | Ridisegna le immagini degli esercizi (`scripts/disegna-esercizi.mjs`); anteprima su http://localhost:5173/scripts/anteprima-esercizi.html |
+
+## Immagini degli esercizi
+Sono in `public/immagini/esercizi/<id>.svg` (id = quello di `src/data/esercizi.json`).
+Per sostituirne una con un'immagine fatta a parte basta mettere un file con **lo stesso nome**:
+il codice non va toccato. Attenzione: `npm run esercizi` le riscrive tutte.
 
 ## Tecnologia
 - **Vite + Preact** (JavaScript), **vite-plugin-pwa** per offline e aggiornamenti, **idb** per IndexedDB, icone **Lucide**.
@@ -31,10 +37,11 @@ src/
     components.css   card, liste, tab bar, fogli dal basso, anelli, cerchi di spunta…
   components/        componenti riutilizzabili (Pagina, Card, Lista, Foglio, Anello, Spunta, Avvisi, icone)
   schermate/         Oggi, Spesa (+ Aggiungi, Storico, Prodotti), Cibo (+ Ricetta, Settimana, GestioneRicette,
-                     CibiEsclusi, StoricoSettimane), Impostazioni, Backup, Anteprima dello stile
+                     CibiEsclusi, StoricoSettimane), Allenamento (+ Guidato, Progressi, Ritmo,
+                     GestioneEsercizi, StoricoAllenamenti), Impostazioni, Backup, Anteprima dello stile
   data/              CONTENUTI modificabili: prodotti.json (con confezioni e proteine), reparti.json,
                      ricette.json, blocchi.json (cosa si può scambiare), pasti.json (schema dal risveglio),
-                     spesa-base.json
+                     spesa-base.json, programma.json (giornate e ciclo), esercizi.json (nomi e istruzioni)
   db/
     database.js      archivi di IndexedDB (VERSIONE_STRUTTURA)
     migrazioni.js    formato dei dati (VERSIONE_DATI) e migrazioni
@@ -44,7 +51,9 @@ src/
     spesa.js         lista aperta, "Spesa fatta", storico, "Ripeti", dispensa finita
     ricette.js       ricette di base + le mie, scambio dei blocchi, cibi esclusi
     piani.js         settimana di ricette, cucinate, settimane tipo
+    allenamento.js   programma (+ mie modifiche), ciclo F-L-F-L-F-L-P, sedute guidate, record, statistiche
   lib/pasti.js       schema dei pasti dal risveglio e dal turno, proteine del giorno
+  lib/suoni.js       bip a fine timer, schermo acceso durante l'allenamento
   lib/generaSpesa.js dalla settimana alla lista: somma, colazione ×7, confezioni, dispensa, 2 giri
   lib/               date, piccoli strumenti
 public/              icone (e in futuro immagini/esercizi/)

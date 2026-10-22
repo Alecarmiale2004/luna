@@ -43,6 +43,13 @@
   --red: #ff3b30; /* errore / elimina */
   --yellow: #ffcc00;
 
+  /* Tipi di giornata dell'allenamento (palette verificata anche per daltonismo;
+     sono sempre accompagnati da icona o nome) */
+  --c-forte: var(--pink);
+  --c-leggera: #1a9bb4;
+  --c-mobilita: #af52de;
+  --c-pausa: var(--gray);
+
   --c-oggi: var(--indigo);
   --c-cibo: var(--orange);
   --c-spesa: var(--green);
@@ -136,6 +143,9 @@
     --pink: #ff375f;
     --red: #ff453a;
     --yellow: #ffd60a;
+
+    --c-leggera: #22a3b8;
+    --c-mobilita: #bf5af2;
   }
 }
 
@@ -171,3 +181,7 @@
 .tint-spesa { --tint: var(--c-spesa); }
 .tint-allenamento { --tint: var(--c-allenamento); }
 .tint-blue { --tint: var(--blue); }
+.tint-forte { --tint: var(--c-forte); }
+.tint-leggera { --tint: var(--c-leggera); }
+.tint-mobilita { --tint: var(--c-mobilita); }
+.tint-pausa { --tint: var(--c-pausa); }

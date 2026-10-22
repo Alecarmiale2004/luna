@@ -50,6 +50,17 @@ export {
   TriangleAlert,
   Ban,
   CircleMinus,
+  Flame,
+  Footprints,
+  Feather,
+  Bed,
+  Trophy,
+  ChartLine,
+  CalendarCheck,
+  Play,
+  Pause,
+  SkipForward,
+  Dumbbell,
 } from 'lucide-preact'
 
 // Figura che corre (Lucide non ce l'ha): disegnata sulla stessa griglia 24×24, stesso tratto.

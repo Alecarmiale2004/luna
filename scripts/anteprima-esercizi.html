@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Anteprima esercizi</title>
+    <style>
+      body { margin: 0; padding: 16px; font: 14px system-ui; background: #fff; color: #000; }
+      @media (prefers-color-scheme: dark) { body { background: #1c1c1e; color: #fff; } }
+      .griglia { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 14px; }
+      img { width: 100%; display: block; }
+      p { margin: 4px 0 0; }
+    </style>
+  </head>
+  <body>
+    <!-- Solo per controllare i disegni durante lo sviluppo: http://localhost:5173/scripts/anteprima-esercizi.html -->
+    <div class="griglia" id="g"></div>
+    <script type="module">
+      import esercizi from '/src/data/esercizi.json'
+      const g = document.getElementById('g')
+      for (const e of esercizi) g.insertAdjacentHTML('beforeend', `<div><img src="/immagini/esercizi/${e.id}.svg"><p>${e.nome}</p></div>`)
+    </script>
+  </body>
+</html>

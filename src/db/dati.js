@@ -21,6 +21,8 @@ const stato = creaSegnale({
   ricetteMie: {}, // ricette aggiunte, modificate o nascoste da me, per id (vedi ricette.js)
   piani: [], // settimane pianificate (vedi piani.js)
   settimaneTipo: [], // settimane salvate da riusare
+  sedute: [], // allenamenti (vedi allenamento.js)
+  eserciziMiei: {}, // serie/ripetizioni/sostituzioni cambiate da me, per esercizio del programma
   memoriaPersistente: null, // true / false / null (non disponibile)
 })
 
@@ -79,7 +81,7 @@ async function primoAvvio() {
 /** Ricarica in memoria i dati dal database (dopo avvio, importazione, ripristino). */
 export async function ricarica() {
   const db = database()
-  const [meta, impostazioni, giorni, spese, prodotti, ricette, piani, settimaneTipo] = await Promise.all([
+  const [meta, impostazioni, giorni, spese, prodotti, ricette, piani, settimaneTipo, sedute, esercizi] = await Promise.all([
     db.getAll('meta'),
     db.get('impostazioni', 'utente'),
     db.getAll('giorni'),
@@ -88,6 +90,8 @@ export async function ricarica() {
     db.getAll('ricette'),
     db.getAll('piani'),
     db.getAll('settimaneTipo'),
+    db.getAll('sedute'),
+    db.getAll('esercizi'),
   ])
   // I valori predefiniti riempiono le impostazioni aggiunte in versioni nuove dell'app;
   // quelle non più usate vengono ignorate (e spariscono al prossimo salvataggio).
@@ -105,6 +109,8 @@ export async function ricarica() {
     ricetteMie: Object.fromEntries(ricette.map((r) => [r.id, r])),
     piani,
     settimaneTipo,
+    sedute,
+    eserciziMiei: Object.fromEntries(esercizi.map((e) => [e.id, e])),
   }))
 }
 

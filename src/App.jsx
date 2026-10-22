@@ -9,8 +9,9 @@ import { DatiTroppoNuovi } from './db/migrazioni.js'
 import { useSegnale } from './lib/segnale.js'
 import { aggiornamentoPronto, aggiornaApp } from './aggiornamenti.js'
 import { Oggi } from './schermate/Oggi.jsx'
-import { Allenamento } from './schermate/Segnaposto.jsx'
 import { Cibo } from './schermate/Cibo.jsx'
+import { Allenamento } from './schermate/Allenamento.jsx'
+import { AllenamentoGuidato } from './schermate/Guidato.jsx'
 import { Spesa } from './schermate/Spesa.jsx'
 
 // Le 4 sezioni della tab bar, nell'ordine in cui compaiono
@@ -64,6 +65,7 @@ export function App() {
   return (
     <>
       <Navigazione tabs={TABS} iniziale="oggi" />
+      <AllenamentoGuidato />
       <BannerAggiornamento />
       <Avvisi />
     </>

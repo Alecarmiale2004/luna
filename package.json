@@ -1,14 +1,15 @@
 {
   "name": "luna",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "Luna — app personale per spesa, cibo e allenamento (PWA per iPhone)",
+  "description": "Luna Ã¢â‚¬â€ app personale per spesa, cibo e allenamento (PWA per iPhone)",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview --host",
-    "icone": "pwa-assets-generator"
+    "icone": "pwa-assets-generator",
+    "esercizi": "node scripts/disegna-esercizi.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

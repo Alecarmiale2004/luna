@@ -21,7 +21,10 @@ import {
   Archive,
   Ban,
   CookingPot,
+  Dumbbell,
 } from '../components/icone.js'
+import { GestioneEsercizi } from './GestioneEsercizi.jsx'
+import { StoricoAllenamenti } from './StoricoAllenamenti.jsx'
 import { GestioneRicette } from './GestioneRicette.jsx'
 import { CibiEsclusi } from './CibiEsclusi.jsx'
 import { StoricoSettimane } from './StoricoSettimane.jsx'
@@ -156,9 +159,10 @@ export function Impostazioni() {
         </Lista>
       </Sezione>
 
-      <Sezione titolo="Contenuti" piede="La gestione degli esercizi arriverà con la sezione Allenamento.">
+      <Sezione titolo="Contenuti">
         <Lista>
           <Riga icona={BookOpen} coloreIcona="var(--orange)" titolo="Ricette" freccia onClick={() => nav.apri(GestioneRicette)} />
+          <Riga icona={Dumbbell} coloreIcona="var(--pink)" titolo="Esercizi" freccia onClick={() => nav.apri(GestioneEsercizi)} />
           <Riga
             icona={Ban}
             coloreIcona="var(--red)"
@@ -187,7 +191,7 @@ export function Impostazioni() {
             onClick={() => nav.apri(StoricoSpese, { indietro: 'Impostazioni' })}
           />
           <Riga icona={CookingPot} coloreIcona="var(--orange)" titolo="Settimane di ricette" freccia onClick={() => nav.apri(StoricoSettimane)} />
-          <Riga icona={CalendarDays} coloreIcona="var(--pink)" titolo="Allenamenti" valore="Presto" disattivata />
+          <Riga icona={CalendarDays} coloreIcona="var(--pink)" titolo="Allenamenti" freccia onClick={() => nav.apri(StoricoAllenamenti)} />
         </Lista>
       </Sezione>
 
