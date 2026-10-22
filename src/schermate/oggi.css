@@ -44,12 +44,12 @@
   font-size: 22px;
   line-height: 28px;
   font-weight: 700;
-  letter-spacing: -0.26px;
+  letter-spacing: var(--tr-22);
 }
 .turno-sottotitolo {
   font-size: 15px;
   line-height: 20px;
-  letter-spacing: -0.23px;
+  letter-spacing: var(--tr-15);
   color: var(--label-2);
 }
 
@@ -81,12 +81,12 @@
   font-size: 15px;
   line-height: 20px;
   font-weight: 600;
-  letter-spacing: -0.23px;
+  letter-spacing: var(--tr-15);
 }
 .settimana-conto {
   font-size: 13px;
   line-height: 18px;
-  letter-spacing: -0.08px;
+  letter-spacing: var(--tr-13);
   color: var(--label-2);
 }
 

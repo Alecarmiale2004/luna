@@ -41,7 +41,9 @@ export default defineConfig({
       },
       workbox: {
         // Tutto ciò che serve all'app viene salvato sul telefono: funziona offline.
-        globPatterns: ['**/*.{js,css,html,svg,png,ico,json,webmanifest}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,ico,json,webmanifest,woff2}'],
+        // Del font Inter servono solo i caratteri latini (italiano e danese compresi)
+        globIgnores: ['**/*cyrillic*', '**/*greek*', '**/*vietnamese*'],
         cleanupOutdatedCaches: true,
       },
     }),

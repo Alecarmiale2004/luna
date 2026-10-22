@@ -52,8 +52,23 @@
   --tint: var(--blue);
 
   /* ---------- Tipografia ---------- */
-  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
-  --font-rounded: ui-rounded, 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  /* Inter è incluso nell'app (funziona offline, uguale su ogni dispositivo).
+     Versione variabile con dimensione ottica: ai titoli grandi usa da solo il taglio "Display". */
+  --font: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-numeri: var(--font);
+
+  /* Spaziatura tra le lettere per ogni dimensione, secondo le metriche consigliate per Inter
+     (più stretta nei titoli grandi, leggermente più aperta nei testi piccoli). */
+  --tr-34: -0.74px;
+  --tr-28: -0.58px;
+  --tr-22: -0.4px;
+  --tr-20: -0.33px;
+  --tr-17: -0.22px;
+  --tr-16: -0.17px;
+  --tr-15: -0.13px;
+  --tr-13: -0.04px;
+  --tr-12: 0px;
+  --tr-11: 0.05px;
 
   /* ---------- Spazi (griglia a 8 pt) ---------- */
   --sp-1: 4px;
@@ -125,17 +140,17 @@
 }
 
 /* ---------- Scala dei testi iOS (dimensione / interlinea) ---------- */
-.t-large-title { font-size: 34px; line-height: 41px; font-weight: 700; letter-spacing: 0.4px; }
-.t-title1 { font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: 0.38px; }
-.t-title2 { font-size: 22px; line-height: 28px; font-weight: 700; letter-spacing: -0.26px; }
-.t-title3 { font-size: 20px; line-height: 25px; font-weight: 600; letter-spacing: -0.45px; }
-.t-headline { font-size: 17px; line-height: 22px; font-weight: 600; letter-spacing: -0.43px; }
-.t-body { font-size: 17px; line-height: 22px; font-weight: 400; letter-spacing: -0.43px; }
-.t-callout { font-size: 16px; line-height: 21px; font-weight: 400; letter-spacing: -0.31px; }
-.t-subheadline { font-size: 15px; line-height: 20px; font-weight: 400; letter-spacing: -0.23px; }
-.t-footnote { font-size: 13px; line-height: 18px; font-weight: 400; letter-spacing: -0.08px; }
-.t-caption1 { font-size: 12px; line-height: 16px; font-weight: 400; letter-spacing: 0; }
-.t-caption2 { font-size: 11px; line-height: 13px; font-weight: 400; letter-spacing: 0.06px; }
+.t-large-title { font-size: 34px; line-height: 41px; font-weight: 700; letter-spacing: var(--tr-34); }
+.t-title1 { font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: var(--tr-28); }
+.t-title2 { font-size: 22px; line-height: 28px; font-weight: 700; letter-spacing: var(--tr-22); }
+.t-title3 { font-size: 20px; line-height: 25px; font-weight: 600; letter-spacing: var(--tr-20); }
+.t-headline { font-size: 17px; line-height: 22px; font-weight: 600; letter-spacing: var(--tr-17); }
+.t-body { font-size: 17px; line-height: 22px; font-weight: 400; letter-spacing: var(--tr-17); }
+.t-callout { font-size: 16px; line-height: 21px; font-weight: 400; letter-spacing: var(--tr-16); }
+.t-subheadline { font-size: 15px; line-height: 20px; font-weight: 400; letter-spacing: var(--tr-15); }
+.t-footnote { font-size: 13px; line-height: 18px; font-weight: 400; letter-spacing: var(--tr-13); }
+.t-caption1 { font-size: 12px; line-height: 16px; font-weight: 400; letter-spacing: var(--tr-12); }
+.t-caption2 { font-size: 11px; line-height: 13px; font-weight: 400; letter-spacing: var(--tr-11); }
 
 /* Colori dei testi */
 .c-label { color: var(--label); }
@@ -143,9 +158,9 @@
 .c-label-3 { color: var(--label-3); }
 .c-tint { color: var(--tint); }
 
-/* Numeri: SF Pro Rounded, grassetto, cifre a larghezza fissa */
+/* Numeri: grassetto, cifre a larghezza fissa (non "ballano" nei timer) */
 .num {
-  font-family: var(--font-rounded);
+  font-family: var(--font-numeri);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
