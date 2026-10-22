@@ -1,6 +1,4 @@
-// Date e "giornata logica".
-// La giornata di Alessandro va dal risveglio (~15:00) al sonno dopo il turno (~8:00):
-// prima dell'ora di cambio (predefinita 12:00) l'app considera ancora la giornata di ieri.
+// Date. L'app usa sempre la data del calendario: dopo mezzanotte è già il giorno dopo.
 // Le date sono stringhe locali "AAAA-MM-GG" (mai toISOString, che usa l'ora UTC).
 import { useEffect, useState } from 'preact/hooks'
 
@@ -22,13 +20,6 @@ export function daISO(iso) {
 export function aggiungiGiorni(iso, n) {
   const d = daISO(iso)
   d.setDate(d.getDate() + n)
-  return dataISO(d)
-}
-
-/** Giornata logica in corso: alle 3 di notte durante il turno è ancora "ieri". */
-export function oggiLogico(adesso = new Date(), oraCambio = 12) {
-  const d = new Date(adesso)
-  if (d.getHours() < oraCambio) d.setDate(d.getDate() - 1)
   return dataISO(d)
 }
 
@@ -96,20 +87,19 @@ export function tempoFa(timestamp, adesso = new Date()) {
 }
 
 /**
- * Hook: la giornata logica di oggi, sempre aggiornata
- * (ricontrolla ogni minuto e quando l'app torna in primo piano).
+ * Hook: la data di oggi, sempre aggiornata
+ * (ricontrolla ogni minuto e quando l'app torna in primo piano, così cambia a mezzanotte).
  */
-export function useOggi(oraCambio) {
-  const [oggi, setOggi] = useState(() => oggiLogico(new Date(), oraCambio))
+export function useOggi() {
+  const [oggi, setOggi] = useState(() => dataISO(new Date()))
   useEffect(() => {
-    const aggiorna = () => setOggi(oggiLogico(new Date(), oraCambio))
-    aggiorna()
+    const aggiorna = () => setOggi(dataISO(new Date()))
     const timer = setInterval(aggiorna, 60_000)
     document.addEventListener('visibilitychange', aggiorna)
     return () => {
       clearInterval(timer)
       document.removeEventListener('visibilitychange', aggiorna)
     }
-  }, [oraCambio])
+  }, [])
   return oggi
 }

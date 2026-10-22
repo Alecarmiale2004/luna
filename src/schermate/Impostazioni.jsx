@@ -4,7 +4,6 @@ import { Pagina, PulsanteIndietro } from '../components/Pagina.jsx'
 import { Sezione, Lista, Riga, MenuValore, Stepper } from '../components/Lista.jsx'
 import {
   AlarmClock,
-  SunMoon,
   Moon,
   Beef,
   FileUp,
@@ -27,7 +26,6 @@ import { tempoFa } from '../lib/giornata.js'
 import { FoglioEsporta, FoglioImporta, FoglioCopie } from './Backup.jsx'
 import { AnteprimaStile } from './AnteprimaStile.jsx'
 
-const ORE_CAMBIO = [9, 10, 11, 12, 13, 14].map((h) => ({ valore: h, etichetta: `alle ${h}:00` }))
 const OGNI_GIORNI = [7, 14, 21, 28].map((g) => ({ valore: g, etichetta: `Ogni ${g} giorni` }))
 
 export function Impostazioni() {
@@ -44,10 +42,7 @@ export function Impostazioni() {
 
   return (
     <Pagina titolo="Impostazioni" sinistra={<PulsanteIndietro etichetta="Oggi" onClick={nav.indietro} />}>
-      <Sezione
-        titolo="La mia giornata"
-        piede="Prima dell’ora di cambio l’app mostra ancora la giornata precedente: durante il turno di notte resti sulla giornata in cui ti sei svegliato."
-      >
+      <Sezione titolo="La mia giornata">
         <Lista>
           <Riga
             icona={AlarmClock}
@@ -59,18 +54,6 @@ export function Impostazioni() {
                 class="campo-ora"
                 value={impostazioni.risveglio}
                 onChange={(e) => e.currentTarget.value && aggiornaImpostazioni({ risveglio: e.currentTarget.value })}
-              />
-            }
-          />
-          <Riga
-            icona={SunMoon}
-            coloreIcona="var(--indigo)"
-            titolo="Cambio di giornata"
-            destra={
-              <MenuValore
-                valore={impostazioni.cambioGiornata}
-                opzioni={ORE_CAMBIO}
-                onChange={(v) => aggiornaImpostazioni({ cambioGiornata: v })}
               />
             }
           />

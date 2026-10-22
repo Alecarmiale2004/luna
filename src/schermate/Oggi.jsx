@@ -27,8 +27,7 @@ import './oggi.css'
 
 export function Oggi() {
   const nav = useNav()
-  const { impostazioni } = useDati()
-  const oggi = useOggi(impostazioni.cambioGiornata)
+  const oggi = useOggi()
 
   return (
     <Pagina

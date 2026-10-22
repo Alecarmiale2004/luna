@@ -8,7 +8,6 @@ export const APP_DESCRIPTION = 'Spesa, cibo e allenamento, al ritmo del turno di
 // L'utente li cambia dall'app: i valori salvati hanno sempre la precedenza.
 export const IMPOSTAZIONI_PREDEFINITE = {
   risveglio: '15:00', // orario abituale di risveglio
-  cambioGiornata: 12, // prima di quest'ora la "giornata" è ancora quella di ieri
   nottiSettimana: 5, // notti di lavoro attese a settimana
   inizioTurno: '23:00',
   fineTurno: '07:00',

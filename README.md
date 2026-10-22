@@ -36,7 +36,7 @@ src/
     migrazioni.js    formato dei dati (VERSIONE_DATI) e migrazioni
     dati.js          lettura/scrittura immediata, copie di sicurezza automatiche
     backup.js        esporta / importa il file JSON
-  lib/               date e "giornata logica", piccoli strumenti
+  lib/               date, piccoli strumenti
 public/              icone (e in futuro immagini/esercizi/)
 ```
 
@@ -49,10 +49,10 @@ public/              icone (e in futuro immagini/esercizi/)
 4. I contenuti (ricette, prodotti, esercizi) andranno in `src/data/*.json`; le modifiche fatte dall'app
    vengono salvate a parte, così un aggiornamento dei contenuti non cancella le tue.
 
-## Giornata logica
-La giornata va dal risveglio al sonno dopo il turno: prima dell'ora di cambio (predefinita 12:00,
-modificabile in Impostazioni) l'app mostra ancora la giornata precedente. Un giorno segnato con la
-luna significa "turno la notte che inizia quel giorno alle 23:00".
+## Date
+L'app usa sempre la **data del calendario**: dopo mezzanotte è già il giorno dopo
+(scelta di Alessandro, al posto della "giornata logica" dal risveglio al sonno).
+Un giorno segnato con la luna significa "turno la notte che inizia quel giorno alle 23:00".
 
 ## Pubblicazione (GitHub Pages)
 Il workflow `.github/workflows/pubblica.yml` pubblica l'app a ogni push su `main`.

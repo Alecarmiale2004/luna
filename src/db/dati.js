@@ -73,11 +73,14 @@ export async function ricarica() {
     db.get('impostazioni', 'utente'),
     db.getAll('giorni'),
   ])
-  const { id: _id, ...salvate } = impostazioni || {}
+  // I valori predefiniti riempiono le impostazioni aggiunte in versioni nuove dell'app;
+  // quelle non più usate vengono ignorate (e spariscono al prossimo salvataggio).
+  const salvate = Object.fromEntries(
+    Object.entries(impostazioni || {}).filter(([chiave]) => chiave in IMPOSTAZIONI_PREDEFINITE),
+  )
   stato.set((s) => ({
     ...s,
     pronto: true,
-    // I valori predefiniti riempiono le impostazioni aggiunte in versioni nuove dell'app
     impostazioni: { ...IMPOSTAZIONI_PREDEFINITE, ...salvate },
     meta: Object.fromEntries(meta.map((m) => [m.chiave, m.valore])),
     giorni: Object.fromEntries(giorni.map((g) => [g.data, g.tipo])),
