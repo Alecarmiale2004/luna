@@ -81,7 +81,7 @@ export function Impostazioni() {
           <Riga
             icona={Beef}
             coloreIcona="var(--orange)"
-            titolo="Proteine al giorno"
+            titolo="Proteine"
             destra={
               <>
                 <span class="riga-valore num">{impostazioni.obiettivoProteine} g</span>
