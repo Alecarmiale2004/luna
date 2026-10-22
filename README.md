@@ -30,12 +30,15 @@ src/
     base.css         regole di base da "app" su iPhone
     components.css   card, liste, tab bar, fogli dal basso, anelli, cerchi di spunta…
   components/        componenti riutilizzabili (Pagina, Card, Lista, Foglio, Anello, Spunta, Avvisi, icone)
-  schermate/         Oggi, Impostazioni, Backup, Anteprima dello stile, sezioni segnaposto
+  schermate/         Oggi, Spesa (+ Aggiungi, Storico, Prodotti), Impostazioni, Backup, Anteprima dello stile
+  data/              CONTENUTI modificabili: prodotti.json, reparti.json, spesa-base.json
   db/
     database.js      archivi di IndexedDB (VERSIONE_STRUTTURA)
     migrazioni.js    formato dei dati (VERSIONE_DATI) e migrazioni
     dati.js          lettura/scrittura immediata, copie di sicurezza automatiche
     backup.js        esporta / importa il file JSON
+    catalogo.js      prodotti di base + i miei prodotti/modifiche
+    spesa.js         lista aperta, "Spesa fatta", storico, "Ripeti"
   lib/               date, piccoli strumenti
 public/              icone (e in futuro immagini/esercizi/)
 ```

@@ -1,0 +1,44 @@
+[
+  { "id": "pomodorini", "it": "Pomodorini", "dk": "Cherrytomater", "reparto": "frutta-verdura", "tipo": "fresco" },
+  { "id": "zucchine", "it": "Zucchine", "dk": "Squash", "reparto": "frutta-verdura", "tipo": "fresco" },
+  { "id": "broccoli", "it": "Broccoli", "dk": "Broccoli", "reparto": "frutta-verdura", "tipo": "fresco" },
+  { "id": "peperoni", "it": "Peperoni", "dk": "Peberfrugt", "reparto": "frutta-verdura", "tipo": "fresco" },
+  { "id": "cipolla", "it": "Cipolla", "dk": "Løg", "reparto": "frutta-verdura", "tipo": "dispensa" },
+  { "id": "aglio", "it": "Aglio", "dk": "Hvidløg", "reparto": "frutta-verdura", "tipo": "dispensa" },
+  { "id": "limone", "it": "Limone", "dk": "Citron", "reparto": "frutta-verdura", "tipo": "fresco" },
+  { "id": "prezzemolo-basilico", "it": "Prezzemolo / basilico", "dk": "Persille / Basilikum", "reparto": "frutta-verdura", "tipo": "fresco" },
+  { "id": "banane", "it": "Banane", "dk": "Bananer", "reparto": "frutta-verdura", "tipo": "fresco" },
+  { "id": "mele", "it": "Mele", "dk": "Æbler", "reparto": "frutta-verdura", "tipo": "fresco" },
+
+  { "id": "pane-toast", "it": "Pane da toast", "dk": "Toastbrød", "reparto": "pane", "tipo": "fresco" },
+
+  { "id": "petto-pollo", "it": "Petto di pollo", "dk": "Kyllingebryst / kyllingebrystfilet", "reparto": "carne", "tipo": "fresco" },
+  { "id": "macinato-manzo", "it": "Macinato di manzo magro", "dk": "Hakket oksekød (4–7% o 8–12%)", "reparto": "carne", "tipo": "fresco" },
+  { "id": "tacchino-macinato", "it": "Tacchino macinato", "dk": "Hakket kalkun", "reparto": "carne", "tipo": "fresco" },
+
+  { "id": "uova", "it": "Uova", "dk": "Æg", "reparto": "latticini", "tipo": "fresco" },
+  { "id": "yogurt-bianco", "it": "Yogurt bianco", "dk": "Yoghurt naturel", "reparto": "latticini", "tipo": "fresco" },
+  { "id": "yogurt-vaniglia", "it": "Yogurt alla vaniglia", "dk": "Vaniljeyoghurt", "reparto": "latticini", "tipo": "fresco" },
+  { "id": "parmigiano", "it": "Parmigiano", "dk": "Parmesan", "reparto": "latticini", "tipo": "fresco" },
+
+  { "id": "penne", "it": "Penne", "dk": "Penne", "reparto": "dispensa", "tipo": "dispensa" },
+  { "id": "fusilli", "it": "Fusilli", "dk": "Fusilli", "reparto": "dispensa", "tipo": "dispensa" },
+  { "id": "riso", "it": "Riso", "dk": "Ris", "reparto": "dispensa", "tipo": "dispensa" },
+  { "id": "tonno", "it": "Tonno al naturale", "dk": "Tun i vand", "reparto": "dispensa", "tipo": "dispensa" },
+  { "id": "passata", "it": "Passata di pomodoro", "dk": "Passata / hakkede tomater", "reparto": "dispensa", "tipo": "dispensa" },
+  { "id": "olive", "it": "Olive", "dk": "Oliven", "reparto": "dispensa", "tipo": "dispensa" },
+  { "id": "olio", "it": "Olio d'oliva", "dk": "Olivenolie", "reparto": "dispensa", "tipo": "dispensa" },
+  { "id": "salsa-soia", "it": "Salsa di soia", "dk": "Sojasauce", "reparto": "dispensa", "tipo": "dispensa" },
+
+  { "id": "sale", "it": "Sale", "dk": "Salt", "reparto": "spezie", "tipo": "dispensa" },
+  { "id": "pepe", "it": "Pepe", "dk": "Peber", "reparto": "spezie", "tipo": "dispensa" },
+  { "id": "paprika", "it": "Paprika", "dk": "Paprika", "reparto": "spezie", "tipo": "dispensa" },
+  { "id": "curry", "it": "Curry", "dk": "Karry", "reparto": "spezie", "tipo": "dispensa" },
+  { "id": "cumino", "it": "Cumino", "dk": "Spidskommen", "reparto": "spezie", "tipo": "dispensa" },
+  { "id": "origano", "it": "Origano", "dk": "Oregano", "reparto": "spezie", "tipo": "dispensa" },
+  { "id": "aglio-polvere", "it": "Aglio in polvere", "dk": "Hvidløgspulver", "reparto": "spezie", "tipo": "dispensa" },
+  { "id": "zenzero", "it": "Zenzero", "dk": "Ingefær", "reparto": "spezie", "tipo": "dispensa" },
+
+  { "id": "fagiolini", "it": "Fagiolini", "dk": "Haricots verts / grønne bønner", "reparto": "surgelati", "tipo": "surgelato" },
+  { "id": "piselli", "it": "Piselli", "dk": "Ærter", "reparto": "surgelati", "tipo": "surgelato" }
+]

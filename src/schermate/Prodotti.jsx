@@ -1,0 +1,144 @@
+// Impostazioni → Prodotti della spesa: aggiungere, rinominare, cambiare reparto, nascondere.
+// Niente si cancella davvero: un prodotto nascosto sparisce dai suggerimenti ma lo storico resta valido.
+import { useRef, useState } from 'preact/hooks'
+import { Pagina, PulsanteIndietro } from '../components/Pagina.jsx'
+import { Sezione, Lista, Riga, MenuValore } from '../components/Lista.jsx'
+import { Foglio } from '../components/Foglio.jsx'
+import { mostraMessaggio } from '../components/Avvisi.jsx'
+import { Plus, Search, CircleX } from '../components/icone.js'
+import { useNav } from '../navigazione.jsx'
+import { useCatalogo, cerca, salvaProdotto, nuovoProdotto, REPARTI } from '../db/catalogo.js'
+import './spesa.css'
+
+const OPZIONI_REPARTO = REPARTI.map((r) => ({ valore: r.id, etichetta: r.it }))
+
+export function Prodotti() {
+  const nav = useNav()
+  const catalogo = useCatalogo()
+  const [testo, setTesto] = useState('')
+  const [modifica, setModifica] = useState(null) // id del prodotto aperto, oppure "nuovo"
+
+  const elenco = testo.trim()
+    ? cerca(
+        catalogo.map((p) => ({ ...p, nascosto: false })),
+        testo,
+      ).map((p) => catalogo.find((c) => c.id === p.id))
+    : catalogo
+
+  return (
+    <Pagina
+      titolo="Prodotti"
+      sinistra={<PulsanteIndietro etichetta="Impostazioni" onClick={nav.indietro} />}
+      destra={
+        <button class="nav-pulsante" aria-label="Nuovo prodotto" onClick={() => setModifica('nuovo')}>
+          <Plus size={26} />
+        </button>
+      }
+    >
+      <label class="ricerca" style={{ marginBottom: 8 }}>
+        <Search size={18} />
+        <input type="search" placeholder="Cerca" value={testo} onInput={(e) => setTesto(e.currentTarget.value)} />
+        {testo && (
+          <button aria-label="Cancella" onClick={() => setTesto('')}>
+            <CircleX size={18} fill="currentColor" color="var(--bg)" />
+          </button>
+        )}
+      </label>
+
+      {REPARTI.map((r, i) => {
+        const prodotti = elenco.filter((p) => p.reparto === r.id)
+        if (!prodotti.length) return null
+        return (
+          <Sezione
+            key={r.id}
+            titolo={`${r.it} · ${r.dk}`}
+            piede={i === REPARTI.length - 1 ? 'I prodotti nascosti non compaiono nei suggerimenti. Lo storico delle spese resta com’è.' : undefined}
+          >
+            <Lista>
+              {prodotti.map((p) => (
+                <Riga
+                  key={p.id}
+                  classe={p.nascosto ? 'nascosta' : ''}
+                  titolo={p.it}
+                  sottotitolo={p.dk || undefined}
+                  valore={p.nascosto ? 'Nascosto' : p.mio ? 'Mio' : undefined}
+                  freccia
+                  onClick={() => setModifica(p.id)}
+                />
+              ))}
+            </Lista>
+          </Sezione>
+        )
+      })}
+
+      <FoglioProdotto id={modifica} onChiudi={() => setModifica(null)} />
+    </Pagina>
+  )
+}
+
+/** Modifica (si salva da sola a ogni cambiamento) o creazione di un prodotto. */
+function FoglioProdotto({ id, onChiudi }) {
+  const catalogo = useCatalogo()
+  const ultimo = useRef(id)
+  if (id) ultimo.current = id
+  const idCorrente = id || ultimo.current
+  const nuovo = idCorrente === 'nuovo'
+  const [bozza, setBozza] = useState({ it: '', dk: '', reparto: 'altro' })
+  const prodotto = nuovo ? bozza : catalogo.find((p) => p.id === idCorrente)
+
+  const cambia = (modifiche) => {
+    if (nuovo) return setBozza({ ...bozza, ...modifiche })
+    // Il nome italiano non può restare vuoto
+    if ('it' in modifiche && !modifiche.it.trim()) return
+    salvaProdotto(idCorrente, modifiche)
+  }
+
+  const crea = () => {
+    nuovoProdotto(bozza)
+    mostraMessaggio('Prodotto aggiunto')
+    setBozza({ it: '', dk: '', reparto: 'altro' })
+    onChiudi()
+  }
+
+  return (
+    <Foglio aperto={!!id} onChiudi={onChiudi} titolo={nuovo ? 'Nuovo prodotto' : prodotto?.it || ''}>
+      {prodotto && (
+        <div class="tint-spesa">
+          <Sezione>
+            <Lista>
+              <Riga
+                titolo="Italiano"
+                destra={<input class="riga-campo" value={prodotto.it} placeholder="obbligatorio" onInput={(e) => cambia({ it: e.currentTarget.value })} />}
+              />
+              <Riga
+                titolo="Danese"
+                destra={<input class="riga-campo" value={prodotto.dk} placeholder="facoltativo" onInput={(e) => cambia({ dk: e.currentTarget.value })} />}
+              />
+              <Riga
+                titolo="Reparto"
+                destra={<MenuValore valore={prodotto.reparto} opzioni={OPZIONI_REPARTO} onChange={(r) => cambia({ reparto: r })} />}
+              />
+            </Lista>
+          </Sezione>
+          <div class="foglio-azioni">
+            {nuovo ? (
+              <button class="pulsante pieno" disabled={!bozza.it.trim()} onClick={crea}>
+                Aggiungi prodotto
+              </button>
+            ) : (
+              <button
+                class="pulsante grigio"
+                onClick={() => {
+                  cambia({ nascosto: !prodotto.nascosto })
+                  mostraMessaggio(prodotto.nascosto ? 'Prodotto di nuovo visibile' : 'Prodotto nascosto')
+                }}
+              >
+                {prodotto.nascosto ? 'Mostra di nuovo' : 'Nascondi prodotto'}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+    </Foglio>
+  )
+}

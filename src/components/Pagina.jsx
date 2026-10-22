@@ -2,7 +2,8 @@
 import { useEffect, useRef, useState } from 'preact/hooks'
 import { ChevronLeft } from './icone.js'
 
-export function Pagina({ titolo, sopratitolo, sinistra, destra, children }) {
+/** titoloBarra: testo piccolo nella barra quando si scorre (predefinito: il titolo) */
+export function Pagina({ titolo, titoloBarra, sopratitolo, sinistra, destra, children }) {
   const pagina = useRef(null)
   const barra = useRef(null)
   const titoloGrande = useRef(null)
@@ -26,7 +27,7 @@ export function Pagina({ titolo, sopratitolo, sinistra, destra, children }) {
       <header class={`navbar${scorsa ? ' scorsa' : ''}`} ref={barra}>
         <div class="navbar-sinistra">{sinistra}</div>
         <div class="navbar-titolo" aria-hidden={!scorsa}>
-          {titolo}
+          {titoloBarra ?? titolo}
         </div>
         <div class="navbar-destra">{destra}</div>
       </header>

@@ -1,12 +1,13 @@
 // Schermata "Oggi": il riepilogo della giornata, dal risveglio.
-// Fase 1: turno di stanotte + mini-settimana, promemoria backup.
-// Le card Colazione, Allenamento, Da cucinare, Proteine e Spesa arrivano nelle fasi successive.
+// Turno di stanotte + mini-settimana, spesa da fare, promemoria backup.
+// Le card Colazione, Allenamento, Da cucinare e Proteine arrivano nelle fasi successive.
 import { useState } from 'preact/hooks'
 import { Pagina } from '../components/Pagina.jsx'
 import { Card, CardTesta } from '../components/Card.jsx'
-import { Moon, Sun, Settings, ChevronLeft, ChevronRight, ShieldCheck } from '../components/icone.js'
+import { Moon, Sun, Settings, ChevronLeft, ChevronRight, ShieldCheck, ShoppingCart } from '../components/icone.js'
 import { useNav } from '../navigazione.jsx'
 import { useDati, segnaGiorno, scriviMeta } from '../db/dati.js'
+import { useSpesa } from '../db/spesa.js'
 import {
   useOggi,
   settimanaDi,
@@ -42,6 +43,7 @@ export function Oggi() {
       <div class="sezione">
         <CardTurni oggi={oggi} />
       </div>
+      <CardSpesa />
       <PromemoriaBackup />
     </Pagina>
   )
@@ -153,6 +155,32 @@ function GiornoSettimana({ data, iniziale, tipo, oggi, passato }) {
       </span>
       <span class="giorno-numero num">{daISO(data).getDate()}</span>
     </button>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Spesa: collegamento rapido se ci sono prodotti da prendere
+// ---------------------------------------------------------------------------
+
+function CardSpesa() {
+  const nav = useNav()
+  const { lista } = useSpesa()
+  const voci = lista?.voci || []
+  const daPrendere = voci.filter((v) => !v.spuntato).length
+  if (!daPrendere) return null
+  const presi = voci.length - daPrendere
+
+  return (
+    <div class="sezione tint-spesa">
+      <Card onClick={() => nav.vaiATab('spesa')}>
+        <CardTesta icona={ShoppingCart} titolo="Spesa" freccia />
+        <p>
+          <span class="t-title1 num">{daPrendere}</span>
+          <span class="t-headline c-label-2"> {daPrendere === 1 ? 'prodotto da prendere' : 'prodotti da prendere'}</span>
+        </p>
+        {presi > 0 && <p class="t-subheadline c-label-2">{presi} già nel carrello</p>}
+      </Card>
+    </div>
   )
 }
 

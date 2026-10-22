@@ -17,7 +17,11 @@ import {
   Info,
   Database,
   ShieldCheck,
+  ShoppingBasket,
+  Archive,
 } from '../components/icone.js'
+import { Prodotti } from './Prodotti.jsx'
+import { StoricoSpese } from './StoricoSpese.jsx'
 import { useNav } from '../navigazione.jsx'
 import { useDati, aggiornaImpostazioni } from '../db/dati.js'
 import { VERSIONE_DATI } from '../db/migrazioni.js'
@@ -147,10 +151,29 @@ export function Impostazioni() {
         </Lista>
       </Sezione>
 
-      <Sezione titolo="Contenuti" piede="Ricette, prodotti, esercizi e storico arriveranno con le prossime fasi.">
+      <Sezione titolo="Contenuti" piede="Ricette, cibi esclusi ed esercizi arriveranno con le prossime fasi.">
         <Lista>
-          <Riga icona={BookOpen} coloreIcona="var(--orange)" titolo="Gestisci contenuti" valore="Presto" disattivata />
-          <Riga icona={CalendarDays} coloreIcona="var(--pink)" titolo="Storico" valore="Presto" disattivata />
+          <Riga
+            icona={ShoppingBasket}
+            coloreIcona="var(--green)"
+            titolo="Prodotti della spesa"
+            freccia
+            onClick={() => nav.apri(Prodotti)}
+          />
+          <Riga icona={BookOpen} coloreIcona="var(--orange)" titolo="Ricette e cibi esclusi" valore="Presto" disattivata />
+        </Lista>
+      </Sezione>
+
+      <Sezione titolo="Storico">
+        <Lista>
+          <Riga
+            icona={Archive}
+            coloreIcona="var(--green)"
+            titolo="Spese"
+            freccia
+            onClick={() => nav.apri(StoricoSpese, { indietro: 'Impostazioni' })}
+          />
+          <Riga icona={CalendarDays} coloreIcona="var(--pink)" titolo="Settimane e allenamenti" valore="Presto" disattivata />
         </Lista>
       </Sezione>
 

@@ -1,0 +1,145 @@
+/* Stili della sezione Spesa */
+
+/* ---------- Riepilogo "X di Y nel carrello" ---------- */
+.carrello {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.carrello-testi {
+  flex: 1;
+}
+.carrello-numeri {
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: var(--tr-28);
+}
+.carrello-numeri .di {
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: var(--tr-20);
+  color: var(--label-2);
+}
+.carrello-etichetta {
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: var(--tr-15);
+  color: var(--label-2);
+}
+
+/* ---------- Reparti ---------- */
+.reparto-testa {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-2);
+}
+.reparto-dk {
+  text-transform: none;
+  color: var(--label-3);
+}
+
+/* ---------- Riga di un prodotto in lista ---------- */
+.voce {
+  padding-left: 4px;
+  gap: 2px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.voce:active {
+  background: var(--bg-pressed);
+  transition: none;
+}
+.voce .riga-contenuto {
+  min-height: 60px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+.voce .riga-titolo,
+.voce .riga-sottotitolo,
+.voce .riga-valore {
+  transition: color 0.25s linear;
+}
+.voce.spuntata .riga-titolo {
+  color: var(--label-3);
+  text-decoration: line-through;
+  text-decoration-color: var(--label-3);
+}
+.voce.spuntata .riga-sottotitolo,
+.voce.spuntata .riga-valore {
+  color: var(--label-3);
+}
+.voce-quantita {
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: var(--tr-15);
+  color: var(--label-2);
+  text-align: right;
+  max-width: 40%;
+}
+
+/* ---------- Azioni in fondo alla lista ---------- */
+.spesa-azioni {
+  padding: var(--sp-6) var(--margin) 0;
+}
+.spesa-azioni .sezione-piede {
+  padding-left: var(--sp-4);
+  padding-right: var(--sp-4);
+  text-align: center;
+}
+
+/* ---------- Lista vuota ---------- */
+.vuoto {
+  padding: var(--sp-8) var(--margin) 0;
+  text-align: center;
+}
+.vuoto-icona {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto var(--sp-4);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--tint) 14%, transparent);
+  color: var(--tint);
+}
+.vuoto .t-subheadline {
+  margin: var(--sp-1) auto 0;
+  max-width: 300px;
+}
+.vuoto-azioni {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+}
+.vuoto-nota {
+  margin-top: calc(-1 * var(--sp-2));
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--label-2);
+}
+
+/* ---------- Foglio "Aggiungi" ---------- */
+.aggiungi-ricerca {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 0 0 var(--sp-2);
+  background: var(--bg);
+}
+.aggiungi-stato {
+  color: var(--tint);
+  display: grid;
+  place-items: center;
+  width: 30px;
+}
+.aggiungi-stato.aggiunto {
+  animation: spunta-pop 0.35s var(--ease-spring);
+}
+
+/* Prodotto nascosto (gestione prodotti) */
+.riga.nascosta .riga-titolo,
+.riga.nascosta .riga-sottotitolo {
+  color: var(--label-3);
+}

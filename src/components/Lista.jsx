@@ -32,9 +32,10 @@ export function Riga({
   freccia,
   tipo,
   disattivata,
+  classe: extra,
   onClick,
 }) {
-  const classe = ['riga', tipo, disattivata && 'disattivata'].filter(Boolean).join(' ')
+  const classe = ['riga', tipo, disattivata && 'disattivata', extra].filter(Boolean).join(' ')
   const contenuto = (
     <>
       {Icona && (

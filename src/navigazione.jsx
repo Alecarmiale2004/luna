@@ -33,7 +33,9 @@ export function Navigazione({ tabs, iniziale }) {
         setPile((p) => ({ ...p, [attiva]: p[attiva].filter((l) => l.chiave !== cima.chiave) }))
       }, DURATA_MS)
     },
+    /** Apre una sezione dalla sua schermata principale (es. dalle card di Oggi) */
     vaiATab(id) {
+      setPile((p) => ({ ...p, [id]: [] }))
       setAttiva(id)
     },
   }

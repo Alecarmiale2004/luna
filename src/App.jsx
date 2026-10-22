@@ -9,7 +9,8 @@ import { DatiTroppoNuovi } from './db/migrazioni.js'
 import { useSegnale } from './lib/segnale.js'
 import { aggiornamentoPronto, aggiornaApp } from './aggiornamenti.js'
 import { Oggi } from './schermate/Oggi.jsx'
-import { Cibo, Spesa, Allenamento } from './schermate/Segnaposto.jsx'
+import { Cibo, Allenamento } from './schermate/Segnaposto.jsx'
+import { Spesa } from './schermate/Spesa.jsx'
 
 // Le 4 sezioni della tab bar, nell'ordine in cui compaiono
 const TABS = [

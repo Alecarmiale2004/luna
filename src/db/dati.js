@@ -15,8 +15,15 @@ const stato = creaSegnale({
   impostazioni: { ...IMPOSTAZIONI_PREDEFINITE },
   meta: {},
   giorni: {}, // { "2026-10-22": "lavoro" | "libero" }
+  spese: [], // liste della spesa: una "aperta" + quelle archiviate (vedi spesa.js)
+  prodottiMiei: {}, // prodotti aggiunti o modificati da me, per id (vedi catalogo.js)
   memoriaPersistente: null, // true / false / null (non disponibile)
 })
+
+/** Per i moduli di dominio (spesa.js…): modifica lo stato in memoria. */
+export function modificaStato(fn) {
+  stato.set(fn)
+}
 
 /** Errori di salvataggio, mostrati come avviso nell'app */
 export const erroreSalvataggio = creaSegnale(null)
@@ -68,10 +75,12 @@ async function primoAvvio() {
 /** Ricarica in memoria i dati dal database (dopo avvio, importazione, ripristino). */
 export async function ricarica() {
   const db = database()
-  const [meta, impostazioni, giorni] = await Promise.all([
+  const [meta, impostazioni, giorni, spese, prodotti] = await Promise.all([
     db.getAll('meta'),
     db.get('impostazioni', 'utente'),
     db.getAll('giorni'),
+    db.getAll('spese'),
+    db.getAll('prodotti'),
   ])
   // I valori predefiniti riempiono le impostazioni aggiunte in versioni nuove dell'app;
   // quelle non più usate vengono ignorate (e spariscono al prossimo salvataggio).
@@ -84,6 +93,8 @@ export async function ricarica() {
     impostazioni: { ...IMPOSTAZIONI_PREDEFINITE, ...salvate },
     meta: Object.fromEntries(meta.map((m) => [m.chiave, m.valore])),
     giorni: Object.fromEntries(giorni.map((g) => [g.data, g.tipo])),
+    spese,
+    prodottiMiei: Object.fromEntries(prodotti.map((p) => [p.id, p])),
   }))
 }
 
@@ -103,7 +114,7 @@ async function chiediMemoriaPersistente() {
 // Scrittura (immediata)
 // ---------------------------------------------------------------------------
 
-async function scrivi(operazione) {
+export async function scrivi(operazione) {
   try {
     await operazione(database())
   } catch (errore) {

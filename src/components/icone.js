@@ -32,6 +32,16 @@ export {
   Minus,
   Plus,
   Database,
+  Archive,
+  Search,
+  CirclePlus,
+  CircleX,
+  CircleCheck,
+  RotateCcw,
+  EyeOff,
+  Package,
+  ShoppingBasket,
+  Clock,
 } from 'lucide-preact'
 
 // Figura che corre (Lucide non ce l'ha): disegnata sulla stessa griglia 24×24, stesso tratto.

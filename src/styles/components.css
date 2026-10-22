@@ -331,6 +331,65 @@ label.riga:active {
   appearance: none;
 }
 
+/* Campo di testo dentro una riga (es. "Nome danese") */
+.riga-campo {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  outline: none;
+  color: var(--label);
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: var(--tr-17);
+  text-align: right;
+}
+.riga-campo::placeholder {
+  color: var(--label-3);
+}
+.riga-campo.sinistra {
+  text-align: left;
+}
+
+/* Campo di ricerca (lente + testo) */
+.ricerca {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  margin: 0 var(--margin);
+  padding: 0 10px;
+  border-radius: 10px;
+  background: var(--fill);
+  color: var(--label-2);
+}
+.ricerca input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  outline: none;
+  color: var(--label);
+  letter-spacing: var(--tr-17);
+}
+.ricerca input::placeholder {
+  color: var(--label-2);
+}
+.ricerca input {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.ricerca input::-webkit-search-cancel-button {
+  display: none;
+}
+.ricerca button {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: var(--label-3);
+}
+
 /* Campo orario nello stile delle "pillole" grigie di iOS */
 .campo-ora {
   -webkit-appearance: none;
@@ -748,6 +807,7 @@ label.riga:active {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
+  width: max-content;
   max-width: calc(100% - 2 * var(--margin));
   padding: 12px 18px;
   border-radius: 999px;
@@ -777,7 +837,7 @@ label.riga:active {
   display: inline-grid;
   place-items: center;
 }
-.anello svg {
+.anello > svg {
   transform: rotate(-90deg);
 }
 .anello-traccia {
