@@ -33,13 +33,13 @@ export function Ritmo() {
       etichetta: `${d.getDate()}/${d.getMonth() + 1}`,
       valore: v,
       attuale: l === lunedi,
-      dettaglio: `Week of ${d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}: ${v} minutes`,
+      dettaglio: `Settimana del ${d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })}: ${v} minuti`,
     }
   })
 
   return (
-    <Pagina titolo="Rhythm" sinistra={<PulsanteIndietro etichetta="Training" onClick={nav.indietro} />}>
-      <Sezione titolo="This week">
+    <Pagina titolo="Ritmo" sinistra={<PulsanteIndietro etichetta="Allenamento" onClick={nav.indietro} />}>
+      <Sezione titolo="Questa settimana">
         <Card>
           <div class="ritmo-settimana">
             {settimanaDi(oggi).map((data, i) => {
@@ -48,7 +48,7 @@ export function Ritmo() {
               return (
                 <div key={data} class={`ritmo-giorno${data === oggi ? ' oggi' : ''} ${tipo ? INFO_TIPO[tipo].tinta : ''}`}>
                   {INIZIALI_GIORNI[i]}
-                  <span class={`ritmo-pallino${tipo ? ' pieno' : ''}`} aria-label={tipo ? nomeTipo(tipo) : 'nothing'}>
+                  <span class={`ritmo-pallino${tipo ? ' pieno' : ''}`} aria-label={tipo ? nomeTipo(tipo) : 'niente'}>
                     {Icona && <Icona size={16} strokeWidth={2.4} />}
                   </span>
                 </div>
@@ -66,15 +66,15 @@ export function Ritmo() {
         </Card>
       </Sezione>
 
-      <Sezione titolo="Consistency" piede="Days in a row following the cycle: Rest days count too.">
+      <Sezione titolo="Costanza" piede="Giorni di fila rispettando il ciclo: anche la Pausa conta.">
         <div class="tessere">
           <div class="tessera tint-forte">
             <span class="num">{ultime4}</span>
-            <span class="t-footnote">{ultime4 === 1 ? 'workout' : 'workouts'} in the last 4 weeks</span>
+            <span class="t-footnote">{ultime4 === 1 ? 'seduta' : 'sedute'} nelle ultime 4 settimane</span>
           </div>
           <div class="tessera tint-leggera">
             <span class="num">{fila}</span>
-            <span class="t-footnote">{fila === 1 ? 'day in a row' : 'days in a row'}</span>
+            <span class="t-footnote">{fila === 1 ? 'giorno di fila' : 'giorni di fila'}</span>
           </div>
           <div class="tessera tint-mobilita">
             <span class="num">
@@ -82,19 +82,19 @@ export function Ritmo() {
               <span class="t-headline c-label-2"> / {OBIETTIVO_MINUTI}</span>
             </span>
             <span class="t-footnote">
-              minutes this week {minuti >= OBIETTIVO_MINUTI && <Check size={14} strokeWidth={3} color="var(--green)" />}
+              minuti questa settimana {minuti >= OBIETTIVO_MINUTI && <Check size={14} strokeWidth={3} color="var(--green)" />}
             </span>
           </div>
           <div class="tessera">
             <span class="num">{totali}</span>
-            <span class="t-footnote">{totali === 1 ? 'workout' : 'workouts'} all time</span>
+            <span class="t-footnote">{totali === 1 ? 'allenamento' : 'allenamenti'} da sempre</span>
           </div>
         </div>
       </Sezione>
 
-      <Sezione titolo="Minutes per week" piede="The recommendation is at least 150 minutes a week of moderate activity.">
+      <Sezione titolo="Minuti a settimana" piede="Il riferimento consigliato è di almeno 150 minuti a settimana di movimento moderato.">
         <Card class="tint-leggera">
-          <GraficoBarre etichetta="Training minutes over the last 8 weeks" barre={barre} unita="min" riferimento={OBIETTIVO_MINUTI} />
+          <GraficoBarre etichetta="Minuti di allenamento nelle ultime 8 settimane" barre={barre} unita="min" riferimento={OBIETTIVO_MINUTI} />
         </Card>
       </Sezione>
     </Pagina>

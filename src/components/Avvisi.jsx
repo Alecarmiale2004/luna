@@ -15,7 +15,7 @@ export function mostraMessaggio(testo, { errore = false } = {}) {
   timerMessaggio = setTimeout(() => messaggio.set(null), 2600)
 }
 
-export function chiediConferma({ titolo, testo, conferma: etichetta = 'OK', annulla = 'Cancel', distruttiva = false }) {
+export function chiediConferma({ titolo, testo, conferma: etichetta = 'OK', annulla = 'Annulla', distruttiva = false }) {
   return new Promise((risolvi) => {
     conferma.set({ titolo, testo, etichetta, annulla, distruttiva, risolvi })
   })

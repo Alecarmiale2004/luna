@@ -93,7 +93,7 @@ const ESERCIZI = {
     pose: [posa(IN_PIEDI, { bV: 90, aV: 90, bL: 88, aL: 88 }), posa(IN_PIEDI, { t: 140, cV: 78, sV: -28, cL: 78, sL: -28, bV: 100, aV: 100, bL: 98, aL: 98 })],
     muscoli: ['cosce', 'glutei'],
     freccia: { giunto: 'anca' },
-    etichetta: '2 s pause',
+    etichetta: 'pausa 2 s',
   },
   'push-up': {
     pose: [
@@ -150,7 +150,7 @@ const ESERCIZI = {
     muscoli: ['addominali', 'spalle'],
     freccia: { giunto: 'ginocchio' },
     tappetino: true,
-    etichetta: 'hold',
+    etichetta: 'tieni',
   },
   'stretching-quadricipiti': {
     pose: [IN_PIEDI, posa(IN_PIEDI, { cV: -5, sV: -165, pV: -100, bV: -15, aV: -15, bL: 70, aL: 80 })],

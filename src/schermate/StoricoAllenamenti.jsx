@@ -7,7 +7,7 @@ import { seduteFatte, minutiSeduta } from '../db/allenamento.js'
 import { daISO, formatoGiorno } from '../lib/giornata.js'
 import { INFO_TIPO, nomeTipo } from './allenamentoComune.jsx'
 
-const meseDi = (iso) => daISO(iso).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
+const meseDi = (iso) => daISO(iso).toLocaleDateString('it-IT', { month: 'long', year: 'numeric' })
 
 export function StoricoAllenamenti() {
   const nav = useNav()
@@ -21,10 +21,10 @@ export function StoricoAllenamenti() {
   }
 
   return (
-    <Pagina titolo="Workouts" sinistra={<PulsanteIndietro etichetta="Settings" onClick={nav.indietro} />}>
+    <Pagina titolo="Allenamenti" sinistra={<PulsanteIndietro etichetta="Impostazioni" onClick={nav.indietro} />}>
       {elenco.length === 0 && (
         <p class="t-body c-label-2" style={{ padding: '24px 32px', textAlign: 'center' }}>
-          Your completed workouts will appear here.
+          Qui compariranno gli allenamenti fatti.
         </p>
       )}
       {mesi.map(({ mese, sedute: lista }) => (
@@ -38,7 +38,7 @@ export function StoricoAllenamenti() {
                   icona={INFO_TIPO[s.tipo].icona}
                   coloreIcona={`var(--c-${s.tipo})`}
                   titolo={formatoGiorno(s.data)}
-                  sottotitolo={s.tipo === 'pausa' ? 'Rest' : `${nomeTipo(s.tipo)} · ${new Set(fatte.map((r) => r.esercizio)).size} exercises`}
+                  sottotitolo={s.tipo === 'pausa' ? 'Pausa' : `${nomeTipo(s.tipo)} · ${new Set(fatte.map((r) => r.esercizio)).size} esercizi`}
                   valore={s.tipo === 'pausa' ? undefined : `${minutiSeduta(s)} min`}
                 />
               )

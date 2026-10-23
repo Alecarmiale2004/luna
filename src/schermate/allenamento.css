@@ -108,7 +108,7 @@
   flex-direction: column;
   background: var(--bg);
   padding-top: var(--safe-top);
-  padding-bottom: var(--safe-bottom);
+  overflow: hidden;
   animation: guidato-entra var(--dur-sheet) var(--ease-ios);
 }
 @keyframes guidato-entra {
@@ -147,12 +147,66 @@
   border-radius: 2px;
   transition: width var(--dur) var(--ease-ios);
 }
+/* Il contenuto scorre se non ci sta: senza min-height: 0 un elemento flex non si
+   restringe e la parte bassa finirebbe fuori dallo schermo, irraggiungibile. */
 .guidato-corpo {
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
-  padding: var(--sp-4) var(--margin) var(--sp-4);
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: var(--sp-4) var(--margin) var(--sp-5);
   display: flex;
   flex-direction: column;
+}
+
+/* Barra fissa in basso con i pulsanti principali, sempre sopra la barra Home dell'iPhone */
+.guidato-piede {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding: var(--sp-3) var(--margin) calc(var(--sp-2) + var(--safe-bottom));
+  background: var(--bar);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-top: var(--hairline) solid var(--bar-border);
+}
+.guidato-collegamenti {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-4);
+  min-height: 36px;
+}
+.pulsante.grande {
+  min-height: 56px;
+  font-size: 19px;
+  line-height: 24px;
+}
+.guidato-nota {
+  display: block;
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+/* Anello del timer: si tocca per avviare o mettere in pausa */
+.anello-tocco {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transition: transform var(--dur-fast) var(--ease-ios);
+}
+.anello-tocco:active {
+  transform: scale(0.96);
+}
+/* I testi dentro l'anello restano sempre dentro il cerchio */
+.anello-testi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 68%;
+  overflow: hidden;
+  text-align: center;
 }
 .guidato-blocco {
   font-size: 13px;
@@ -178,6 +232,8 @@
   display: block;
   width: 100%;
   height: auto;
+  max-height: 28vh;
+  object-fit: contain;
 }
 .guidato-istruzioni {
   margin: 0;
@@ -227,12 +283,20 @@
   transform: scale(0.9);
 }
 .timer-testo {
-  font-size: 44px;
-  line-height: 48px;
+  font-size: clamp(30px, 10vw, 44px);
+  line-height: 1.1;
+}
+.recupero .timer-testo {
+  font-size: clamp(36px, 13vw, 56px);
 }
 .timer-sotto {
+  max-width: 100%;
   font-size: 13px;
+  line-height: 16px;
   color: var(--label-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .riga-azioni {
   display: flex;

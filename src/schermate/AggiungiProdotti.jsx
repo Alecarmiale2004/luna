@@ -16,7 +16,7 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
   const { spese } = useDati()
   const catalogo = useCatalogo()
   const [testo, setTesto] = useState('')
-  const [nuovo, setNuovo] = useState(null) // { it, dk, reparto } mentre creo un prodotto
+  const [nuovo, setNuovo] = useState(null) // { nome, dk, reparto } mentre creo un prodotto
 
   useEffect(() => {
     if (aperto) {
@@ -69,14 +69,14 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
   )
 
   return (
-    <Foglio aperto={aperto} onChiudi={onChiudi} titolo="Add items" grande>
+    <Foglio aperto={aperto} onChiudi={onChiudi} titolo="Aggiungi prodotti" grande>
       <div class="tint-spesa">
         <div class="aggiungi-ricerca">
           <label class="ricerca">
             <Search size={18} />
             <input
               type="search"
-              placeholder="Search or type a new item"
+              placeholder="Cerca o scrivi un prodotto nuovo"
               value={testo}
               enterKeyHint="done"
               autoComplete="off"
@@ -86,7 +86,7 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
               }}
             />
             {testo && (
-              <button aria-label="Clear" onClick={() => setTesto('')}>
+              <button aria-label="Cancella" onClick={() => setTesto('')}>
                 <CircleX size={18} fill="currentColor" color="var(--bg)" />
               </button>
             )}
@@ -96,15 +96,15 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
         {testo.trim() ? (
           <>
             {risultati.length > 0 && (
-              <Sezione titolo="In the catalogue">
+              <Sezione titolo="Nel catalogo">
                 <Lista>{risultati.map(riga)}</Lista>
               </Sezione>
             )}
             {!esisteGia && !nuovo && (
-              <Sezione piede="It will be remembered and suggested next time.">
+              <Sezione piede="Verrà ricordato e suggerito le prossime volte.">
                 <Lista>
                   <Riga
-                    titolo={`Add “${testo.trim()}”`}
+                    titolo={`Aggiungi «${testo.trim()}»`}
                     tipo="azione"
                     onClick={() => setNuovo({ nome: testo.trim(), dk: '', reparto: 'altro' })}
                   />
@@ -113,27 +113,27 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
             )}
             {nuovo && (
               <>
-                <Sezione titolo="New item" piede="The Danish name helps you spot it on the shelf.">
+                <Sezione titolo="Nuovo prodotto" piede="Il nome danese ti aiuta a riconoscerlo sullo scaffale.">
                   <Lista>
                     <Riga
-                      titolo="Name"
+                      titolo="Italiano"
                       destra={
                         <input class="riga-campo" value={nuovo.nome} onInput={(e) => setNuovo({ ...nuovo, nome: e.currentTarget.value })} />
                       }
                     />
                     <Riga
-                      titolo="Danish"
+                      titolo="Danese"
                       destra={
                         <input
                           class="riga-campo"
-                          placeholder="optional"
+                          placeholder="facoltativo"
                           value={nuovo.dk}
                           onInput={(e) => setNuovo({ ...nuovo, dk: e.currentTarget.value })}
                         />
                       }
                     />
                     <Riga
-                      titolo="Aisle"
+                      titolo="Reparto"
                       destra={
                         <MenuValore valore={nuovo.reparto} opzioni={OPZIONI_REPARTO} onChange={(r) => setNuovo({ ...nuovo, reparto: r })} />
                       }
@@ -142,7 +142,7 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
                 </Sezione>
                 <div class="foglio-azioni">
                   <button class="pulsante pieno" disabled={!nuovo.nome.trim()} onClick={creaEAggiungi}>
-                    Add to the list
+                    Aggiungi alla lista
                   </button>
                 </div>
               </>
@@ -151,7 +151,7 @@ export function FoglioAggiungi({ aperto, onChiudi }) {
         ) : (
           <>
             {frequenti.length > 0 && (
-              <Sezione titolo="Used often">
+              <Sezione titolo="Usati spesso">
                 <Lista>{frequenti.map(riga)}</Lista>
               </Sezione>
             )}

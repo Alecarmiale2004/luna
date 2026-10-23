@@ -31,7 +31,7 @@ export const immagineEsercizio = (id) => `${import.meta.env.BASE_URL}immagini/es
 export function testoVoce(v) {
   if (v.serie) {
     if (v.minSecondi != null) return `${v.serie} × ${v.minSecondi}–${v.maxSecondi} s`
-    return `${v.serie} × ${v.min === v.max ? v.min : `${v.min}–${v.max}`}${v.perLato ? ' per leg' : ''}`
+    return `${v.serie} × ${v.min === v.max ? v.min : `${v.min}–${v.max}`}${v.perLato ? ' per gamba' : ''}`
   }
   if (v.secondi) return v.secondi >= 120 ? `${Math.round(v.secondi / 60)} min` : `${v.secondi} s`
   return `${v.ripetizioni}`
@@ -250,12 +250,23 @@ export function usaVersioneFacile(id) {
   const facile = passo && esercizio(passo.esercizio).versioneFacile
   if (!facile) return
   const aTempo = facile === 'verticale-muro-statica'
+  // Nota e progressione erano dell'esercizio originale: per la versione facile non valgono
   const passi = s.passi.map((p, i) =>
     i >= s.indice && p.slot === passo.slot
-      ? { ...p, esercizio: facile, tipo: aTempo ? 'serieTempo' : p.tipo, min: aTempo ? 20 : p.min, max: aTempo ? 30 : p.max, valore: aTempo ? 20 : p.valore, precedente: null }
+      ? {
+          ...p,
+          esercizio: facile,
+          tipo: aTempo ? 'serieTempo' : p.tipo,
+          min: aTempo ? 20 : p.min,
+          max: aTempo ? 30 : p.max,
+          valore: aTempo ? 20 : p.valore,
+          precedente: null,
+          nota: '',
+          progressione: '',
+        }
       : p,
   )
-  return salva({ ...s, passi })
+  return salva({ ...s, passi, timer: null })
 }
 
 export function terminaSeduta(id) {
@@ -337,7 +348,7 @@ export function suggerimenti(seduta) {
   })
   for (const [id, elenco] of Object.entries(perEsercizio)) {
     const tutteAlMassimo = elenco.every(({ p, r }) => r && !r.saltato && r.valore >= p.max)
-    if (tutteAlMassimo) out.push({ esercizio: id, testo: elenco[0].p.progressione || 'Next time, 1–2 more reps.' })
+    if (tutteAlMassimo) out.push({ esercizio: id, testo: elenco[0].p.progressione || 'La prossima volta 1–2 ripetizioni in più.' })
   }
   return out
 }

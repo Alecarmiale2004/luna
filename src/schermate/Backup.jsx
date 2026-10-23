@@ -27,35 +27,35 @@ export function FoglioEsporta({ aperto, onChiudi }) {
     setOccupato(true)
     try {
       if (await salvaBackup(backup)) {
-        mostraMessaggio('Backup saved')
+        mostraMessaggio('Backup salvato')
         onChiudi()
       }
     } catch (errore) {
       console.error(errore)
-      mostraMessaggio('Couldn’t save the backup', { errore: true })
+      mostraMessaggio('Non sono riuscito a salvare il backup', { errore: true })
     } finally {
       setOccupato(false)
     }
   }
 
   return (
-    <Foglio aperto={aperto} onChiudi={onChiudi} titolo="Export backup">
+    <Foglio aperto={aperto} onChiudi={onChiudi} titolo="Esporta backup">
       <div class="tint-blue">
         <IconaGrande icona={FileUp} colore="var(--blue)" />
         <p class="foglio-spiegazione">
-          All your data in a single file. Tap <strong>Save backup</strong> and choose <strong>Save to Files</strong>
-          {' '}(iCloud Drive is best).
+          Tutti i tuoi dati in un unico file. Tocca <strong>Salva backup</strong> e scegli <strong>Salva in File</strong>
+          {' '}(meglio su iCloud Drive).
         </p>
         <Sezione>
           <Lista>
             <Riga titolo="File" valore={backup ? backup.file.name : '…'} />
-            <Riga titolo="Contents" sottotitolo={backup ? backup.riepilogo : 'Preparing the file…'} />
-            <Riga titolo="Size" valore={backup ? formatoDimensione(backup.dimensione) : '…'} />
+            <Riga titolo="Contenuto" sottotitolo={backup ? backup.riepilogo : 'Preparo il file…'} />
+            <Riga titolo="Dimensione" valore={backup ? formatoDimensione(backup.dimensione) : '…'} />
           </Lista>
         </Sezione>
         <div class="foglio-azioni">
           <button class="pulsante pieno" disabled={!backup || occupato} onClick={salva}>
-            Save backup
+            Salva backup
           </button>
         </div>
       </div>
@@ -97,22 +97,22 @@ export function FoglioImporta({ aperto, onChiudi }) {
     setOccupato(true)
     try {
       await importaBackup(backup)
-      mostraMessaggio('Backup imported')
+      mostraMessaggio('Backup importato')
       onChiudi()
     } catch (err) {
       console.error(err)
-      setErrore('Import failed: your data has not been changed.')
+      setErrore('Importazione non riuscita: i tuoi dati non sono stati modificati.')
     } finally {
       setOccupato(false)
     }
   }
 
   return (
-    <Foglio aperto={aperto} onChiudi={onChiudi} titolo="Import backup">
+    <Foglio aperto={aperto} onChiudi={onChiudi} titolo="Importa backup">
       <div class="tint-blue">
         <IconaGrande icona={FileDown} colore="var(--green)" />
         <p class="foglio-spiegazione">
-          Choose a backup file you saved earlier. You’ll see what’s in it before your data is replaced.
+          Scegli un file di backup salvato in precedenza. Prima di sostituire i dati, ne vedrai il contenuto.
         </p>
 
         <input ref={campoFile} type="file" accept=".json,application/json" class="sr-only" onChange={scegli} tabIndex={-1} />
@@ -120,7 +120,7 @@ export function FoglioImporta({ aperto, onChiudi }) {
         {!backup && (
           <div class="foglio-azioni">
             <button class="pulsante tinta" onClick={() => campoFile.current.click()}>
-              Choose backup file
+              Scegli file di backup
             </button>
           </div>
         )}
@@ -135,20 +135,20 @@ export function FoglioImporta({ aperto, onChiudi }) {
         {backup && (
           <>
             <Sezione
-              titolo="Backup contents"
-              piede="Your current data will be replaced by the backup. A safety copy is saved first, and you can restore it from Settings."
+              titolo="Contenuto del backup"
+              piede="I dati attuali verranno sostituiti da quelli del backup. Prima ne salvo da solo una copia di sicurezza, che puoi ripristinare dalle Impostazioni."
             >
               <Lista>
-                <Riga titolo="Created" valore={backup.creatoIl ? formatoMomento(backup.creatoIl) : '—'} />
-                <Riga titolo="Contents" sottotitolo={backup.riepilogo} />
+                <Riga titolo="Creato il" valore={backup.creatoIl ? formatoMomento(backup.creatoIl) : '—'} />
+                <Riga titolo="Contenuto" sottotitolo={backup.riepilogo} />
               </Lista>
             </Sezione>
             <div class="foglio-azioni">
               <button class="pulsante distruttivo" disabled={occupato} onClick={importa}>
-                Replace my data
+                Sostituisci i miei dati
               </button>
               <button class="pulsante grigio" disabled={occupato} onClick={() => campoFile.current.click()}>
-                Choose another file
+                Scegli un altro file
               </button>
             </div>
           </>
@@ -171,39 +171,39 @@ export function FoglioCopie({ aperto, onChiudi }) {
 
   const ripristina = async (copia) => {
     const ok = await chiediConferma({
-      titolo: 'Restore this copy?',
-      testo: `Your current data will be replaced with the copy from ${formatoMomento(copia.id)}. A safety copy is saved first.`,
-      conferma: 'Restore',
+      titolo: 'Ripristinare questa copia?',
+      testo: `I dati attuali verranno sostituiti con la copia del ${formatoMomento(copia.id)}. Prima ne salvo una copia di sicurezza.`,
+      conferma: 'Ripristina',
       distruttiva: true,
     })
     if (!ok) return
     try {
       await ripristinaCopia(copia.id)
-      mostraMessaggio('Copy restored')
+      mostraMessaggio('Copia ripristinata')
       onChiudi()
     } catch (err) {
       console.error(err)
-      mostraMessaggio('Restore failed', { errore: true })
+      mostraMessaggio('Ripristino non riuscito', { errore: true })
     }
   }
 
   return (
-    <Foglio aperto={aperto} onChiudi={onChiudi} titolo="Automatic copies" grande>
+    <Foglio aperto={aperto} onChiudi={onChiudi} titolo="Copie automatiche" grande>
       <IconaGrande icona={ArchiveRestore} colore="var(--gray)" />
       <p class="foglio-spiegazione">
-        Before every data update, import or restore, the app saves a copy by itself. The last 5 are kept,
-        on this phone only.
+        Prima di ogni aggiornamento dei dati, importazione o ripristino, l’app salva da sola una copia. Restano le
+        ultime 5, solo su questo telefono.
       </p>
       <Sezione>
         <Lista>
-          {copie === null && <Riga titolo="Loading…" />}
-          {copie?.length === 0 && <Riga titolo="No copies yet" sottotitolo="One will appear here the first time it’s needed." />}
+          {copie === null && <Riga titolo="Caricamento…" />}
+          {copie?.length === 0 && <Riga titolo="Nessuna copia per ora" sottotitolo="Comparirà qui la prima volta che serve." />}
           {copie?.map((c) => (
             <Riga
               key={c.id}
               titolo={formatoMomento(c.id)}
               sottotitolo={`${c.motivo} · ${c.riepilogo}`}
-              destra={<span class="riga-valore" style={{ color: 'var(--blue)' }}>Restore</span>}
+              destra={<span class="riga-valore" style={{ color: 'var(--blue)' }}>Ripristina</span>}
               onClick={() => ripristina(c)}
             />
           ))}

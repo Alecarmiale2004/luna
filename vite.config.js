@@ -27,7 +27,7 @@ export default defineConfig({
         name: APP_NAME,
         short_name: APP_NAME,
         description: APP_DESCRIPTION,
-        lang: 'en',
+        lang: 'it',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#F2F2F7',

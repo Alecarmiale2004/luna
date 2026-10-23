@@ -34,10 +34,10 @@ export function Oggi() {
 
   return (
     <Pagina
-      titolo="Today"
+      titolo="Oggi"
       sopratitolo={formatoGiorno(oggi)}
       destra={
-        <button class="nav-pulsante" aria-label="Settings" onClick={() => nav.apri(Impostazioni)}>
+        <button class="nav-pulsante" aria-label="Impostazioni" onClick={() => nav.apri(Impostazioni)}>
           <Settings size={24} />
         </button>
       }
@@ -60,9 +60,9 @@ export function Oggi() {
 // ---------------------------------------------------------------------------
 
 const TESTI_TURNO = {
-  lavoro: { titolo: 'Working tonight', icona: Moon },
-  libero: { titolo: 'Off tonight', icona: Sun },
-  vuoto: { titolo: 'Working tonight?', icona: null },
+  lavoro: { titolo: 'Lavoro stanotte', icona: Moon },
+  libero: { titolo: 'Libero stanotte', icona: Sun },
+  vuoto: { titolo: 'Lavori stanotte?', icona: null },
 }
 
 /** Un tocco alterna lavoro ↔ libero (un giorno non segnato diventa "lavoro"). */
@@ -81,10 +81,10 @@ function CardTurni({ oggi }) {
   const testi = TESTI_TURNO[tipo]
   const sottotitolo =
     tipo === 'lavoro'
-      ? `Shift ${impostazioni.inizioTurno} – ${impostazioni.fineTurno}`
+      ? `Turno ${impostazioni.inizioTurno} – ${impostazioni.fineTurno}`
       : tipo === 'libero'
-        ? 'No shift: the day is all yours'
-        : 'Tap to mark your shift'
+        ? 'Niente turno: giornata tutta tua'
+        : 'Tocca per segnare il turno'
 
   const pressione = usePressione({
     onTocco: () => segna(oggi, prossimoTipo(tipoDi(oggi))),
@@ -96,9 +96,9 @@ function CardTurni({ oggi }) {
 
   return (
     <Card class="card-turni">
-      <CardTesta icona={Moon} titolo="Shift" />
+      <CardTesta icona={Moon} titolo="Turno" />
 
-      <button class="turno-oggi" {...pressione} aria-label={`${testi.titolo}. Tap to change.`}>
+      <button class="turno-oggi" {...pressione} aria-label={`${testi.titolo}. Tocca per cambiare.`}>
         <span class={`turno-icona ${tipo}`} key={tipo}>
           {testi.icona && <testi.icona size={30} strokeWidth={2.2} />}
         </span>
@@ -111,16 +111,16 @@ function CardTurni({ oggi }) {
       <div class="divisore" />
 
       <div class="settimana-testa">
-        <button class="settimana-freccia" aria-label="Previous week" onClick={() => setScarto(scarto - 1)}>
+        <button class="settimana-freccia" aria-label="Settimana precedente" onClick={() => setScarto(scarto - 1)}>
           <ChevronLeft size={22} strokeWidth={2.4} />
         </button>
         <div class="settimana-etichetta">
           <span class="settimana-nome">{etichettaSettimana(settimana[0], oggi)}</span>
           <span class="settimana-conto">
-            <span class="num">{notti}</span> of {impostazioni.nottiSettimana} work nights
+            <span class="num">{notti}</span> di {impostazioni.nottiSettimana} notti di lavoro
           </span>
         </div>
-        <button class="settimana-freccia" aria-label="Next week" onClick={() => setScarto(scarto + 1)}>
+        <button class="settimana-freccia" aria-label="Settimana successiva" onClick={() => setScarto(scarto + 1)}>
           <ChevronRight size={22} strokeWidth={2.4} />
         </button>
       </div>
@@ -138,7 +138,7 @@ function CardTurni({ oggi }) {
         ))}
       </div>
 
-      <p class="settimana-aiuto">Tap a day to mark it: moon = work, sun = off. Press and hold to clear it.</p>
+      <p class="settimana-aiuto">Tocca un giorno per segnarlo: luna = lavoro, sole = libero. Tieni premuto per togliere il segno.</p>
     </Card>
   )
 }
@@ -148,7 +148,7 @@ function GiornoSettimana({ data, iniziale, tipo, oggi, passato }) {
     onTocco: () => segna(data, prossimoTipo(tipo)),
     onPressioneLunga: () => tipo && segna(data, null),
   })
-  const descrizione = tipo === 'lavoro' ? 'work' : tipo === 'libero' ? 'off' : 'not marked'
+  const descrizione = tipo === 'lavoro' ? 'lavoro' : tipo === 'libero' ? 'libero' : 'non segnato'
   return (
     <button
       class={`giorno${oggi ? ' oggi' : ''}${passato ? ' passato' : ''}`}
@@ -180,12 +180,12 @@ function CardSpesa() {
   return (
     <div class="sezione tint-spesa">
       <Card onClick={() => nav.vaiATab('spesa')}>
-        <CardTesta icona={ShoppingCart} titolo="Shopping" freccia />
+        <CardTesta icona={ShoppingCart} titolo="Spesa" freccia />
         <p>
           <span class="t-title1 num">{daPrendere}</span>
-          <span class="t-headline c-label-2"> {daPrendere === 1 ? 'item to buy' : 'items to buy'}</span>
+          <span class="t-headline c-label-2"> {daPrendere === 1 ? 'prodotto da prendere' : 'prodotti da prendere'}</span>
         </p>
-        {presi > 0 && <p class="t-subheadline c-label-2">{presi} already in the cart</p>}
+        {presi > 0 && <p class="t-subheadline c-label-2">{presi} già nel carrello</p>}
       </Card>
     </div>
   )
@@ -215,17 +215,17 @@ function PromemoriaBackup() {
           <Card>
             <CardTesta icona={ShieldCheck} titolo="Backup" />
             <p class="t-headline">
-              {meta.ultimoBackup ? `Last backup: ${tempoFa(meta.ultimoBackup)}` : 'You haven’t made a backup yet'}
+              {meta.ultimoBackup ? `Ultimo backup: ${tempoFa(meta.ultimoBackup)}` : 'Non hai ancora fatto un backup'}
             </p>
             <p class="t-subheadline c-label-2" style={{ marginTop: 2 }}>
-              Save it to Files or iCloud: if you change phone or Safari clears its data, you lose nothing.
+              Salvalo in File o su iCloud: se cambi telefono o Safari cancella i dati, non perdi niente.
             </p>
             <div class="riga-pulsanti">
               <button class="pulsante piccolo pieno" onClick={() => setFoglio(true)}>
-                Back up now
+                Fai il backup
               </button>
               <button class="pulsante piccolo grigio" onClick={() => scriviMeta('backupRimandato', new Date().toISOString())}>
-                Later
+                Più tardi
               </button>
             </div>
           </Card>

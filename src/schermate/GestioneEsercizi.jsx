@@ -17,7 +17,7 @@ export function GestioneEsercizi() {
   const [scelta, setScelta] = useState(null) // { tipo, blocco, slot }
 
   return (
-    <Pagina titolo="Exercises" sinistra={<PulsanteIndietro etichetta="Settings" onClick={nav.indietro} />}>
+    <Pagina titolo="Esercizi" sinistra={<PulsanteIndietro etichetta="Impostazioni" onClick={nav.indietro} />}>
       {TIPI.filter((t) => t !== 'pausa').map((t) => {
         const g = giornata(t)
         return g.blocchi.map((b) => (
@@ -27,7 +27,7 @@ export function GestioneEsercizi() {
                 <Riga
                   key={v.slot}
                   titolo={esercizio(v.esercizio).nome}
-                  sottotitolo={v.esercizio !== v.slot ? `instead of: ${esercizio(v.slot).nome}` : v.modificata ? 'changed' : undefined}
+                  sottotitolo={v.esercizio !== v.slot ? `al posto di: ${esercizio(v.slot).nome}` : v.modificata ? 'modificato' : undefined}
                   valore={testoVoce(v)}
                   freccia
                   onClick={() => setScelta({ tipo: t, blocco: b.id, slot: v.slot })}
@@ -38,7 +38,7 @@ export function GestioneEsercizi() {
         ))
       })}
       <p class="sezione-piede" style={{ paddingBottom: 16 }}>
-        Changes apply from your next workout. Your history stays as it is.
+        Le modifiche valgono dal prossimo allenamento. Lo storico resta com’è.
       </p>
       <FoglioVoce scelta={scelta} onChiudi={() => setScelta(null)} />
     </Pagina>
@@ -69,13 +69,13 @@ function FoglioVoce({ scelta, onChiudi }) {
         <Sezione>
           <Lista>
             <Riga
-              titolo="Exercise"
+              titolo="Esercizio"
               destra={<MenuValore valore={v.esercizio} opzioni={OPZIONI_ESERCIZI} onChange={(id) => cambia({ sostituto: id === s.slot ? undefined : id })} />}
             />
             {v.serie ? (
               <>
                 <Riga
-                  titolo="Sets"
+                  titolo="Serie"
                   destra={
                     <>
                       <span class="riga-valore num">{v.serie}</span>
@@ -84,7 +84,7 @@ function FoglioVoce({ scelta, onChiudi }) {
                   }
                 />
                 <Riga
-                  titolo={aTempo ? 'Minimum seconds' : 'Minimum reps'}
+                  titolo={aTempo ? 'Secondi minimi' : 'Ripetizioni minime'}
                   destra={
                     <>
                       <span class="riga-valore num">{aTempo ? v.minSecondi : v.min}</span>
@@ -99,7 +99,7 @@ function FoglioVoce({ scelta, onChiudi }) {
                   }
                 />
                 <Riga
-                  titolo={aTempo ? 'Maximum seconds' : 'Maximum reps'}
+                  titolo={aTempo ? 'Secondi massimi' : 'Ripetizioni massime'}
                   destra={
                     <>
                       <span class="riga-valore num">{aTempo ? v.maxSecondi : v.max}</span>
@@ -116,7 +116,7 @@ function FoglioVoce({ scelta, onChiudi }) {
               </>
             ) : v.secondi ? (
               <Riga
-                titolo="Duration"
+                titolo="Durata"
                 destra={
                   <>
                     <span class="riga-valore num">{v.secondi} s</span>
@@ -126,7 +126,7 @@ function FoglioVoce({ scelta, onChiudi }) {
               />
             ) : (
               <Riga
-                titolo="Reps"
+                titolo="Ripetizioni"
                 destra={
                   <>
                     <span class="riga-valore num">{v.ripetizioni}</span>
@@ -143,10 +143,10 @@ function FoglioVoce({ scelta, onChiudi }) {
               class="pulsante grigio"
               onClick={() => {
                 ripristinaVoce(s.tipo, s.blocco, s.slot)
-                mostraMessaggio('Exercise restored')
+                mostraMessaggio('Esercizio ripristinato')
               }}
             >
-              Restore as in the programme
+              Ripristina come nel programma
             </button>
           </div>
         )}

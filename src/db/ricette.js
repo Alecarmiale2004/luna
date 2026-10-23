@@ -12,9 +12,9 @@ import { catalogoDa, normalizza } from './catalogo.js'
 
 export const BLOCCHI = [
   { id: 'base', nome: 'Base' },
-  { id: 'proteina', nome: 'Protein' },
-  { id: 'verdura', nome: 'Vegetables' },
-  { id: 'condimento', nome: 'Seasoning' },
+  { id: 'proteina', nome: 'Proteina' },
+  { id: 'verdura', nome: 'Verdura' },
+  { id: 'condimento', nome: 'Condimento' },
 ]
 export const BLOCCHI_SCAMBIABILI = ['base', 'proteina', 'verdura']
 
@@ -52,7 +52,7 @@ export function salvaRicetta(id, modifiche) {
 export function nuovaRicetta() {
   const id = `mia-${Date.now().toString(36)}`
   salvaRicetta(id, {
-    nome: 'New recipe',
+    nome: 'Nuova ricetta',
     minuti: 25,
     proteinePorzione: 38,
     procedimento: '',
@@ -71,14 +71,12 @@ export function nuovaRicetta() {
 // Cibi esclusi
 // ---------------------------------------------------------------------------
 
-/** Radici delle parole: "Carrots" e "carrot" → ["carrot"] */
+/** Radici delle parole, senza l'ultima vocale: "Carote" e "carota" → ["carot"] */
 function radici(testo) {
   return normalizza(testo)
     .split(/[^a-z0-9]+/)
     .filter(Boolean)
-    // Singolare e plurale inglesi si riducono alla stessa radice: "carrots"/"carrot",
-    // "tomatoes"/"tomato", "olives"/"olive". Le parole brevi restano intere.
-    .map((p) => (p.length > 3 ? p.replace(/s$/, '').replace(/e$/, '') : p))
+    .map((p) => (p.length > 3 ? p.replace(/[aeiou]$/, '') : p))
 }
 
 /** a è contenuta in b come sequenza di parole intere? */
@@ -90,7 +88,7 @@ function contiene(b, a) {
 
 /**
  * Il prodotto corrisponde a un cibo escluso? Confronta parole intere:
- * "tomato" esclude "Tomato passata", "bell peppers" esclude "Bell peppers" ma non "Black pepper".
+ * "pomodoro" esclude "Passata di pomodoro", ma "peperoni" non esclude "Pepe".
  */
 export function eEscluso(prodotto, esclusi) {
   if (!prodotto) return false
@@ -163,13 +161,13 @@ export function baseDi(ricetta) {
 // Testi
 // ---------------------------------------------------------------------------
 
-/** "300 g", "2 cans", "3 eggs", "2 tbsp", "to taste" */
+/** "300 g", "2 scatolette", "3 uova", "2 cucchiai", "q.b." */
 export function testoQuantita(ing, prodotto) {
-  if (ing.quantita == null || !ing.unita) return 'to taste'
-  if (ing.unita === 'g') return ing.quantita >= 1000 ? `${ing.quantita / 1000} kg` : `${ing.quantita} g`
-  if (ing.unita === 'cucchiai') return `${ing.quantita} tbsp`
+  if (ing.quantita == null || !ing.unita) return 'q.b.'
+  if (ing.unita === 'g') return ing.quantita >= 1000 ? `${String(ing.quantita / 1000).replace('.', ',')} kg` : `${ing.quantita} g`
+  if (ing.unita === 'cucchiai') return `${ing.quantita} ${ing.quantita === 1 ? 'cucchiaio' : 'cucchiai'}`
   const c = prodotto?.confezione
-  if (prodotto?.id === 'uova') return `${ing.quantita} ${ing.quantita === 1 ? 'egg' : 'eggs'}`
+  if (prodotto?.id === 'uova') return `${ing.quantita} ${ing.quantita === 1 ? 'uovo' : 'uova'}`
   if (c?.unita === 'pz' && c.nome) return `${ing.quantita} ${ing.quantita === 1 ? c.nome : c.plurale}`
   return `${ing.quantita} pz`
 }

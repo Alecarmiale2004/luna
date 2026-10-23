@@ -24,7 +24,7 @@ export function catalogoDa(prodottiMiei) {
     ...Object.values(prodottiMiei)
       .filter((p) => !idBase.has(p.id))
       .map((p) => ({ ...p, mio: true })),
-  ].sort((a, b) => posizioneReparto(a.reparto) - posizioneReparto(b.reparto) || a.nome.localeCompare(b.nome, 'en'))
+  ].sort((a, b) => posizioneReparto(a.reparto) - posizioneReparto(b.reparto) || a.nome.localeCompare(b.nome, 'it'))
   cache = { miei: prodottiMiei, elenco }
   return elenco
 }
@@ -45,7 +45,7 @@ export function normalizza(testo) {
     .trim()
 }
 
-/** Prodotti visibili che contengono il testo nel nome (inglese o danese) */
+/** Prodotti visibili che contengono il testo nel nome (italiano) o in danese */
 export function cerca(catalogo, testo) {
   const t = normalizza(testo)
   if (!t) return []

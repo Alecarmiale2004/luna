@@ -68,14 +68,14 @@ export function schemaPasti({ impostazioni, lavoro, ricetta, perId }) {
       id: 'principale',
       nome: PASTI.principale.nome,
       ora: sommaOre(risveglio, PASTI.principale.dopoRisveglio),
-      descrizione: nomeRicetta || 'Recipe not chosen yet',
+      descrizione: nomeRicetta || 'Ricetta da scegliere',
       proteine: ricetta ? ricetta.proteinePorzione : null,
     },
     {
       id: lavoro ? 'schiscetta' : 'secondo',
       nome: secondo.nome,
       ora: lavoro ? sommaOre(inizioTurno, secondo.dopoInizioTurno) : sommaOre(risveglio, secondo.dopoRisveglio),
-      descrizione: nomeRicetta ? `${nomeRicetta}, lighter portion` : secondo.descrizione,
+      descrizione: nomeRicetta ? `${nomeRicetta}, porzione leggera` : secondo.descrizione,
       proteine: ricetta ? proteineLeggera(ricetta, perId, secondo.riduzioneBaseGrammi) : null,
     },
     {

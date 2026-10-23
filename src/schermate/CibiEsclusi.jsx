@@ -22,8 +22,8 @@ export function CibiEsclusi() {
   }
 
   return (
-    <Pagina titolo="Excluded foods" sinistra={<PulsanteIndietro etichetta="Settings" onClick={nav.indietro} />}>
-      <Sezione piede="They’re never suggested as swaps; recipes that contain them are flagged in red.">
+    <Pagina titolo="Cibi esclusi" sinistra={<PulsanteIndietro etichetta="Impostazioni" onClick={nav.indietro} />}>
+      <Sezione piede="Non vengono mai proposti negli scambi; le ricette che li contengono sono segnalate in rosso.">
         <Lista>
           {esclusi.map((e) => (
             <Riga
@@ -32,7 +32,7 @@ export function CibiEsclusi() {
               destra={
                 <button
                   class="nav-pulsante"
-                  aria-label={`Remove ${e}`}
+                  aria-label={`Togli ${e}`}
                   style={{ color: 'var(--red)', marginRight: -10 }}
                   onClick={() => {
                     vibra()
@@ -46,13 +46,13 @@ export function CibiEsclusi() {
           ))}
         </Lista>
       </Sezione>
-      <Sezione titolo="Add">
+      <Sezione titolo="Aggiungi">
         <Lista>
           <Riga
             titolo={
               <input
                 class="riga-campo sinistra"
-                placeholder="e.g. Aubergine"
+                placeholder="es. Melanzane"
                 value={nuovo}
                 enterKeyHint="done"
                 onInput={(e) => setNuovo(e.currentTarget.value)}
@@ -61,7 +61,7 @@ export function CibiEsclusi() {
             }
             destra={
               <button class="pulsante piccolo tinta tint-blue" disabled={!nuovo.trim()} onClick={aggiungi}>
-                Add
+                Aggiungi
               </button>
             }
           />

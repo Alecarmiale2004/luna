@@ -65,10 +65,10 @@ export function CardColazione() {
   return (
     <div class="sezione tint-cibo">
       <Card class="card-pasto">
-        <CardTesta icona={Egg} titolo="Breakfast" dettaglio={fatta ? 'done' : `at ${colazione.ora}`} />
+        <CardTesta icona={Egg} titolo="Colazione" dettaglio={fatta ? 'fatta' : `alle ${colazione.ora}`} />
         <div class="pasto-riga" onClick={() => alternaPasto(giornata, 'colazione', !fatta)}>
           <div class="pasto-testi">
-            <p class={`t-headline${fatta ? ' c-label-3' : ''}`}>{fatta ? 'Breakfast done' : 'Had breakfast?'}</p>
+            <p class={`t-headline${fatta ? ' c-label-3' : ''}`}>{fatta ? 'Colazione fatta' : 'Hai fatto colazione?'}</p>
             <p class="t-subheadline c-label-2">{colazione.descrizione}</p>
           </div>
           <Spunta attiva={fatta} />
@@ -89,10 +89,10 @@ export function CardDaCucinare({ onApriRicetta }) {
     return (
       <div class="sezione tint-cibo">
         <Card onClick={() => nav.vaiATab('cibo')}>
-          <CardTesta icona={CookingPot} titolo="To cook" freccia />
-          <p class="t-headline">{piano?.voci.length ? 'Week completed' : 'No recipes planned'}</p>
+          <CardTesta icona={CookingPot} titolo="Da cucinare" freccia />
+          <p class="t-headline">{piano?.voci.length ? 'Settimana completata' : 'Nessuna ricetta in programma'}</p>
           <p class="t-subheadline c-label-2">
-            {piano?.voci.length ? 'You’ve cooked all of this week’s recipes.' : 'Choose this week’s recipes in the Food section.'}
+            {piano?.voci.length ? 'Hai cucinato tutte le ricette della settimana.' : 'Scegli le ricette della settimana nella sezione Cibo.'}
           </p>
         </Card>
       </div>
@@ -106,14 +106,14 @@ export function CardDaCucinare({ onApriRicetta }) {
       <Card class="card-cucina">
         <CardTesta
           icona={CookingPot}
-          titolo={fatta ? 'Cooked today' : 'To cook today'}
-          dettaglio={voce.volte > 1 ? `${Math.min(quante + (fatta ? 0 : 1), voce.volte)} of ${voce.volte}` : undefined}
+          titolo={fatta ? 'Cucinata oggi' : 'Da cucinare oggi'}
+          dettaglio={voce.volte > 1 ? `${Math.min(quante + (fatta ? 0 : 1), voce.volte)}ª di ${voce.volte}` : undefined}
         />
         <button class="cucina-ricetta" onClick={() => (dalCibo ? onApriRicetta(voce) : nav.vaiATab('cibo'))}>
           <p class={`t-title3${fatta ? ' c-label-2' : ''}`}>{ricetta.nome}</p>
           <p class="t-subheadline c-label-2">
-            {lavoro ? 'Main meal + lunchbox for your shift' : 'Main meal + second meal at home'} · {ricetta.minuti} min · ~
-            {ricetta.proteinePorzione} g of protein
+            {lavoro ? 'Pasto principale + schiscetta per il turno' : 'Pasto principale + secondo pasto a casa'} · {ricetta.minuti} min · ~
+            {ricetta.proteinePorzione} g di proteine
           </p>
         </button>
         <button
@@ -126,10 +126,10 @@ export function CardDaCucinare({ onApriRicetta }) {
         >
           {fatta ? (
             <>
-              <Check size={20} strokeWidth={2.6} /> Cooked
+              <Check size={20} strokeWidth={2.6} /> Cucinata
             </>
           ) : (
-            'Mark as cooked'
+            'Segna come cucinata'
           )}
         </button>
       </Card>
@@ -143,9 +143,9 @@ export function CardProteine({ conPasti = false }) {
   const mancano = Math.max(0, obiettivo - proteine)
   const contenuto = (
     <>
-      <CardTesta icona={Beef} titolo="Protein" freccia={!conPasti} />
+      <CardTesta icona={Beef} titolo="Proteine" freccia={!conPasti} />
       <div class="proteine">
-        <Anello valore={proteine / obiettivo} dimensione={96} spessore={14} etichetta={`${proteine} grams of ${obiettivo}`}>
+        <Anello valore={proteine / obiettivo} dimensione={96} spessore={14} etichetta={`${proteine} grammi su ${obiettivo}`}>
           <span class="proteine-percento num">{Math.round((proteine / obiettivo) * 100)}%</span>
         </Anello>
         <div>
@@ -153,7 +153,7 @@ export function CardProteine({ conPasti = false }) {
             <span class="t-title1 num">{proteine}</span>
             <span class="t-headline c-label-2"> / {obiettivo} g</span>
           </p>
-          <p class="t-subheadline c-label-2">{mancano ? `~${mancano} g to go` : 'Goal reached!'}</p>
+          <p class="t-subheadline c-label-2">{mancano ? `Mancano ~${mancano} g` : 'Obiettivo raggiunto!'}</p>
         </div>
       </div>
     </>

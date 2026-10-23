@@ -97,7 +97,7 @@ export function Foglio({ aperto, onChiudi, titolo, grande = false, children }) {
         <div class="foglio-maniglia" />
         <div class="foglio-testa">
           <h2>{titolo}</h2>
-          <button class="pulsante-tondo" aria-label="Close" onClick={onChiudi}>
+          <button class="pulsante-tondo" aria-label="Chiudi" onClick={onChiudi}>
             <X size={16} strokeWidth={2.8} />
           </button>
         </div>

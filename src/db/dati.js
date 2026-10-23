@@ -58,7 +58,7 @@ export async function avvia() {
     await primoAvvio()
   } else if (versione < VERSIONE_DATI) {
     const dati = await leggiTutto()
-    await salvaCopia(dati, versione, 'Before the data update')
+    await salvaCopia(dati, versione, 'Prima dell’aggiornamento dei dati')
     const migrati = migra(dati, versione)
     impostaMeta(migrati, 'versioneDati', VERSIONE_DATI)
     await scriviTutto(migrati)
@@ -135,7 +135,7 @@ export async function scrivi(operazione) {
     await operazione(database())
   } catch (errore) {
     console.error(errore)
-    erroreSalvataggio.set('Couldn’t save the last change. Please try again.')
+    erroreSalvataggio.set('Non sono riuscito a salvare l’ultima modifica. Riprova.')
   }
 }
 
@@ -207,8 +207,8 @@ export async function elencoCopie() {
 
 export async function ripristinaCopia(id) {
   const copia = await database().get('copie', id)
-  if (!copia) throw new Error('Copy not found')
-  await sostituisciDati(migra(copia.dati, copia.versioneDati), 'Before restoring a copy')
+  if (!copia) throw new Error('Copia non trovata')
+  await sostituisciDati(migra(copia.dati, copia.versioneDati), 'Prima del ripristino di una copia')
 }
 
 /**
@@ -229,14 +229,14 @@ export async function sostituisciDati(nuovi, motivo) {
 // ---------------------------------------------------------------------------
 
 const ETICHETTE = {
-  giorni: ['day', 'days'],
-  spese: ['shopping list', 'shopping lists'],
-  piani: ['planned week', 'planned weeks'],
-  sedute: ['workout', 'workouts'],
-  ricette: ['custom recipe', 'custom recipes'],
-  prodotti: ['custom product', 'custom products'],
-  esercizi: ['custom exercise', 'custom exercises'],
-  settimaneTipo: ['saved week', 'saved weeks'],
+  giorni: ['giorno', 'giorni'],
+  spese: ['spesa', 'spese'],
+  piani: ['settimana pianificata', 'settimane pianificate'],
+  sedute: ['allenamento', 'allenamenti'],
+  ricette: ['ricetta personalizzata', 'ricette personalizzate'],
+  prodotti: ['prodotto personalizzato', 'prodotti personalizzati'],
+  esercizi: ['esercizio personalizzato', 'esercizi personalizzati'],
+  settimaneTipo: ['settimana tipo', 'settimane tipo'],
 }
 
 /** es. "12 giorni segnati · 3 spese" (solo gli archivi non vuoti) */
@@ -247,5 +247,5 @@ export function riepilogoDati(dati) {
       return n ? `${n} ${n === 1 ? uno : tanti}` : null
     })
     .filter(Boolean)
-  return parti.length ? parti.join(' · ') : 'No data yet'
+  return parti.length ? parti.join(' · ') : 'Nessun dato inserito'
 }

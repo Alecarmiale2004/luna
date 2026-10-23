@@ -1,8 +1,8 @@
 {
   "_nota": "Schema pasti dal risveglio (vedi 02-alimentazione/strategia-pasti.md). Gli orari sono calcolati dall'app: 'dopoRisveglio' in ore dal risveglio, 'dopoInizioTurno'/'dopoFineTurno' in ore dall'inizio/fine del turno.",
   "colazione": {
-    "nome": "Breakfast",
-    "descrizione": "2 eggs, 2 slices of toast, vanilla yoghurt, fruit",
+    "nome": "Colazione",
+    "descrizione": "2 uova, 2 fette di pane tostato, yogurt alla vaniglia, frutta",
     "proteine": 25,
     "dopoRisveglio": 0,
     "ingredienti": [
@@ -13,25 +13,25 @@
     ]
   },
   "principale": {
-    "nome": "Main meal",
-    "descrizione": "Full recipe, normal portion",
+    "nome": "Pasto principale",
+    "descrizione": "Ricetta completa, porzione normale",
     "dopoRisveglio": 4
   },
   "schiscetta": {
-    "nome": "Lunchbox",
-    "descrizione": "Same recipe, lighter portion",
+    "nome": "Schiscetta",
+    "descrizione": "Stessa ricetta, porzione più leggera",
     "dopoInizioTurno": 3.5,
     "riduzioneBaseGrammi": 30
   },
   "secondoPasto": {
-    "nome": "Second meal",
-    "descrizione": "Same recipe, at home",
+    "nome": "Secondo pasto",
+    "descrizione": "Stessa ricetta, a casa",
     "dopoRisveglio": 9,
     "riduzioneBaseGrammi": 30
   },
   "spuntino": {
-    "nome": "Snack before bed",
-    "descrizione": "Plain yoghurt, maybe with fruit",
+    "nome": "Spuntino prima di dormire",
+    "descrizione": "Yogurt bianco, eventualmente con frutta",
     "proteine": 7,
     "dopoFineTurno": 0.5,
     "ingredienti": [{ "prodotto": "yogurt-bianco", "quantita": 150, "unita": "g" }]
