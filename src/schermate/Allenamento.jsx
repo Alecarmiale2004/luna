@@ -39,20 +39,20 @@ export function Allenamento() {
 
   const termina = async () => {
     const ok = await chiediConferma({
-      titolo: 'Terminare l’allenamento?',
-      testo: 'Quello che hai fatto resta salvato.',
-      conferma: 'Termina',
+      titolo: 'End the workout?',
+      testo: 'What you’ve done stays saved.',
+      conferma: 'End',
     })
     if (ok) {
       terminaSeduta(inCorso.id)
-      mostraMessaggio('Allenamento salvato')
+      mostraMessaggio('Workout saved')
     }
   }
 
   const { icona: Icona, tinta } = INFO_TIPO[inCorso?.tipo || tipo]
 
   return (
-    <Pagina titolo="Allenamento">
+    <Pagina titolo="Training">
       {/* ---------- Oggi ---------- */}
       <div class={`sezione ${tinta}`}>
         <Card>
@@ -63,19 +63,19 @@ export function Allenamento() {
                   <Icona size={28} />
                 </span>
                 <div>
-                  <p class="t-footnote c-label-2">ALLENAMENTO IN CORSO</p>
+                  <p class="t-footnote c-label-2">WORKOUT IN PROGRESS</p>
                   <p class="titolo">{nomeTipo(inCorso.tipo)}</p>
                   <p class="t-subheadline c-label-2">
-                    {inCorso.indice} di {inCorso.passi.length} passi fatti
+                    {inCorso.indice} of {inCorso.passi.length} steps done
                   </p>
                 </div>
               </div>
               <div class="riga-azioni" style={{ marginTop: 16 }}>
                 <button class="pulsante grigio" onClick={termina}>
-                  Termina
+                  End
                 </button>
                 <button class="pulsante pieno" onClick={() => riprendiAllenamento(inCorso.id)}>
-                  <Play size={18} fill="currentColor" /> Riprendi
+                  <Play size={18} fill="currentColor" /> Resume
                 </button>
               </div>
             </>
@@ -84,14 +84,14 @@ export function Allenamento() {
               <div class="allenamento-oggi">
                 <span class="tipo-icona">{fattaOggi ? <Check size={28} strokeWidth={3} /> : <Icona size={28} />}</span>
                 <div>
-                  <p class="t-footnote c-label-2">{fattaOggi ? 'OGGI FATTO · PROSSIMA' : 'OGGI'}</p>
+                  <p class="t-footnote c-label-2">{fattaOggi ? 'DONE TODAY · NEXT' : 'TODAY'}</p>
                   <p class="titolo">{nomeTipo(tipo)}</p>
                   <p class="t-subheadline c-label-2">
                     {fattaOggi
                       ? fattaOggi.tipo === 'pausa'
-                        ? 'Oggi hai segnato una pausa'
-                        : `Oggi: ${nomeTipo(fattaOggi.tipo)}, ${minutiSeduta(fattaOggi)} min`
-                      : `${PROGRAMMA.giornate[tipo].durata}${tipo === 'leggera' ? ' · o Mobilità se sei stanco' : ''}`}
+                        ? 'You marked a rest day today'
+                        : `Today: ${nomeTipo(fattaOggi.tipo)}, ${minutiSeduta(fattaOggi)} min`
+                      : `${PROGRAMMA.giornate[tipo].durata}${tipo === 'leggera' ? ' · or Mobility if you’re tired' : ''}`}
                   </p>
                 </div>
               </div>
@@ -105,12 +105,12 @@ export function Allenamento() {
               {forteIeri && !fattaOggi && (
                 <p class="suggerimento-orario">
                   <TriangleAlert size={18} color="var(--orange)" />
-                  Ieri hai fatto una Forte: oggi lascia recuperare i muscoli.
+                  Yesterday was a Strength day: let your muscles recover today.
                 </p>
               )}
               {!fattaOggi && (
                 <button class="pulsante pieno" style={{ marginTop: 16 }} onClick={() => setAperto(tipo)}>
-                  {tipo === 'pausa' ? 'Vedi la giornata di pausa' : `Inizia: ${nomeTipo(tipo)}`}
+                  {tipo === 'pausa' ? 'See the rest day' : `Start: ${nomeTipo(tipo)}`}
                 </button>
               )}
             </>
@@ -119,7 +119,7 @@ export function Allenamento() {
       </div>
 
       {/* ---------- I 4 tipi di giornata ---------- */}
-      <Sezione titolo="Tipi di giornata" piede="Puoi sempre scegliere un tipo diverso da quello proposto.">
+      <Sezione titolo="Day types" piede="You can always pick a different type from the suggested one.">
         <div class="tipi">
           {TIPI.map((t) => {
             const { icona: I, tinta: ti } = INFO_TIPO[t]
@@ -145,16 +145,16 @@ export function Allenamento() {
           <Riga
             icona={ChartLine}
             coloreIcona="var(--c-forte)"
-            titolo="Progressi"
-            sottotitolo="Grafici e record di ogni esercizio"
+            titolo="Progress"
+            sottotitolo="Charts and records for every exercise"
             freccia
             onClick={() => nav.apri(Progressi)}
           />
           <Riga
             icona={CalendarCheck}
             coloreIcona="var(--c-leggera)"
-            titolo="Ritmo"
-            sottotitolo={`${minuti} di 150 minuti questa settimana · ${totale} ${totale === 1 ? 'allenamento' : 'allenamenti'} in tutto`}
+            titolo="Rhythm"
+            sottotitolo={`${minuti} of 150 minutes this week · ${totale} ${totale === 1 ? 'workout' : 'workouts'} in total`}
             freccia
             onClick={() => nav.apri(Ritmo)}
           />
@@ -170,7 +170,7 @@ export function Allenamento() {
 function Ciclo({ pos }) {
   return (
     <>
-      <div class="ciclo" aria-label={`Giorno ${pos + 1} di ${CICLO.length} del ciclo`}>
+      <div class="ciclo" aria-label={`Day ${pos + 1} of ${CICLO.length} in the cycle`}>
         {CICLO.map((t, i) => (
           <span
             key={i}
@@ -180,7 +180,7 @@ function Ciclo({ pos }) {
         ))}
       </div>
       <div class="ciclo-legenda">
-        <span>Ciclo: giorno {pos + 1} di {CICLO.length}</span>
+        <span>Cycle: day {pos + 1} of {CICLO.length}</span>
         <span>{CICLO.map((t) => nomeTipo(t)[0]).join(' · ')}</span>
       </div>
     </>
@@ -200,7 +200,7 @@ function FoglioGiornata({ tipo, forteIeri, oggi, bloccato, onChiudi }) {
   const inizia = () => {
     onChiudi()
     avviaAllenamento(t, oggi)
-    if (t === 'pausa') mostraMessaggio('Giornata di pausa segnata')
+    if (t === 'pausa') mostraMessaggio('Rest day marked')
   }
 
   return (
@@ -216,7 +216,7 @@ function FoglioGiornata({ tipo, forteIeri, oggi, bloccato, onChiudi }) {
         </p>
         {t === 'forte' && forteIeri && (
           <p class="avviso-esclusi" style={{ color: 'var(--orange)', background: 'color-mix(in srgb, var(--orange) 12%, transparent)' }}>
-            <TriangleAlert size={18} /> Ieri hai fatto una Forte: servono circa 48 ore di recupero per gli stessi muscoli.
+            <TriangleAlert size={18} /> Yesterday was a Strength day: the same muscles need about 48 hours to recover.
           </p>
         )}
         {g.blocchi.map((b) => (
@@ -241,7 +241,7 @@ function FoglioGiornata({ tipo, forteIeri, oggi, bloccato, onChiudi }) {
         ))}
         <div class="foglio-azioni">
           <button class="pulsante pieno" disabled={bloccato} onClick={inizia}>
-            {t === 'pausa' ? 'Segna giornata di pausa' : bloccato ? 'Hai già un allenamento in corso' : 'Inizia'}
+            {t === 'pausa' ? 'Mark a rest day' : bloccato ? 'You already have a workout in progress' : 'Start'}
           </button>
         </div>
       </div>

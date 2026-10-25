@@ -48,8 +48,8 @@ export function AllenamentoGuidato() {
   return createPortal(<Vista seduta={seduta} />, document.body)
 }
 
-/** 60 → "1 minuto", 1800 → "30 minuti", 30 → "30 secondi" */
-const durata = (s) => (s % 60 === 0 ? `${s / 60} ${s === 60 ? 'minuto' : 'minuti'}` : `${s} secondi`)
+/** 60 → "1 minute", 1800 → "30 minutes", 30 → "30 seconds" */
+const durata = (s) => (s % 60 === 0 ? `${s / 60} ${s === 60 ? 'minute' : 'minutes'}` : `${s} seconds`)
 
 /** Dimensione dell'anello del timer, più piccola sugli schermi bassi */
 const dimensioneAnello = (massima) => Math.round(Math.min(massima, window.innerWidth * 0.52, window.innerHeight * 0.26))
@@ -76,9 +76,9 @@ function Vista({ seduta }) {
   const chiudi = async () => {
     if (finito || seduta.stato === 'fatta') return sedutaAperta.set(null)
     const ok = await chiediConferma({
-      titolo: 'Uscire dall’allenamento?',
-      testo: 'Quello che hai fatto resta salvato: puoi riprendere dalla sezione Allenamento.',
-      conferma: 'Esci',
+      titolo: 'Leave the workout?',
+      testo: 'What you’ve done stays saved: you can resume from the Training section.',
+      conferma: 'Leave',
     })
     if (ok) sedutaAperta.set(null)
   }
@@ -87,12 +87,12 @@ function Vista({ seduta }) {
     seduta.stato === 'fatta' ? seduta.secondiAttivi : seduta.secondiAttivi + Math.max(0, (adesso - Date.parse(seduta.ultimaAttivita)) / 1000)
 
   return (
-    <div class={`guidato ${tinta}`} role="dialog" aria-modal="true" aria-label="Allenamento">
+    <div class={`guidato ${tinta}`} role="dialog" aria-modal="true" aria-label="Workout">
       <div class="guidato-barra">
-        <button class="pulsante-tondo" aria-label="Chiudi" onClick={chiudi} style={{ marginLeft: 8 }}>
+        <button class="pulsante-tondo" aria-label="Close" onClick={chiudi} style={{ marginLeft: 8 }}>
           <X size={16} strokeWidth={2.8} />
         </button>
-        <div class="centro">{finito ? 'Fatto!' : `${nomeTipo(seduta.tipo)} · ${passo.blocco}`}</div>
+        <div class="centro">{finito ? 'Done!' : `${nomeTipo(seduta.tipo)} · ${passo.blocco}`}</div>
         <span class="tempo num">{mmss(trascorso)}</span>
       </div>
       <div class="avanzamento" aria-hidden="true">
@@ -132,11 +132,11 @@ function Passo({ seduta, passo, adesso }) {
     <div class="guidato-collegamenti">
       {e.versioneFacile && (
         <button class="collegamento" onClick={() => usaVersioneFacile(seduta.id)}>
-          Versione facile
+          Easy version
         </button>
       )}
       <button class="collegamento" style={{ color: 'var(--label-2)' }} onClick={salta}>
-        Salta esercizio
+        Skip exercise
       </button>
     </div>
   )
@@ -144,10 +144,10 @@ function Passo({ seduta, passo, adesso }) {
   return (
     <>
       <div class="guidato-corpo">
-        <span class="guidato-blocco">{passo.serie ? `Serie ${passo.serie} di ${passo.totSerie}` : passo.blocco}</span>
+        <span class="guidato-blocco">{passo.serie ? `Set ${passo.serie} of ${passo.totSerie}` : passo.blocco}</span>
         <h1 class="guidato-nome">{e.nome}</h1>
         <div class="guidato-immagine">
-          <img src={immagineEsercizio(passo.esercizio)} alt={`${e.nome}: posizione 1 e 2`} />
+          <img src={immagineEsercizio(passo.esercizio)} alt={`${e.nome}: positions 1 and 2`} />
         </div>
         <ul class="guidato-istruzioni">
           {e.istruzioni.map((r) => (
@@ -159,19 +159,19 @@ function Passo({ seduta, passo, adesso }) {
           {passo.tipo === 'serie' && (
             <>
               <p class="guidato-obiettivo">
-                Obiettivo {passo.min === passo.max ? passo.min : `${passo.min}–${passo.max}`} ripetizioni
-                {passo.perLato ? ' per gamba' : ''}
+                Target {passo.min === passo.max ? passo.min : `${passo.min}–${passo.max}`} reps
+                {passo.perLato ? ' per leg' : ''}
                 {nota && <span class="guidato-nota">{nota}</span>}
-                {passo.precedente != null && <span class="guidato-nota">La volta scorsa: {passo.precedente}</span>}
+                {passo.precedente != null && <span class="guidato-nota">Last time: {passo.precedente}</span>}
               </p>
               <div class="contatore">
-                <button aria-label="Una in meno" onClick={() => (vibra(), setValore(Math.max(0, valore - 1)))}>
+                <button aria-label="One less" onClick={() => (vibra(), setValore(Math.max(0, valore - 1)))}>
                   <Minus size={28} strokeWidth={2.6} />
                 </button>
                 <span class="contatore-valore num" aria-live="polite">
                   {valore}
                 </span>
-                <button aria-label="Una in più" onClick={() => (vibra(), setValore(valore + 1))}>
+                <button aria-label="One more" onClick={() => (vibra(), setValore(valore + 1))}>
                   <Plus size={28} strokeWidth={2.6} />
                 </button>
               </div>
@@ -181,36 +181,36 @@ function Passo({ seduta, passo, adesso }) {
           {passo.tipo === 'ripetizioni' && (
             <>
               <p class="contatore-valore num">{passo.ripetizioni}</p>
-              <p class="guidato-obiettivo">{nota || 'ripetizioni'}</p>
+              <p class="guidato-obiettivo">{nota || 'reps'}</p>
             </>
           )}
 
           {aTempo && (
             <>
               <p class="guidato-obiettivo">
-                {passo.tipo === 'serieTempo' ? `Obiettivo ${passo.min}–${passo.max} secondi` : durata(passo.secondi)}
+                {passo.tipo === 'serieTempo' ? `Target ${passo.min}–${passo.max} seconds` : durata(passo.secondi)}
                 {nota && <span class="guidato-nota">{nota}</span>}
-                {passo.precedente != null && <span class="guidato-nota">La volta scorsa: {passo.precedente} s</span>}
+                {passo.precedente != null && <span class="guidato-nota">Last time: {passo.precedente} s</span>}
               </p>
               <button
                 class="anello-tocco"
                 onClick={timer.inCorso ? timer.pausa : timer.avvia}
-                aria-label={timer.inCorso ? 'Metti in pausa il timer' : 'Avvia il timer'}
+                aria-label={timer.inCorso ? 'Pause the timer' : 'Start the timer'}
               >
-                <Anello valore={Math.max(0, timer.restante) / timer.totale} dimensione={dimensioneAnello(190)} spessore={16} etichetta={`${Math.ceil(timer.restante)} secondi`}>
+                <Anello valore={Math.max(0, timer.restante) / timer.totale} dimensione={dimensioneAnello(190)} spessore={16} etichetta={`${Math.ceil(timer.restante)} seconds`}>
                   <span class="anello-testi">
                     <span class="timer-testo num">{mmss(timer.restante)}</span>
-                    <span class="timer-sotto">{timer.inCorso ? (passo.tipo === 'serieTempo' ? 'tieni la posizione' : 'in corso') : timer.inPausa ? 'in pausa' : 'pronto'}</span>
+                    <span class="timer-sotto">{timer.inCorso ? (passo.tipo === 'serieTempo' ? 'hold the position' : 'running') : timer.inPausa ? 'paused' : 'ready'}</span>
                   </span>
                 </Anello>
               </button>
               {passo.tipo === 'serieTempo' && !timer.iniziato && (
                 <div class="contatore" style={{ gap: 16 }}>
-                  <button aria-label="5 secondi in meno" onClick={() => setValore(Math.max(5, valore - 5))}>
+                  <button aria-label="5 seconds less" onClick={() => setValore(Math.max(5, valore - 5))}>
                     <Minus size={24} strokeWidth={2.6} />
                   </button>
                   <span class="t-headline num">{valore} s</span>
-                  <button aria-label="5 secondi in più" onClick={() => setValore(valore + 5)}>
+                  <button aria-label="5 seconds more" onClick={() => setValore(valore + 5)}>
                     <Plus size={24} strokeWidth={2.6} />
                   </button>
                 </div>
@@ -223,12 +223,12 @@ function Passo({ seduta, passo, adesso }) {
       <Piede>
         {passo.tipo === 'serie' && (
           <button class="pulsante pieno grande" onClick={() => (vibra(), completaPasso(seduta.id, valore))}>
-            Fatto: {valore} {valore === 1 ? 'ripetizione' : 'ripetizioni'}
+            Done: {valore} {valore === 1 ? 'rep' : 'reps'}
           </button>
         )}
         {passo.tipo === 'ripetizioni' && (
           <button class="pulsante pieno grande" onClick={() => (vibra(), completaPasso(seduta.id, passo.ripetizioni))}>
-            Fatto
+            Done
           </button>
         )}
         {aTempo && (
@@ -236,15 +236,15 @@ function Passo({ seduta, passo, adesso }) {
             {timer.inCorso ? (
               <>
                 <button class="pulsante grigio grande" onClick={timer.pausa}>
-                  <Pause size={22} fill="currentColor" /> Pausa
+                  <Pause size={22} fill="currentColor" /> Pause
                 </button>
                 <button class="pulsante tinta grande" onClick={timer.ferma}>
-                  {passo.tipo === 'serieTempo' ? 'Ferma qui' : 'Fatto'}
+                  {passo.tipo === 'serieTempo' ? 'Stop here' : 'Done'}
                 </button>
               </>
             ) : (
               <button class="pulsante pieno grande" onClick={timer.avvia}>
-                <Play size={22} fill="currentColor" /> {timer.inPausa ? 'Riprendi' : 'Avvia'}
+                <Play size={22} fill="currentColor" /> {timer.inPausa ? 'Resume' : 'Start'}
               </button>
             )}
           </div>
@@ -306,17 +306,17 @@ function Recupero({ seduta, adesso }) {
     <>
       <div class="guidato-corpo">
         <div class="recupero">
-          <p class="t-title2">Recupero</p>
-          <Anello valore={restante / totale} dimensione={dimensioneAnello(230)} spessore={18} etichetta={`${Math.ceil(restante)} secondi di recupero`}>
+          <p class="t-title2">Rest</p>
+          <Anello valore={restante / totale} dimensione={dimensioneAnello(230)} spessore={18} etichetta={`${Math.ceil(restante)} seconds of rest`}>
             <span class="anello-testi">
               <span class="timer-testo num">{mmss(restante)}</span>
-              <span class="timer-sotto">recupero</span>
+              <span class="timer-sotto">rest</span>
             </span>
           </Anello>
           {prossimo && (
             <p class="t-body c-label-2">
-              Poi: <strong class="c-label">{esercizio(prossimo.esercizio).nome}</strong>
-              {prossimo.serie ? ` · serie ${prossimo.serie} di ${prossimo.totSerie}` : ''}
+              Next: <strong class="c-label">{esercizio(prossimo.esercizio).nome}</strong>
+              {prossimo.serie ? ` · set ${prossimo.serie} of ${prossimo.totSerie}` : ''}
             </p>
           )}
         </div>
@@ -330,7 +330,7 @@ function Recupero({ seduta, adesso }) {
             +15 s
           </button>
           <button class="pulsante pieno grande" onClick={() => aggiornaSeduta(seduta.id, { recuperoFine: null })}>
-            Salta il recupero
+            Skip rest
           </button>
         </div>
       </Piede>
@@ -353,25 +353,25 @@ function Riepilogo({ seduta }) {
           <span class="tipo-icona" style={{ margin: '0 auto 12px' }}>
             <Trophy size={28} />
           </span>
-          <p class="t-title1">Allenamento completato!</p>
-          <p class="t-subheadline c-label-2">{nomeTipo(seduta.tipo)} · ottimo lavoro</p>
+          <p class="t-title1">Workout complete!</p>
+          <p class="t-subheadline c-label-2">{nomeTipo(seduta.tipo)} · great job</p>
         </div>
         <div class="riepilogo-numeri">
           <div>
             <span class="num">{minutiSeduta(seduta)}</span>
-            <span>minuti</span>
+            <span>minutes</span>
           </div>
           <div>
             <span class="num">{esercizi}</span>
-            <span>esercizi</span>
+            <span>exercises</span>
           </div>
           <div>
             <span class="num">{serie}</span>
-            <span>serie</span>
+            <span>sets</span>
           </div>
         </div>
         {record.length > 0 && (
-          <Sezione titolo="Nuovi record">
+          <Sezione titolo="New records">
             <Lista>
               {record.map((r) => (
                 <Riga
@@ -379,7 +379,7 @@ function Riepilogo({ seduta }) {
                   icona={Trophy}
                   coloreIcona="var(--orange)"
                   titolo={esercizio(r.esercizio).nome}
-                  sottotitolo={`Prima: ${r.prima}${r.unita ? ' s' : ''}`}
+                  sottotitolo={`Before: ${r.prima}${r.unita ? ' s' : ''}`}
                   valore={`${r.valore}${r.unita ? ' s' : ''}`}
                 />
               ))}
@@ -387,7 +387,7 @@ function Riepilogo({ seduta }) {
           </Sezione>
         )}
         {consigli.length > 0 && (
-          <Sezione titolo="Pronto per il passo successivo" piede="Hai fatto il massimo in tutte le serie: la prossima volta prova così.">
+          <Sezione titolo="Ready for the next step" piede="You hit the top of the range in every set: next time, try this.">
             <Lista>
               {consigli.map((c) => (
                 <Riga key={c.esercizio} icona={ChartLine} coloreIcona="var(--tint)" titolo={esercizio(c.esercizio).nome} sottotitolo={c.testo} />
@@ -398,7 +398,7 @@ function Riepilogo({ seduta }) {
       </div>
       <Piede>
         <button class="pulsante pieno grande" onClick={() => sedutaAperta.set(null)}>
-          Fine
+          Finish
         </button>
       </Piede>
     </>

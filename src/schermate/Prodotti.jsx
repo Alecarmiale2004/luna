@@ -27,19 +27,19 @@ export function Prodotti() {
 
   return (
     <Pagina
-      titolo="Prodotti"
-      sinistra={<PulsanteIndietro etichetta="Impostazioni" onClick={nav.indietro} />}
+      titolo="Products"
+      sinistra={<PulsanteIndietro etichetta="Settings" onClick={nav.indietro} />}
       destra={
-        <button class="nav-pulsante" aria-label="Nuovo prodotto" onClick={() => setModifica('nuovo')}>
+        <button class="nav-pulsante" aria-label="New product" onClick={() => setModifica('nuovo')}>
           <Plus size={26} />
         </button>
       }
     >
       <label class="ricerca" style={{ marginBottom: 8 }}>
         <Search size={18} />
-        <input type="search" placeholder="Cerca" value={testo} onInput={(e) => setTesto(e.currentTarget.value)} />
+        <input type="search" placeholder="Search" value={testo} onInput={(e) => setTesto(e.currentTarget.value)} />
         {testo && (
-          <button aria-label="Cancella" onClick={() => setTesto('')}>
+          <button aria-label="Clear" onClick={() => setTesto('')}>
             <CircleX size={18} fill="currentColor" color="var(--bg)" />
           </button>
         )}
@@ -52,7 +52,7 @@ export function Prodotti() {
           <Sezione
             key={r.id}
             titolo={`${r.nome} · ${r.dk}`}
-            piede={i === REPARTI.length - 1 ? 'I prodotti nascosti non compaiono nei suggerimenti. Lo storico delle spese resta com’è.' : undefined}
+            piede={i === REPARTI.length - 1 ? 'Hidden products don’t show up in suggestions. Your shopping history stays as it is.' : undefined}
           >
             <Lista>
               {prodotti.map((p) => (
@@ -61,7 +61,7 @@ export function Prodotti() {
                   classe={p.nascosto ? 'nascosta' : ''}
                   titolo={p.nome}
                   sottotitolo={p.dk || undefined}
-                  valore={p.nascosto ? 'Nascosto' : p.mio ? 'Mio' : undefined}
+                  valore={p.nascosto ? 'Hidden' : p.mio ? 'Mine' : undefined}
                   freccia
                   onClick={() => setModifica(p.id)}
                 />
@@ -88,34 +88,34 @@ function FoglioProdotto({ id, onChiudi }) {
 
   const cambia = (modifiche) => {
     if (nuovo) return setBozza({ ...bozza, ...modifiche })
-    // Il nome italiano non può restare vuoto
+    // Il nome non può restare vuoto
     if ('nome' in modifiche && !modifiche.nome.trim()) return
     salvaProdotto(idCorrente, modifiche)
   }
 
   const crea = () => {
     nuovoProdotto(bozza)
-    mostraMessaggio('Prodotto aggiunto')
+    mostraMessaggio('Product added')
     setBozza({ nome: '', dk: '', reparto: 'altro' })
     onChiudi()
   }
 
   return (
-    <Foglio aperto={!!id} onChiudi={onChiudi} titolo={nuovo ? 'Nuovo prodotto' : prodotto?.nome || ''}>
+    <Foglio aperto={!!id} onChiudi={onChiudi} titolo={nuovo ? 'New product' : prodotto?.nome || ''}>
       {prodotto && (
         <div class="tint-spesa">
           <Sezione>
             <Lista>
               <Riga
-                titolo="Italiano"
-                destra={<input class="riga-campo" value={prodotto.nome} placeholder="obbligatorio" onInput={(e) => cambia({ nome: e.currentTarget.value })} />}
+                titolo="Name"
+                destra={<input class="riga-campo" value={prodotto.nome} placeholder="required" onInput={(e) => cambia({ nome: e.currentTarget.value })} />}
               />
               <Riga
-                titolo="Danese"
-                destra={<input class="riga-campo" value={prodotto.dk} placeholder="facoltativo" onInput={(e) => cambia({ dk: e.currentTarget.value })} />}
+                titolo="Danish"
+                destra={<input class="riga-campo" value={prodotto.dk} placeholder="optional" onInput={(e) => cambia({ dk: e.currentTarget.value })} />}
               />
               <Riga
-                titolo="Reparto"
+                titolo="Aisle"
                 destra={<MenuValore valore={prodotto.reparto} opzioni={OPZIONI_REPARTO} onChange={(r) => cambia({ reparto: r })} />}
               />
             </Lista>
@@ -123,17 +123,17 @@ function FoglioProdotto({ id, onChiudi }) {
           <div class="foglio-azioni">
             {nuovo ? (
               <button class="pulsante pieno" disabled={!bozza.nome.trim()} onClick={crea}>
-                Aggiungi prodotto
+                Add product
               </button>
             ) : (
               <button
                 class="pulsante grigio"
                 onClick={() => {
                   cambia({ nascosto: !prodotto.nascosto })
-                  mostraMessaggio(prodotto.nascosto ? 'Prodotto di nuovo visibile' : 'Prodotto nascosto')
+                  mostraMessaggio(prodotto.nascosto ? 'Product visible again' : 'Product hidden')
                 }}
               >
-                {prodotto.nascosto ? 'Mostra di nuovo' : 'Nascondi prodotto'}
+                {prodotto.nascosto ? 'Show again' : 'Hide product'}
               </button>
             )}
           </div>

@@ -19,7 +19,7 @@ import { FoglioAggiungi } from './AggiungiProdotti.jsx'
 import { StoricoSpese } from './StoricoSpese.jsx'
 import './spesa.css'
 
-const confronta = (a, b) => a.nome.localeCompare(b.nome, 'it')
+const confronta = (a, b) => a.nome.localeCompare(b.nome, 'en')
 
 export function Spesa() {
   const nav = useNav()
@@ -47,33 +47,33 @@ export function Spesa() {
   const fatta = async () => {
     const rimasti = voci.length - presi
     const ok = await chiediConferma({
-      titolo: 'Spesa fatta?',
+      titolo: 'Done shopping?',
       testo: rimasti
-        ? `${presi} prodotti nel carrello. ${rimasti === 1 ? 'Quello non preso resta' : `I ${rimasti} non presi restano`} in lista per la prossima volta.`
-        : `${presi} prodotti nel carrello. La lista va nello storico.`,
-      conferma: 'Archivia',
+        ? `${presi} items in the cart. ${rimasti === 1 ? 'The one you didn’t get stays' : `The ${rimasti} you didn’t get stay`} on the list for next time.`
+        : `${presi} items in the cart. The list goes into your history.`,
+      conferma: 'Archive',
     })
     if (!ok) return
     spesaFatta()
     vibra()
-    mostraMessaggio('Spesa archiviata')
+    mostraMessaggio('Shopping archived')
   }
 
   const ripetiUltima = () => {
     const n = ripeti(ultima)
-    mostraMessaggio(n ? `${n} prodotti aggiunti` : 'Erano già tutti in lista')
+    mostraMessaggio(n ? `${n} items added` : 'They were all on the list already')
   }
 
   const aggiungiBase = () => {
     const n = aggiungi(BASE_COLAZIONE.map((id) => ({ prodotto: perId[id] })).filter((e) => e.prodotto))
-    mostraMessaggio(n ? `${n} prodotti aggiunti` : 'Erano già tutti in lista')
+    mostraMessaggio(n ? `${n} items added` : 'They were all on the list already')
   }
 
   const svuotaLista = async () => {
     const ok = await chiediConferma({
-      titolo: 'Svuotare la lista?',
-      testo: 'Tutti i prodotti vengono tolti dalla lista. Lo storico delle spese resta com’è.',
-      conferma: 'Svuota',
+      titolo: 'Clear the list?',
+      testo: 'All items are removed from the list. Your shopping history stays as it is.',
+      conferma: 'Clear',
       distruttiva: true,
     })
     if (ok) svuota()
@@ -81,14 +81,14 @@ export function Spesa() {
 
   return (
     <Pagina
-      titolo="Spesa"
-      titoloBarra={voci.length ? `${presi} di ${voci.length} nel carrello` : 'Spesa'}
+      titolo="Shopping"
+      titoloBarra={voci.length ? `${presi} of ${voci.length} in the cart` : 'Shopping'}
       destra={
         <>
-          <button class="nav-pulsante" aria-label="Storico delle spese" onClick={() => nav.apri(StoricoSpese, { indietro: 'Spesa' })}>
+          <button class="nav-pulsante" aria-label="Shopping history" onClick={() => nav.apri(StoricoSpese, { indietro: 'Shopping' })}>
             <Archive size={22} />
           </button>
-          <button class="nav-pulsante" aria-label="Aggiungi prodotti" onClick={() => setAggiungendo(true)}>
+          <button class="nav-pulsante" aria-label="Add items" onClick={() => setAggiungendo(true)}>
             <Plus size={26} />
           </button>
         </>
@@ -99,24 +99,24 @@ export function Spesa() {
           <div class="vuoto-icona">
             <ShoppingCart size={36} />
           </div>
-          <p class="t-title2">La lista è vuota</p>
-          <p class="t-subheadline c-label-2">Aggiungi quello che ti serve, oppure riparti dall’ultima spesa.</p>
+          <p class="t-title2">Your list is empty</p>
+          <p class="t-subheadline c-label-2">Add what you need, or start again from your last shop.</p>
           <div class="vuoto-azioni">
             {ultima && (
               <>
                 <button class="pulsante pieno" onClick={ripetiUltima}>
-                  Ripeti l’ultima spesa
+                  Repeat last shop
                 </button>
                 <p class="vuoto-nota">
-                  {formatoGiorno(ultima.data)} · {ultima.voci.length} prodotti
+                  {formatoGiorno(ultima.data)} · {ultima.voci.length} items
                 </p>
               </>
             )}
             <button class={`pulsante ${ultima ? 'tinta' : 'pieno'}`} onClick={() => setAggiungendo(true)}>
-              Aggiungi prodotti
+              Add items
             </button>
             <button class="pulsante grigio" onClick={aggiungiBase}>
-              Aggiungi la base della colazione
+              Add the breakfast basics
             </button>
           </div>
         </div>
@@ -124,7 +124,7 @@ export function Spesa() {
         <>
           <div class="sezione">
             <Card class="carrello">
-              <Anello valore={presi / voci.length} dimensione={58} spessore={9} etichetta={`${presi} di ${voci.length}`}>
+              <Anello valore={presi / voci.length} dimensione={58} spessore={9} etichetta={`${presi} of ${voci.length}`}>
                 {presi === voci.length ? (
                   <Check size={22} strokeWidth={3} color="var(--tint)" />
                 ) : (
@@ -133,9 +133,9 @@ export function Spesa() {
               </Anello>
               <div class="carrello-testi">
                 <p class="carrello-numeri num">
-                  {presi} <span class="di">di {voci.length}</span>
+                  {presi} <span class="di">of {voci.length}</span>
                 </p>
-                <p class="carrello-etichetta">{presi === voci.length ? 'Tutto nel carrello!' : 'nel carrello'}</p>
+                <p class="carrello-etichetta">{presi === voci.length ? 'All in the cart!' : 'in the cart'}</p>
               </div>
             </Card>
           </div>
@@ -146,18 +146,18 @@ export function Spesa() {
 
           <div class="spesa-azioni">
             <button class="pulsante pieno" disabled={!presi} onClick={fatta}>
-              Spesa fatta
+              Done shopping
             </button>
             <p class="sezione-piede">
-              {presi ? 'Archivia la lista nello storico. Tieni premuto un prodotto per cambiarlo o toglierlo.' : 'Spunta i prodotti mentre li metti nel carrello. Tieni premuto un prodotto per cambiarlo o toglierlo.'}
+              {presi ? 'Archives the list into your history. Press and hold an item to change or remove it.' : 'Tick items off as you put them in the cart. Press and hold an item to change or remove it.'}
             </p>
           </div>
 
           <Sezione>
             <Lista>
-              <Riga titolo="Aggiungi prodotti" tipo="azione" onClick={() => setAggiungendo(true)} />
-              {ultima && <Riga titolo="Ripeti l’ultima spesa" tipo="azione" onClick={ripetiUltima} />}
-              <Riga titolo="Svuota la lista" tipo="distruttiva" onClick={svuotaLista} />
+              <Riga titolo="Add items" tipo="azione" onClick={() => setAggiungendo(true)} />
+              {ultima && <Riga titolo="Repeat last shop" tipo="azione" onClick={ripetiUltima} />}
+              <Riga titolo="Clear the list" tipo="distruttiva" onClick={svuotaLista} />
             </Lista>
           </Sezione>
         </>
@@ -263,21 +263,21 @@ function FoglioVoce({ voce, onChiudi }) {
     <Foglio aperto={!!voce} onChiudi={onChiudi} titolo={v?.nome || ''}>
       {v && (
         <div class="tint-spesa">
-          <Sezione piede={v.dk ? `In negozio: ${v.dk}` : undefined}>
+          <Sezione piede={v.dk ? `In the store: ${v.dk}` : undefined}>
             <Lista>
               <Riga
-                titolo="Quantità"
+                titolo="Quantity"
                 destra={
                   <input
                     class="riga-campo"
                     type="text"
-                    placeholder="es. 2 confezioni"
+                    placeholder="e.g. 2 packs"
                     value={v.quantita}
                     onInput={(e) => aggiornaVoce(v.id, { quantita: e.currentTarget.value })}
                   />
                 }
               />
-              <Riga titolo="Reparto" valore={trovaReparto(v.reparto).nome} />
+              <Riga titolo="Aisle" valore={trovaReparto(v.reparto).nome} />
             </Lista>
           </Sezione>
           <div class="foglio-azioni">
@@ -288,7 +288,7 @@ function FoglioVoce({ voce, onChiudi }) {
                 onChiudi()
               }}
             >
-              {v.spuntato ? 'Rimetti da prendere' : 'Segna nel carrello'}
+              {v.spuntato ? 'Put back on the list' : 'Mark as in the cart'}
             </button>
             <button
               class="pulsante grigio"
@@ -298,7 +298,7 @@ function FoglioVoce({ voce, onChiudi }) {
                 onChiudi()
               }}
             >
-              Togli dalla lista
+              Remove from the list
             </button>
           </div>
         </div>

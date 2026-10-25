@@ -147,7 +147,7 @@ function LivelloSpinto({ classe, uscendo, onIndietro, zIndex, children }) {
 
 function TabBar({ tabs, attiva, onTocca }) {
   return (
-    <nav class="tabbar" aria-label="Sezioni">
+    <nav class="tabbar" aria-label="Sections">
       {tabs.map((t) => (
         <button
           key={t.id}

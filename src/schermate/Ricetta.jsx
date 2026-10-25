@@ -62,22 +62,22 @@ export function FoglioRicetta({ stato, onChiudi, inizioSettimana }) {
         <div class="ricetta-dati">
           <div class="ricetta-dato">
             <span class="num">~{applicata.proteinePorzione} g</span>
-            <span>proteine a porzione</span>
+            <span>protein per portion</span>
           </div>
           <div class="ricetta-dato">
             <span class="num">{ricetta.minuti}′</span>
-            <span>minuti</span>
+            <span>minutes</span>
           </div>
           <div class="ricetta-dato">
             <span class="num">2</span>
-            <span>porzioni</span>
+            <span>portions</span>
           </div>
         </div>
 
         {vietati.length > 0 && (
           <p class="avviso-esclusi">
             <TriangleAlert size={18} strokeWidth={2.4} style={{ marginTop: 1 }} />
-            Contiene cibi che hai escluso: {vietati.map((i) => perId[i.prodotto]?.nome).join(', ')}. Puoi scambiarli qui sotto.
+            Contains foods you’ve excluded: {vietati.map((i) => perId[i.prodotto]?.nome).join(', ')}. You can swap them below.
           </p>
         )}
 
@@ -88,8 +88,8 @@ export function FoglioRicetta({ stato, onChiudi, inizioSettimana }) {
           return (
             <Sezione
               key={b.id}
-              titolo={b.id === 'base' ? `${b.nome} · per 2 porzioni` : b.nome}
-              piede={b.id === 'proteina' && !voce ? 'Tocca un ingrediente per scambiarlo: le quantità si adattano da sole.' : undefined}
+              titolo={b.id === 'base' ? `${b.nome} · for 2 portions` : b.nome}
+              piede={b.id === 'proteina' && !voce ? 'Use the arrows next to an ingredient to swap it: quantities adjust automatically.' : undefined}
             >
               <Lista>
                 {ingredienti.map((ing) => {
@@ -97,7 +97,7 @@ export function FoglioRicetta({ stato, onChiudi, inizioSettimana }) {
                   const originale = ing.originale || ing.prodotto
                   const opzioni = scambiabile ? opzioniScambio(b.id, impostazioni.cibiEsclusi, perId) : []
                   if (scambiabile && !opzioni.some((o) => o.id === originale) && perId[originale]) opzioni.unshift(perId[originale])
-                  const nota = [ing.originale && `al posto di ${perId[ing.originale]?.nome.toLowerCase()}`, ing.nota, ing.facoltativo && 'facoltativo']
+                  const nota = [ing.originale && `instead of ${perId[ing.originale]?.nome.toLowerCase()}`, ing.nota, ing.facoltativo && 'optional']
                     .filter(Boolean)
                     .join(' · ')
                   return (
@@ -128,31 +128,31 @@ export function FoglioRicetta({ stato, onChiudi, inizioSettimana }) {
           )
         })}
 
-        <Sezione titolo="Porzioni">
+        <Sezione titolo="Portions">
           <Lista>
             <Riga
-              titolo="Pasto principale"
-              sottotitolo={base ? `${base.unita === 'g' ? Math.round(base.quantita / 1.7) : '—'} g di ${perId[base.prodotto]?.nome.toLowerCase()}, metà di proteina e verdura` : 'Metà della ricetta'}
+              titolo="Main meal"
+              sottotitolo={base ? `${base.unita === 'g' ? Math.round(base.quantita / 1.7) : '—'} g of ${perId[base.prodotto]?.nome.toLowerCase()}, half the protein and vegetables` : 'Half the recipe'}
               valore={`~${applicata.proteinePorzione} g`}
             />
             <Riga
-              titolo="Schiscetta"
-              sottotitolo={`${PASTI.schiscetta.riduzioneBaseGrammi} g di base in meno: più leggera da digerire di notte`}
+              titolo="Lunchbox"
+              sottotitolo={`${PASTI.schiscetta.riduzioneBaseGrammi} g less pasta or rice: lighter to digest at night`}
               valore={`~${Math.round(applicata.proteinePorzione - (PASTI.schiscetta.riduzioneBaseGrammi * (perId[base?.prodotto]?.proteine100 || 0)) / 100)} g`}
             />
           </Lista>
         </Sezione>
 
         {ricetta.procedimento && (
-          <Sezione titolo="Procedimento">
+          <Sezione titolo="Method">
             <p class="testo-card">{ricetta.procedimento}</p>
           </Sezione>
         )}
 
-        <Sezione titolo={`Nel piano · ${settimana}`}>
+        <Sezione titolo={`In the plan · ${settimana}`}>
           <Lista>
             <Riga
-              titolo={voce ? 'Volte in settimana' : 'Non ancora in programma'}
+              titolo={voce ? 'Times this week' : 'Not planned yet'}
               destra={
                 voce ? (
                   <>
@@ -170,10 +170,10 @@ export function FoglioRicetta({ stato, onChiudi, inizioSettimana }) {
               class="pulsante pieno"
               onClick={() => {
                 impostaVolte(inizio, ricetta.id, 1, scambiProva)
-                mostraMessaggio(`Aggiunta a ${settimana}`)
+                mostraMessaggio(`Added to ${settimana}`)
               }}
             >
-              Aggiungi alla settimana
+              Add to the week
             </button>
           </div>
         )}

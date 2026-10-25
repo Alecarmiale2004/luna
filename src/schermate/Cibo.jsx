@@ -35,25 +35,25 @@ export function Cibo() {
 
   const copiaScorsa = () => {
     sostituisciVoci(inizio, pianoPrima.voci)
-    mostraMessaggio('Ricette copiate dalla settimana scorsa')
+    mostraMessaggio('Recipes copied from last week')
   }
 
   return (
-    <Pagina titolo="Cibo" sopratitolo={giornata !== oggi ? `Pasti della notte di ${formatoGiorno(giornata)}` : undefined}>
+    <Pagina titolo="Food" sopratitolo={giornata !== oggi ? `Meals from the night of ${formatoGiorno(giornata)}` : undefined}>
       <CardProteine conPasti />
       <CardDaCucinare onApriRicetta={(voce) => setFoglio({ tipo: 'ricetta', id: voce.ricetta, voce: voce.id, inizio: lunediDi(giornata) })} />
 
       {/* ---------- Settimana ---------- */}
       <section class="sezione tint-cibo">
         <div class="settimana-cibo-testa">
-          <button class="settimana-freccia" aria-label="Settimana precedente" onClick={() => setScarto(scarto - 1)}>
+          <button class="settimana-freccia" aria-label="Previous week" onClick={() => setScarto(scarto - 1)}>
             <ChevronLeft size={22} strokeWidth={2.4} />
           </button>
           <div class="settimana-etichetta">
             <span class="settimana-nome">{etichettaSettimana(inizio, oggi)}</span>
-            <span class="settimana-conto">Ricette della settimana</span>
+            <span class="settimana-conto">Recipes for the week</span>
           </div>
-          <button class="settimana-freccia" aria-label="Settimana successiva" onClick={() => setScarto(scarto + 1)}>
+          <button class="settimana-freccia" aria-label="Next week" onClick={() => setScarto(scarto + 1)}>
             <ChevronRight size={22} strokeWidth={2.4} />
           </button>
         </div>
@@ -61,19 +61,19 @@ export function Cibo() {
         {voci.length === 0 ? (
           <>
             <Card>
-              <p class="t-headline">Nessuna ricetta in programma</p>
+              <p class="t-headline">No recipes planned</p>
               <p class="t-subheadline c-label-2">
-                Con {impostazioni.nottiSettimana} notti di lavoro bastano 3–4 ricette, ognuna cucinata 1–2 volte.
+                With {impostazioni.nottiSettimana} work nights, 3–4 recipes are enough, each cooked 1–2 times.
               </p>
               <button class="pulsante pieno" style={{ marginTop: 16 }} onClick={() => setFoglio({ tipo: 'pianifica' })}>
-                Scegli le ricette
+                Choose recipes
               </button>
             </Card>
             {(pianoPrima?.voci.length > 0 || settimaneTipo.length > 0) && (
-              <Sezione titolo="Oppure riparti da">
+              <Sezione titolo="Or start again from">
                 <Lista>
                   {pianoPrima?.voci.length > 0 && (
-                    <Riga titolo="La settimana scorsa" sottotitolo={riassunto(pianoPrima.voci, ricettePerId)} tipo="azione" onClick={copiaScorsa} />
+                    <Riga titolo="Last week" sottotitolo={riassunto(pianoPrima.voci, ricettePerId)} tipo="azione" onClick={copiaScorsa} />
                   )}
                   {settimaneTipo.map((t) => (
                     <Riga
@@ -83,7 +83,7 @@ export function Cibo() {
                       tipo="azione"
                       onClick={() => {
                         sostituisciVoci(inizio, t.voci)
-                        mostraMessaggio(`Settimana «${t.nome}» applicata`)
+                        mostraMessaggio(`“${t.nome}” applied`)
                       }}
                     />
                   ))}
@@ -96,17 +96,17 @@ export function Cibo() {
             <Card class="riepilogo-settimana">
               <div>
                 <span class="num">{sessioni}</span>
-                <span class="t-footnote c-label-2">{sessioni === 1 ? 'sessione' : 'sessioni'}</span>
+                <span class="t-footnote c-label-2">{sessioni === 1 ? 'session' : 'sessions'}</span>
               </div>
               <div>
                 <span class="num">{sessioni * 2}</span>
-                <span class="t-footnote c-label-2">porzioni</span>
+                <span class="t-footnote c-label-2">portions</span>
               </div>
               <div>
                 <span class="num">
                   {cucinate}/{sessioni}
                 </span>
-                <span class="t-footnote c-label-2">cucinate</span>
+                <span class="t-footnote c-label-2">cooked</span>
               </div>
             </Card>
             <div style={{ height: 12 }} />
@@ -122,8 +122,8 @@ export function Cibo() {
                     titolo={r.nome}
                     sottotitolo={
                       scambi.length
-                        ? scambi.map((i) => `${perId[i.prodotto]?.nome} al posto di ${perId[i.originale]?.nome.toLowerCase()}`).join(' · ')
-                        : `~${applicata.proteinePorzione} g di proteine · ${r.minuti} min`
+                        ? scambi.map((i) => `${perId[i.prodotto]?.nome} instead of ${perId[i.originale]?.nome.toLowerCase()}`).join(' · ')
+                        : `~${applicata.proteinePorzione} g of protein · ${r.minuti} min`
                     }
                     destra={
                       <span class="volte num">
@@ -138,13 +138,13 @@ export function Cibo() {
             </Lista>
             <div class="foglio-azioni" style={{ paddingTop: 16 }}>
               <button class="pulsante pieno" onClick={() => setFoglio({ tipo: 'genera' })}>
-                Genera lista della spesa
+                Make the shopping list
               </button>
             </div>
             <Sezione>
               <Lista>
-                <Riga titolo="Modifica le ricette" tipo="azione" onClick={() => setFoglio({ tipo: 'pianifica' })} />
-                <Riga titolo="Salva come settimana tipo" tipo="azione" onClick={() => setFoglio({ tipo: 'salva' })} />
+                <Riga titolo="Edit recipes" tipo="azione" onClick={() => setFoglio({ tipo: 'pianifica' })} />
+                <Riga titolo="Save this week for later" tipo="azione" onClick={() => setFoglio({ tipo: 'salva' })} />
               </Lista>
             </Sezione>
           </>
@@ -152,7 +152,7 @@ export function Cibo() {
       </section>
 
       {/* ---------- Ricettario ---------- */}
-      <Sezione titolo="Ricette" piede="Ogni ricetta dà 2 porzioni: il pasto principale e la schiscetta, più leggera.">
+      <Sezione titolo="Recipes" piede="Each recipe makes 2 portions: the main meal and a lighter lunchbox.">
         <Lista>
           {visibili.map((r) => {
             const vietati = ingredientiEsclusi(r.ingredienti, esclusi, perId)
@@ -160,7 +160,7 @@ export function Cibo() {
               <Riga
                 key={r.id}
                 titolo={r.nome}
-                sottotitolo={vietati.length ? `Contiene ${vietati.map((i) => perId[i.prodotto]?.nome.toLowerCase()).join(', ')}` : `~${r.proteinePorzione} g di proteine · ${r.minuti} min`}
+                sottotitolo={vietati.length ? `Contains ${vietati.map((i) => perId[i.prodotto]?.nome.toLowerCase()).join(', ')}` : `~${r.proteinePorzione} g of protein · ${r.minuti} min`}
                 destra={vietati.length ? <TriangleAlert size={18} color="var(--red)" /> : undefined}
                 freccia
                 onClick={() => apriRicetta(r.id)}
@@ -181,6 +181,6 @@ export function Cibo() {
 /** "Pasta pollo… ×2, Riso… ×1" in breve */
 function riassunto(voci, ricettePerId) {
   return voci
-    .map((v) => `${ricettePerId[v.ricetta]?.nome || 'Ricetta'}${v.volte > 1 ? ` ×${v.volte}` : ''}`)
+    .map((v) => `${ricettePerId[v.ricetta]?.nome || 'Recipe'}${v.volte > 1 ? ` ×${v.volte}` : ''}`)
     .join(', ')
 }

@@ -36,11 +36,11 @@ export function confezioni(prodotto, f) {
   const totale = c.unita === 'g' ? grammi : f.pz + (gPezzo ? (f.g + f.cucchiai * GRAMMI_CUCCHIAIO) / gPezzo : 0)
   if (totale <= 0) return null
   const n = Math.max(1, Math.ceil(totale / c.quantita - TOLLERANZA))
-  const nome = n === 1 ? c.nome || 'confezione' : c.plurale || 'confezioni'
+  const nome = n === 1 ? c.nome || 'pack' : c.plurale || 'packs'
   const testo = `${n} ${nome}${c.descrizione ? ` (${c.descrizione})` : ''}`
   // Quanto serve davvero: in grammi se le ricette lo pesano, altrimenti in pezzi
   // (niente "servono 7" accanto a "7 banane")
-  const serve = f.g > 0 || c.unita === 'g' ? `servono ~${Math.round(grammi)} g` : c.quantita > 1 ? `servono ${Math.ceil(totale)}` : ''
+  const serve = f.g > 0 || c.unita === 'g' ? `you need ~${Math.round(grammi)} g` : c.quantita > 1 ? `you need ${Math.ceil(totale)}` : ''
   return { n, testo, serve }
 }
 
@@ -102,6 +102,6 @@ export function calcolaSpesa({ piano, ricettePerId, perId, dispensaFinita = {}, 
     const c = confezioni(prodotto, fabbisogno)
     if (c) voci.push({ prodotto, quantita: c.testo, serve: c.serve })
   }
-  dispensa.sort((a, b) => posizioneReparto(a.prodotto.reparto) - posizioneReparto(b.prodotto.reparto) || a.prodotto.nome.localeCompare(b.prodotto.nome, 'it'))
+  dispensa.sort((a, b) => posizioneReparto(a.prodotto.reparto) - posizioneReparto(b.prodotto.reparto) || a.prodotto.nome.localeCompare(b.prodotto.nome, 'en'))
   return { voci, dispensa, sessioni: tutte.length, sessioniGiro: (giro === 2 ? secondaMeta : primaMeta).length }
 }

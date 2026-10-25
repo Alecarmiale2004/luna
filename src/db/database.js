@@ -56,7 +56,7 @@ export async function apriDatabase() {
 }
 
 export function database() {
-  if (!db) throw new Error('Database non ancora aperto')
+  if (!db) throw new Error('Database not open yet')
   return db
 }
 

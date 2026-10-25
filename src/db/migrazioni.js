@@ -10,7 +10,7 @@
 // quindi un backup vecchio si può sempre reimportare.
 // Prima di ogni migrazione l'app salva da sola una copia di sicurezza.
 
-export const VERSIONE_DATI = 3
+export const VERSIONE_DATI = 4
 
 // Cibi esclusi predefiniti della versione italiana → inglese (migrazione 2)
 const ESCLUSI_IN_INGLESE = {
@@ -56,6 +56,35 @@ const PAROLE_QUANTITA = {
 }
 const quantitaInItaliano = (testo) => testo.replace(/[a-z]+/g, (parola) => PAROLE_QUANTITA[parola] ?? parola)
 
+// Parole delle quantità generate dalla versione italiana → inglese (migrazione 4)
+const PAROLE_QUANTITA_IT = {
+  confezioni: 'packs',
+  confezione: 'pack',
+  pacchi: 'packs',
+  pacco: 'pack',
+  vaschette: 'trays',
+  vaschetta: 'tray',
+  pezzi: 'pieces',
+  pezzo: 'piece',
+  buste: 'bags',
+  busta: 'bag',
+  bottiglie: 'bottles',
+  bottiglia: 'bottle',
+  scatolette: 'cans',
+  scatoletta: 'can',
+  uova: 'eggs',
+  fette: 'slices',
+  banane: 'bananas',
+  mele: 'apples',
+  mela: 'apple',
+  sgocciolato: 'drained',
+}
+const quantitaInInglese = (testo) =>
+  testo
+    .replace(/l['’]un[oa]\b/g, 'each') // "~300 g l'una" → "~300 g each"
+    .replace(/\(da /g, '(') // "(da 500 g)" → "(500 g)"
+    .replace(/[a-z]+/g, (parola) => PAROLE_QUANTITA_IT[parola] ?? parola)
+
 /** Rinomina il campo `it` in `nome` (se c'è) */
 const conNome = ({ it, ...resto }) => (it === undefined ? resto : { nome: it, ...resto })
 
@@ -88,6 +117,24 @@ export const MIGRAZIONI = {
     dati.spese = (dati.spese || []).map((l) => ({
       ...l,
       voci: (l.voci || []).map((v) => (v.quantita ? { ...v, quantita: quantitaInItaliano(v.quantita) } : v)),
+    }))
+    return dati
+  },
+
+  // 4 — L'app torna in inglese (versione 1.3.0, decisione di Alessandro del 25/10/2026).
+  // Tornano in inglese i testi che la versione italiana poteva aver salvato da sola:
+  // cibi esclusi predefiniti, nomi automatici delle settimane tipo, quantità generate.
+  4: (dati) => {
+    dati.impostazioni = (dati.impostazioni || []).map((i) =>
+      Array.isArray(i.cibiEsclusi) ? { ...i, cibiEsclusi: i.cibiEsclusi.map((c) => ESCLUSI_IN_INGLESE[c] || c) } : i,
+    )
+    dati.settimaneTipo = (dati.settimaneTipo || []).map((t) => ({
+      ...t,
+      nome: (t.nome || '').replace(/^Settimana tipo\b/, 'Saved week'),
+    }))
+    dati.spese = (dati.spese || []).map((l) => ({
+      ...l,
+      voci: (l.voci || []).map((v) => (v.quantita ? { ...v, quantita: quantitaInInglese(v.quantita) } : v)),
     }))
     return dati
   },

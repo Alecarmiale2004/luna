@@ -10,7 +10,7 @@ import { eserciziMisurati, esercizio, storicoEsercizio, record, giornata, immagi
 import { useOggi, aggiungiGiorni, daISO, formatoBreve } from '../lib/giornata.js'
 import './allenamento.css'
 
-const breve = (iso) => daISO(iso).toLocaleDateString('it-IT', { day: 'numeric', month: 'short' })
+const breve = (iso) => daISO(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 
 export function Progressi() {
   const nav = useNav()
@@ -19,14 +19,14 @@ export function Progressi() {
   const conDati = ids.filter((id) => storicoEsercizio(sedute, id).length)
 
   return (
-    <Pagina titolo="Progressi" sinistra={<PulsanteIndietro etichetta="Allenamento" onClick={nav.indietro} />}>
+    <Pagina titolo="Progress" sinistra={<PulsanteIndietro etichetta="Training" onClick={nav.indietro} />}>
       <div class="tint-forte">
         {conDati.length === 0 && (
           <p class="t-body c-label-2" style={{ padding: '16px 32px', textAlign: 'center' }}>
-            Dopo la prima giornata Forte qui vedrai i grafici e i record di ogni esercizio.
+            After your first Strength day you’ll see charts and records for every exercise here.
           </p>
         )}
-        <Sezione titolo="Record personali" piede="Il record è la serie migliore di sempre. Tocca un esercizio per il grafico.">
+        <Sezione titolo="Personal records" piede="A record is your best set ever. Tap an exercise to see its chart.">
           <Lista>
             {ids.map((id) => {
               const r = record(sedute, id)
@@ -34,7 +34,7 @@ export function Progressi() {
                 <Riga
                   key={id}
                   titolo={esercizio(id).nome}
-                  sottotitolo={r ? `il ${formatoBreve(r.data)}` : 'Ancora nessun dato'}
+                  sottotitolo={r ? `on ${formatoBreve(r.data)}` : 'No data yet'}
                   valore={r ? `${r.valore}${r.unita ? ' s' : ''}` : '—'}
                   freccia
                   onClick={() => nav.apri(DettaglioEsercizio, { id })}
@@ -49,9 +49,9 @@ export function Progressi() {
 }
 
 const PERIODI = [
-  { valore: 28, etichetta: '4 settimane' },
-  { valore: 183, etichetta: '6 mesi' },
-  { valore: 0, etichetta: 'Da sempre' },
+  { valore: 28, etichetta: '4 weeks' },
+  { valore: 183, etichetta: '6 months' },
+  { valore: 0, etichetta: 'All time' },
 ]
 
 function DettaglioEsercizio({ id }) {
@@ -68,38 +68,38 @@ function DettaglioEsercizio({ id }) {
   const voce = giornata('forte').blocchi.flatMap((b) => b.voci).find((v) => v.esercizio === id)
 
   return (
-    <Pagina titolo={e.nome} titoloBarra="Progressi" sinistra={<PulsanteIndietro etichetta="Progressi" onClick={nav.indietro} />}>
+    <Pagina titolo={e.nome} titoloBarra="Progress" sinistra={<PulsanteIndietro etichetta="Progress" onClick={nav.indietro} />}>
       <div class="tint-forte">
         <div class="sezione">
           <Segmenti opzioni={PERIODI} valore={periodo} onChange={setPeriodo} />
           <Card>
             {punti.length ? (
               <GraficoLinea
-                etichetta={`${e.nome}: serie migliore per seduta`}
+                etichetta={`${e.nome}: best set per workout`}
                 unita={unita}
                 record={migliore}
                 punti={punti.map((x) => ({
                   etichetta: breve(x.data),
                   valore: x.valore,
-                  dettaglio: `${formatoBreve(x.data)} · migliore ${x.valore}${unita ? ' s' : ''} · serie: ${x.serie.join(', ')}`,
+                  dettaglio: `${formatoBreve(x.data)} · best ${x.valore}${unita ? ' s' : ''} · sets: ${x.serie.join(', ')}`,
                 }))}
               />
             ) : (
               <p class="t-body c-label-2" style={{ textAlign: 'center', padding: '24px 0' }}>
-                Nessun dato in questo periodo.
+                No data in this period.
               </p>
             )}
           </Card>
-          <p class="sezione-piede">Ogni punto è la tua serie migliore in una seduta{unita ? ', in secondi' : ', in ripetizioni'}.</p>
+          <p class="sezione-piede">Each point is your best set in a workout{unita ? ', in seconds' : ', in reps'}.</p>
         </div>
 
         {voce?.progressione && (
-          <Sezione titolo="Quando diventa facile">
+          <Sezione titolo="When it gets easy">
             <p class="testo-card">{voce.progressione}</p>
           </Sezione>
         )}
 
-        <Sezione titolo="Come si fa">
+        <Sezione titolo="How to do it">
           <Card>
             <img src={immagineEsercizio(id)} alt="" style={{ width: '100%', display: 'block' }} />
             <ul class="guidato-istruzioni" style={{ marginTop: 10 }}>
@@ -111,10 +111,10 @@ function DettaglioEsercizio({ id }) {
         </Sezione>
 
         {tutto.length > 0 && (
-          <Sezione titolo="Tutte le sedute">
+          <Sezione titolo="All workouts">
             <Lista>
               {[...tutto].reverse().map((x) => (
-                <Riga key={x.id} titolo={formatoBreve(x.data)} sottotitolo={`Serie: ${x.serie.join(' · ')}`} valore={`${x.valore}${unita ? ' s' : ''}`} />
+                <Riga key={x.id} titolo={formatoBreve(x.data)} sottotitolo={`Sets: ${x.serie.join(' · ')}`} valore={`${x.valore}${unita ? ' s' : ''}`} />
               ))}
             </Lista>
           </Sezione>

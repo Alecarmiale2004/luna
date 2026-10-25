@@ -16,10 +16,10 @@ import { Spesa } from './schermate/Spesa.jsx'
 
 // Le 4 sezioni della tab bar, nell'ordine in cui compaiono
 const TABS = [
-  { id: 'oggi', titolo: 'Oggi', Icona: SunMoon, tinta: 'tint-oggi', Schermata: Oggi },
-  { id: 'cibo', titolo: 'Cibo', Icona: Utensils, tinta: 'tint-cibo', Schermata: Cibo },
-  { id: 'spesa', titolo: 'Spesa', Icona: ShoppingCart, tinta: 'tint-spesa', Schermata: Spesa },
-  { id: 'allenamento', titolo: 'Allenamento', Icona: Corsa, tinta: 'tint-allenamento', Schermata: Allenamento },
+  { id: 'oggi', titolo: 'Today', Icona: SunMoon, tinta: 'tint-oggi', Schermata: Oggi },
+  { id: 'cibo', titolo: 'Food', Icona: Utensils, tinta: 'tint-cibo', Schermata: Cibo },
+  { id: 'spesa', titolo: 'Shopping', Icona: ShoppingCart, tinta: 'tint-spesa', Schermata: Spesa },
+  { id: 'allenamento', titolo: 'Training', Icona: Corsa, tinta: 'tint-allenamento', Schermata: Allenamento },
 ]
 
 export function App() {
@@ -48,14 +48,14 @@ export function App() {
     return (
       <div class="schermata-centrale">
         <div>
-          <p class="t-title2">{stato === 'troppoNuovi' ? 'Serve un aggiornamento' : 'Qualcosa non va'}</p>
+          <p class="t-title2">{stato === 'troppoNuovi' ? 'Update needed' : 'Something went wrong'}</p>
           <p class="t-body c-label-2" style={{ marginTop: 8 }}>
             {stato === 'troppoNuovi'
-              ? `I tuoi dati sono stati salvati da una versione più nuova di ${APP_NAME}. Chiudi e riapri l’app per aggiornarla: i dati sono al sicuro.`
-              : `${APP_NAME} non riesce ad aprire i dati. Chiudi e riapri l’app: i dati non sono stati toccati.`}
+              ? `Your data was saved by a newer version of ${APP_NAME}. Close and reopen the app to update it: your data is safe.`
+              : `${APP_NAME} can’t open your data. Close and reopen the app: your data hasn’t been touched.`}
           </p>
           <button class="pulsante pieno tint-blue" onClick={() => location.reload()}>
-            Riprova
+            Try again
           </button>
         </div>
       </div>
@@ -80,10 +80,10 @@ function BannerAggiornamento() {
     <div class="banner tint-blue" role="status">
       <RefreshCw size={22} color="var(--blue)" strokeWidth={2.2} />
       <p class="banner-testo">
-        <strong>Nuova versione disponibile</strong>I tuoi dati restano al sicuro.
+        <strong>New version available</strong>Your data stays safe.
       </p>
       <button class="pulsante piccolo pieno" onClick={aggiornaApp}>
-        Aggiorna
+        Update
       </button>
     </div>
   )

@@ -10,7 +10,7 @@ import { aggiungiGiorni, daISO } from '../lib/giornata.js'
 const intervallo = (inizio) => {
   const a = daISO(inizio)
   const b = daISO(aggiungiGiorni(inizio, 6))
-  const fmt = (d, mese) => d.toLocaleDateString('it-IT', mese ? { day: 'numeric', month: 'short' } : { day: 'numeric' })
+  const fmt = (d, mese) => d.toLocaleDateString('en-GB', mese ? { day: 'numeric', month: 'short' } : { day: 'numeric' })
   return `${fmt(a, a.getMonth() !== b.getMonth())} – ${fmt(b, true)} ${b.getFullYear()}`
 }
 
@@ -24,23 +24,23 @@ export function StoricoSettimane() {
   const settimane = piani.filter((p) => p.voci.length).sort((a, b) => b.inizio.localeCompare(a.inizio))
 
   return (
-    <Pagina titolo="Settimane" sinistra={<PulsanteIndietro etichetta="Impostazioni" onClick={nav.indietro} />}>
+    <Pagina titolo="Weeks" sinistra={<PulsanteIndietro etichetta="Settings" onClick={nav.indietro} />}>
       {preferite.length > 0 && (
-        <Sezione titolo="Le ricette che cucini di più">
+        <Sezione titolo="The recipes you cook most">
           <Lista>
             {preferite.map(([id, n]) => (
-              <Riga key={id} titolo={perId[id]?.nome || 'Ricetta eliminata'} valore={`${n} ${n === 1 ? 'volta' : 'volte'}`} />
+              <Riga key={id} titolo={perId[id]?.nome || 'Deleted recipe'} valore={`${n} ${n === 1 ? 'time' : 'times'}`} />
             ))}
           </Lista>
         </Sezione>
       )}
       {settimane.length === 0 && (
         <p class="t-body c-label-2" style={{ padding: '24px 32px', textAlign: 'center' }}>
-          Qui compariranno le settimane di ricette pianificate nella sezione Cibo.
+          Recipe weeks planned in the Food section will appear here.
         </p>
       )}
       {settimane.length > 0 && (
-        <Sezione titolo="Settimane pianificate">
+        <Sezione titolo="Planned weeks">
           <Lista>
             {settimane.map((p) => {
               const sessioni = p.voci.reduce((t, v) => t + v.volte, 0)
@@ -49,7 +49,7 @@ export function StoricoSettimane() {
                 <Riga
                   key={p.id}
                   titolo={intervallo(p.inizio)}
-                  sottotitolo={p.voci.map((v) => `${perId[v.ricetta]?.nome || 'Ricetta'}${v.volte > 1 ? ` ×${v.volte}` : ''}`).join(', ')}
+                  sottotitolo={p.voci.map((v) => `${perId[v.ricetta]?.nome || 'Recipe'}${v.volte > 1 ? ` ×${v.volte}` : ''}`).join(', ')}
                   valore={`${fatte}/${sessioni}`}
                 />
               )

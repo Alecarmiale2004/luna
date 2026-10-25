@@ -88,11 +88,11 @@ export function MenuValore({ valore, opzioni, onChange, soloIcona = false }) {
 export function Stepper({ valore, min = -Infinity, max = Infinity, passo = 1, onChange }) {
   return (
     <span class="stepper">
-      <button aria-label="Diminuisci" disabled={valore <= min} onClick={() => onChange(Math.max(min, valore - passo))}>
+      <button aria-label="Decrease" disabled={valore <= min} onClick={() => onChange(Math.max(min, valore - passo))}>
         <Minus size={18} strokeWidth={2.4} />
       </button>
       <span class="stepper-separatore" />
-      <button aria-label="Aumenta" disabled={valore >= max} onClick={() => onChange(Math.min(max, valore + passo))}>
+      <button aria-label="Increase" disabled={valore >= max} onClick={() => onChange(Math.min(max, valore + passo))}>
         <Plus size={18} strokeWidth={2.4} />
       </button>
     </span>
