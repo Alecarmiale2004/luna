@@ -8,7 +8,7 @@ import { createPortal } from 'preact/compat'
 import { Anello } from '../components/Anello.jsx'
 import { Sezione, Lista, Riga } from '../components/Lista.jsx'
 import { chiediConferma } from '../components/Avvisi.jsx'
-import { X, Minus, Plus, Play, Pause, Trophy, ChartLine } from '../components/icone.js'
+import { X, ChevronLeft, Minus, Plus, Play, Pause, Trophy, ChartLine } from '../components/icone.js'
 import { useSegnale } from '../lib/segnale.js'
 import { useDati } from '../db/dati.js'
 import {
@@ -16,7 +16,7 @@ import {
   immagineEsercizio,
   completaPasso,
   aggiornaSeduta,
-  usaVersioneFacile,
+  tornaIndietro,
   terminaSeduta,
   recordDellaSeduta,
   suggerimenti,
@@ -89,10 +89,18 @@ function Vista({ seduta }) {
   return (
     <div class={`guidato ${tinta}`} role="dialog" aria-modal="true" aria-label="Workout">
       <div class="guidato-barra">
-        <button class="pulsante-tondo" aria-label="Close" onClick={chiudi} style={{ marginLeft: 8 }}>
-          <X size={16} strokeWidth={2.8} />
-        </button>
-        <div class="centro">{finito ? 'Done!' : `${nomeTipo(seduta.tipo)} · ${passo.blocco}`}</div>
+        <span class="guidato-sinistra">
+          <button class="pulsante-tondo" aria-label="Close" onClick={chiudi}>
+            <X size={16} strokeWidth={2.8} />
+          </button>
+          {!finito && seduta.indice > 0 && (
+            <button class="indietro" aria-label="Back to the previous step" onClick={() => (vibra(), tornaIndietro(seduta.id))}>
+              <ChevronLeft size={20} strokeWidth={2.6} />
+              Back
+            </button>
+          )}
+        </span>
+        <div class="centro">{finito ? 'Done!' : passo.blocco}</div>
         <span class="tempo num">{mmss(trascorso)}</span>
       </div>
       <div class="avanzamento" aria-hidden="true">
@@ -104,7 +112,7 @@ function Vista({ seduta }) {
       ) : inRecupero ? (
         <Recupero seduta={seduta} adesso={adesso} />
       ) : (
-        // La chiave include l'esercizio: con la "versione facile" lo schermo riparte da zero
+        // La chiave include l'esercizio: cambiando passo lo schermo riparte da zero
         // (altrimenti terrebbe le ripetizioni dell'esercizio di prima come secondi del timer)
         <Passo seduta={seduta} passo={passo} adesso={adesso} key={`${seduta.indice}-${passo.esercizio}`} />
       )}
@@ -125,16 +133,11 @@ function Passo({ seduta, passo, adesso }) {
   const salta = () => completaPasso(seduta.id, null, { saltato: true })
   const aTempo = passo.tipo === 'tempo' || passo.tipo === 'serieTempo'
   const timer = useTimer({ seduta, passo, adesso, obiettivo: passo.tipo === 'tempo' ? passo.secondi : valore })
-  // La nota appartiene all'esercizio del programma: con la versione facile non vale
+  // La nota appartiene all'esercizio del programma (non a un sostituto scelto nelle Impostazioni)
   const nota = passo.esercizio === passo.slot ? passo.nota : ''
 
   const collegamenti = (
     <div class="guidato-collegamenti">
-      {e.versioneFacile && (
-        <button class="collegamento" onClick={() => usaVersioneFacile(seduta.id)}>
-          Easy version
-        </button>
-      )}
       <button class="collegamento" style={{ color: 'var(--label-2)' }} onClick={salta}>
         Skip exercise
       </button>

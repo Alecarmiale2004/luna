@@ -248,30 +248,24 @@ export function completaPasso(id, valore = null, { saltato = false } = {}) {
   })
 }
 
-/** Versione facile (es. verticale statica al posto delle flessioni) per le serie rimaste */
-export function usaVersioneFacile(id) {
+/**
+ * Torna al passo precedente (anche dal recupero): toglie quello che avevo registrato
+ * e lo rimette come valore di partenza, così posso correggerlo o rifarlo.
+ */
+export function tornaIndietro(id) {
   const s = sedutaDaId(id)
-  const passo = s?.passi[s.indice]
-  const facile = passo && esercizio(passo.esercizio).versioneFacile
-  if (!facile) return
-  const aTempo = facile === 'verticale-muro-statica'
-  // Nota e progressione erano dell'esercizio originale: per la versione facile non valgono
-  const passi = s.passi.map((p, i) =>
-    i >= s.indice && p.slot === passo.slot
-      ? {
-          ...p,
-          esercizio: facile,
-          tipo: aTempo ? 'serieTempo' : p.tipo,
-          min: aTempo ? 20 : p.min,
-          max: aTempo ? 30 : p.max,
-          valore: aTempo ? 20 : p.valore,
-          precedente: null,
-          nota: '',
-          progressione: '',
-        }
-      : p,
-  )
-  return salva({ ...s, passi, timer: null })
+  if (!s || s.indice <= 0) return
+  const indice = s.indice - 1
+  const registrazione = s.registrazioni.filter((r) => r.passo === indice).at(-1)
+  const passi = s.passi.map((p, i) => (i === indice && registrazione?.valore != null ? { ...p, valore: registrazione.valore } : p))
+  return salva({
+    ...s,
+    passi,
+    indice,
+    registrazioni: s.registrazioni.filter((r) => r.passo !== indice),
+    recuperoFine: null,
+    timer: null,
+  })
 }
 
 export function terminaSeduta(id) {

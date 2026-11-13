@@ -116,12 +116,32 @@
 }
 .guidato-barra {
   display: grid;
-  grid-template-columns: 44px 1fr 72px;
+  grid-template-columns: 110px 1fr 110px;
   align-items: center;
   min-height: 52px;
   padding: 0 var(--sp-2);
 }
+.guidato-sinistra {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-left: var(--sp-2);
+}
+.guidato-barra .indietro {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-right: var(--sp-2);
+  font-size: 17px;
+  color: var(--tint);
+}
+.guidato-barra .indietro:active {
+  opacity: 0.4;
+}
 .guidato-barra .centro {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   text-align: center;
   font-size: 15px;
   line-height: 20px;

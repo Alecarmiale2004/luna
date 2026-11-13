@@ -1,6 +1,6 @@
 {
   "name": "luna",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "Daily Life — personal app for the day plan, shopping, training and study (iPhone PWA)",
   "type": "module",
