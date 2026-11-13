@@ -1,25 +1,25 @@
-// Radice dell'app: avvia i dati, poi mostra le 4 sezioni con la tab bar.
+// Radice dell'app: avvia i dati, poi mostra le 4 sezioni con la tab bar (Oggi, Spesa, Allenamento, Studio).
 import { useEffect, useState } from 'preact/hooks'
 import { APP_NAME } from './config.js'
 import { Navigazione } from './navigazione.jsx'
 import { Avvisi, mostraMessaggio } from './components/Avvisi.jsx'
-import { SunMoon, Utensils, ShoppingCart, Corsa, RefreshCw } from './components/icone.js'
+import { Sunrise, ShoppingCart, Corsa, BookOpen, RefreshCw } from './components/icone.js'
 import { avvia, erroreSalvataggio } from './db/dati.js'
 import { DatiTroppoNuovi } from './db/migrazioni.js'
 import { useSegnale } from './lib/segnale.js'
 import { aggiornamentoPronto, aggiornaApp } from './aggiornamenti.js'
 import { Oggi } from './schermate/Oggi.jsx'
-import { Cibo } from './schermate/Cibo.jsx'
 import { Allenamento } from './schermate/Allenamento.jsx'
 import { AllenamentoGuidato } from './schermate/Guidato.jsx'
 import { Spesa } from './schermate/Spesa.jsx'
+import { Studio } from './schermate/Studio.jsx'
 
 // Le 4 sezioni della tab bar, nell'ordine in cui compaiono
 const TABS = [
-  { id: 'oggi', titolo: 'Today', Icona: SunMoon, tinta: 'tint-oggi', Schermata: Oggi },
-  { id: 'cibo', titolo: 'Food', Icona: Utensils, tinta: 'tint-cibo', Schermata: Cibo },
+  { id: 'oggi', titolo: 'Today', Icona: Sunrise, tinta: 'tint-oggi', Schermata: Oggi },
   { id: 'spesa', titolo: 'Shopping', Icona: ShoppingCart, tinta: 'tint-spesa', Schermata: Spesa },
   { id: 'allenamento', titolo: 'Training', Icona: Corsa, tinta: 'tint-allenamento', Schermata: Allenamento },
+  { id: 'studio', titolo: 'Study', Icona: BookOpen, tinta: 'tint-studio', Schermata: Studio },
 ]
 
 export function App() {

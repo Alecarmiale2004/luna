@@ -1,0 +1,65 @@
+/* Stili della sezione Studio */
+
+/* ---------- IELTS ---------- */
+.card-ielts {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.ielts-numero {
+  min-width: 64px;
+  display: grid;
+  place-items: center;
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: 700;
+  letter-spacing: var(--tr-34, -0.4px);
+  color: var(--tint);
+}
+
+/* ---------- Inglese: gli ultimi 7 giorni ---------- */
+.sette-giorni {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-top: var(--sp-3);
+}
+.sette-giorno {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.sette-iniziale {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--label-2);
+}
+.sette-giorno.oggi .sette-iniziale {
+  color: var(--tint);
+}
+.sette-cerchio {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--gray-4);
+  color: #fff;
+}
+.sette-giorno.fatto .sette-cerchio {
+  background: var(--tint);
+  border-color: var(--tint);
+}
+
+/* ---------- Lettura ---------- */
+.lettura {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-top: var(--sp-2);
+}
+.riga-azioni .pulsante.quadrato {
+  flex: 0 0 50px;
+  padding: 0;
+}

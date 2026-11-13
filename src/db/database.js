@@ -8,7 +8,7 @@
 //   si scrive una migrazione.
 import { openDB } from 'idb'
 
-export const NOME_DB = 'luna'
+export const NOME_DB = 'luna' // nome della prima versione: NON cambiarlo, i dati sono qui
 const VERSIONE_STRUTTURA = 1
 
 // Tutti gli archivi dell'app, anche quelli usati nelle fasi successive.
@@ -16,7 +16,7 @@ const VERSIONE_STRUTTURA = 1
 export const ARCHIVI = {
   meta: { chiave: 'chiave' }, // { chiave, valore }: versione dati, primo avvio, ultimo backup…
   impostazioni: { chiave: 'id' }, // un solo record, id "utente"
-  giorni: { chiave: 'data' }, // { data: "2026-10-22", tipo: "lavoro" | "libero" }
+  giorni: { chiave: 'data' }, // un record per giorno: blocchi spuntati, inglese, lettura, peso (vedi giorno.js)
   spese: { chiave: 'id', indici: ['data'] }, // liste della spesa (aperta + archiviate)
   prodotti: { chiave: 'id' }, // prodotti aggiunti o modificati da me
   ricette: { chiave: 'id' }, // ricette aggiunte, modificate o nascoste da me

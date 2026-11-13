@@ -1,13 +1,41 @@
-// Schermata "Oggi": il riepilogo della giornata, dal risveglio.
-// Nell'ordine della giornata: turno + mini-settimana, colazione, allenamento (con il conto
-// alla rovescia dopo la colazione), da cucinare, proteine, spesa da fare, promemoria backup.
+// Schermata "Oggi": la giornata tipo da spuntare, blocco per blocco, con quello in corso evidenziato.
+// Sopra: lavoro di oggi (di sera) + mini-settimana; sotto: spesa da fare e promemoria backup.
 import { useState } from 'preact/hooks'
 import { Pagina } from '../components/Pagina.jsx'
 import { Card, CardTesta } from '../components/Card.jsx'
-import { Moon, Sun, Settings, ChevronLeft, ChevronRight, ShieldCheck, ShoppingCart } from '../components/icone.js'
+import { Spunta } from '../components/Spunta.jsx'
+import { Segmenti } from '../components/Grafico.jsx'
+import {
+  Briefcase,
+  Sun,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+  ShieldCheck,
+  ShoppingCart,
+  ListChecks,
+  Play,
+  Pause,
+} from '../components/icone.js'
 import { useNav } from '../navigazione.jsx'
-import { useDati, segnaGiorno, scriviMeta } from '../db/dati.js'
+import { useDati, scriviMeta } from '../db/dati.js'
 import { useSpesa } from '../db/spesa.js'
+import {
+  orarioLavoro,
+  alternaLavoro,
+  alternaInizioLavoro,
+  INIZI_LAVORO,
+  blocchiDelGiorno,
+  bloccoAttuale,
+  segnaBlocco,
+  segnaInglese,
+  serieInglese,
+  secondiLettura,
+  avviaLettura,
+  fermaLettura,
+} from '../db/giorno.js'
+import { proposta } from '../db/allenamento.js'
+import PROGRAMMA from '../data/programma.json'
 import {
   useOggi,
   settimanaDi,
@@ -22,10 +50,9 @@ import {
 } from '../lib/giornata.js'
 import { usePressione } from '../lib/pressione.js'
 import { vibra } from '../lib/tocco.js'
+import { useAdesso, nomeTipo } from './allenamentoComune.jsx'
 import { Impostazioni } from './Impostazioni.jsx'
 import { FoglioEsporta } from './Backup.jsx'
-import { CardColazione, CardDaCucinare, CardProteine } from './ciboComune.jsx'
-import { CardAllenamentoOggi } from './allenamentoComune.jsx'
 import './oggi.css'
 
 export function Oggi() {
@@ -43,12 +70,9 @@ export function Oggi() {
       }
     >
       <div class="sezione">
-        <CardTurni oggi={oggi} />
+        <CardLavoro oggi={oggi} />
       </div>
-      <CardColazione />
-      <CardAllenamentoOggi />
-      <CardDaCucinare />
-      <CardProteine />
+      <CardGiornata oggi={oggi} />
       <CardSpesa />
       <PromemoriaBackup />
     </Pagina>
@@ -56,57 +80,48 @@ export function Oggi() {
 }
 
 // ---------------------------------------------------------------------------
-// Turno di stanotte + mini-settimana
+// Lavoro di oggi + mini-settimana
 // ---------------------------------------------------------------------------
 
-const TESTI_TURNO = {
-  lavoro: { titolo: 'Working tonight', icona: Moon },
-  libero: { titolo: 'Off tonight', icona: Sun },
-  vuoto: { titolo: 'Working tonight?', icona: null },
-}
-
-/** Un tocco alterna lavoro ↔ libero (un giorno non segnato diventa "lavoro"). */
-const prossimoTipo = (tipo) => (tipo === 'lavoro' ? 'libero' : 'lavoro')
-
-function segna(data, tipo) {
-  vibra()
-  segnaGiorno(data, tipo)
-}
-
-function CardTurni({ oggi }) {
-  const { giorni, impostazioni } = useDati()
+function CardLavoro({ oggi }) {
+  const dati = useDati()
   const [scarto, setScarto] = useState(0) // settimane rispetto a quella in corso
-  const tipoDi = (data) => giorni[data]?.tipo
-  const tipo = tipoDi(oggi) || 'vuoto'
-  const testi = TESTI_TURNO[tipo]
-  const sottotitolo =
-    tipo === 'lavoro'
-      ? `Shift ${impostazioni.inizioTurno} – ${impostazioni.fineTurno}`
-      : tipo === 'libero'
-        ? 'No shift: the day is all yours'
-        : 'Tap to mark your shift'
-
-  const pressione = usePressione({
-    onTocco: () => segna(oggi, prossimoTipo(tipoDi(oggi))),
-    onPressioneLunga: () => tipoDi(oggi) && segna(oggi, null),
-  })
-
+  const lavoro = orarioLavoro(oggi, dati)
   const settimana = settimanaDi(aggiungiGiorni(oggi, scarto * 7))
-  const notti = settimana.filter((d) => tipoDi(d) === 'lavoro').length
+  const giorniLavoro = settimana.filter((d) => orarioLavoro(d, dati)).length
+
+  const alterna = (data) => {
+    vibra()
+    alternaLavoro(data)
+  }
 
   return (
     <Card class="card-turni">
-      <CardTesta icona={Moon} titolo="Shift" />
+      <CardTesta icona={Briefcase} titolo="Work" />
 
-      <button class="turno-oggi" {...pressione} aria-label={`${testi.titolo}. Tap to change.`}>
-        <span class={`turno-icona ${tipo}`} key={tipo}>
-          {testi.icona && <testi.icona size={30} strokeWidth={2.2} />}
+      <button class="turno-oggi" onClick={() => alterna(oggi)} aria-label={`${lavoro ? 'Working today' : 'Day off'}. Tap to change.`}>
+        <span class={`turno-icona ${lavoro ? 'lavoro' : 'libero'}`} key={lavoro ? 'l' : 'f'}>
+          {lavoro ? <Briefcase size={28} strokeWidth={2.2} /> : <Sun size={30} strokeWidth={2.2} />}
         </span>
         <span class="turno-testi">
-          <span class="turno-titolo">{testi.titolo}</span>
-          <span class="turno-sottotitolo">{sottotitolo}</span>
+          <span class="turno-titolo">{lavoro ? `${lavoro.inizio} – ${lavoro.fine}` : 'Day off'}</span>
+          <span class="turno-sottotitolo">{lavoro ? 'Working this evening · tap if you’re off' : 'No work today · tap if you work'}</span>
         </span>
       </button>
+      {lavoro && (
+        <div class="turno-inizio">
+          <span class="t-subheadline c-label-2">Today I start at</span>
+          <Segmenti
+            opzioni={INIZI_LAVORO.map((ora) => ({ valore: ora, etichetta: ora }))}
+            valore={lavoro.inizio}
+            onChange={(ora) => {
+              if (ora === lavoro.inizio) return
+              vibra()
+              alternaInizioLavoro(oggi)
+            }}
+          />
+        </div>
+      )}
 
       <div class="divisore" />
 
@@ -117,7 +132,7 @@ function CardTurni({ oggi }) {
         <div class="settimana-etichetta">
           <span class="settimana-nome">{etichettaSettimana(settimana[0], oggi)}</span>
           <span class="settimana-conto">
-            <span class="num">{notti}</span> of {impostazioni.nottiSettimana} work nights
+            <span class="num">{giorniLavoro}</span> work {giorniLavoro === 1 ? 'day' : 'days'}
           </span>
         </div>
         <button class="settimana-freccia" aria-label="Next week" onClick={() => setScarto(scarto + 1)}>
@@ -131,37 +146,130 @@ function CardTurni({ oggi }) {
             key={data}
             data={data}
             iniziale={INIZIALI_GIORNI[i]}
-            tipo={tipoDi(data)}
+            lavoro={!!orarioLavoro(data, dati)}
+            cambiato={!!dati.giorni[data]?.lavoro}
             oggi={data === oggi}
             passato={data < oggi}
+            onAlterna={alterna}
           />
         ))}
       </div>
 
-      <p class="settimana-aiuto">Tap a day to mark it: moon = work, sun = off. Press and hold to clear it.</p>
+      <p class="settimana-aiuto">Tap a day to switch work and day off. Your usual days are in Settings.</p>
     </Card>
   )
 }
 
-function GiornoSettimana({ data, iniziale, tipo, oggi, passato }) {
-  const pressione = usePressione({
-    onTocco: () => segna(data, prossimoTipo(tipo)),
-    onPressioneLunga: () => tipo && segna(data, null),
-  })
-  const descrizione = tipo === 'lavoro' ? 'work' : tipo === 'libero' ? 'off' : 'not marked'
+function GiornoSettimana({ data, iniziale, lavoro, cambiato, oggi, passato, onAlterna }) {
+  const pressione = usePressione({ onTocco: () => onAlterna(data) })
   return (
     <button
       class={`giorno${oggi ? ' oggi' : ''}${passato ? ' passato' : ''}`}
       {...pressione}
-      aria-label={`${formatoGiorno(data)}: ${descrizione}`}
+      aria-label={`${formatoGiorno(data)}: ${lavoro ? 'work' : 'day off'}${cambiato ? ', changed this week' : ''}`}
     >
       <span class="giorno-iniziale">{iniziale}</span>
-      <span class={`giorno-icona ${tipo || 'vuoto'}`} key={tipo || 'vuoto'}>
-        {tipo === 'lavoro' && <Moon size={18} strokeWidth={2.4} />}
-        {tipo === 'libero' && <Sun size={18} strokeWidth={2.4} />}
+      <span class={`giorno-icona ${lavoro ? 'lavoro' : 'libero'}${cambiato ? ' cambiato' : ''}`} key={lavoro ? 'l' : 'f'}>
+        {lavoro ? <Briefcase size={17} strokeWidth={2.4} /> : <Sun size={18} strokeWidth={2.4} />}
       </span>
       <span class="giorno-numero num">{daISO(data).getDate()}</span>
     </button>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// La giornata: blocchi da spuntare
+// ---------------------------------------------------------------------------
+
+const mmss = (secondi) => `${Math.floor(secondi / 60)}:${String(Math.floor(secondi % 60)).padStart(2, '0')}`
+
+function CardGiornata({ oggi }) {
+  const nav = useNav()
+  const dati = useDati()
+  const adesso = useAdesso(1000)
+  const giorno = dati.giorni[oggi] || {}
+  const blocchi = blocchiDelGiorno(oggi, dati)
+  // Il blocco in corso solo per la data di oggi (dopo mezzanotte la pagina passa al giorno nuovo)
+  const attuale = oggi === dataISO(new Date(adesso)) ? bloccoAttuale(blocchi, new Date(adesso)) : null
+  const allenamento = proposta(dati.sedute, oggi)
+  const obiettivo = dati.impostazioni.obiettivoLetturaMinuti
+  const letti = secondiLettura(giorno, adesso)
+  const leggendo = !!giorno.lettura?.inizio
+
+  /** Fatto o no, per ogni blocco (quelli collegati guardano anche la loro sezione) */
+  const fatto = (b) => {
+    if (b.azione === 'inglese') return !!giorno.inglese
+    if (b.azione === 'lettura') return !!giorno.fatti?.lettura || letti >= obiettivo * 60
+    if (b.azione === 'allenamento') return !!giorno.fatti?.allenamento || !!allenamento.fattaOggi
+    return !!giorno.fatti?.[b.id]
+  }
+  const segna = (b, valore) => (b.azione === 'inglese' ? segnaInglese(oggi, valore) : segnaBlocco(oggi, b.id, valore))
+
+  const sottotitolo = (b) => {
+    if (b.azione === 'lettura') return leggendo ? `Reading… ${mmss(letti)}` : `${Math.floor(letti / 60)} of ${obiettivo} min`
+    if (b.azione === 'inglese') {
+      const n = serieInglese(dati.giorni, oggi)
+      return n ? `${n} ${n === 1 ? 'day' : 'days'} in a row` : 'Start your streak today'
+    }
+    if (b.azione === 'allenamento') {
+      const { inCorso, fattaOggi, tipo } = allenamento
+      if (inCorso) return `${nomeTipo(inCorso.tipo)} in progress`
+      if (fattaOggi) return fattaOggi.tipo === 'pausa' ? 'Rest day' : `${nomeTipo(fattaOggi.tipo)} done`
+      return tipo === 'pausa' ? 'Rest day' : `${nomeTipo(tipo)} · ${PROGRAMMA.giornate[tipo].durata}`
+    }
+    return b.nota || ''
+  }
+
+  const daFare = blocchi.filter((b) => !b.lavoro)
+  const fatti = daFare.filter(fatto).length
+
+  return (
+    <div class="sezione tint-oggi">
+      <Card class="card-giornata">
+        <CardTesta icona={ListChecks} titolo="My day" dettaglio={`${fatti} of ${daFare.length}`} />
+        <div class="blocchi">
+          {blocchi.map((b) => {
+            const vai =
+              b.azione === 'allenamento' ? () => nav.vaiATab('allenamento') : b.azione ? () => nav.vaiATab('studio') : null
+            return (
+              <div key={b.id} class={`blocco${b.id === attuale?.id ? ' attuale' : ''}${fatto(b) ? ' fatto' : ''}${b.lavoro ? ' lavoro' : ''}`}>
+                <span class="blocco-ora num">{b.ora}</span>
+                {b.lavoro ? (
+                  <span class="blocco-icona-lavoro" aria-hidden="true">
+                    <Briefcase size={16} strokeWidth={2.4} />
+                  </span>
+                ) : (
+                  <Spunta attiva={fatto(b)} onChange={(v) => segna(b, v)} etichetta={b.nome} />
+                )}
+                <button class="blocco-testi" onClick={vai || (b.lavoro ? undefined : () => (vibra(), segna(b, !fatto(b))))} disabled={b.lavoro}>
+                  <span class="blocco-nome">
+                    {b.nome}
+                    {b.azione === 'lettura' ? ` · ${obiettivo} min` : ''}
+                  </span>
+                  {sottotitolo(b) && <span class="blocco-nota">{sottotitolo(b)}</span>}
+                  {b.id === attuale?.id && !b.lavoro && <span class="blocco-adesso">Now</span>}
+                </button>
+                {b.azione === 'lettura' && !fatto(b) ? (
+                  <button
+                    class="blocco-azione"
+                    aria-label={leggendo ? 'Pause reading' : 'Start reading'}
+                    onClick={() => {
+                      vibra()
+                      leggendo ? fermaLettura(oggi) : avviaLettura(oggi)
+                    }}
+                  >
+                    {leggendo ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" />}
+                  </button>
+                ) : vai ? (
+                  <ChevronRight class="blocco-freccia" size={18} strokeWidth={2.4} />
+                ) : null}
+              </div>
+            )
+          })}
+        </div>
+        <p class="settimana-aiuto">Change the times and the blocks in Settings → My day.</p>
+      </Card>
+    </div>
   )
 }
 

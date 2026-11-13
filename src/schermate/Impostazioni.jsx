@@ -3,9 +3,9 @@ import { useEffect, useState } from 'preact/hooks'
 import { Pagina, PulsanteIndietro } from '../components/Pagina.jsx'
 import { Sezione, Lista, Riga, MenuValore, Stepper } from '../components/Lista.jsx'
 import {
-  AlarmClock,
-  Moon,
-  Beef,
+  Briefcase,
+  ListChecks,
+  GraduationCap,
   FileUp,
   FileDown,
   Bell,
@@ -19,22 +19,18 @@ import {
   ShieldCheck,
   ShoppingBasket,
   Archive,
-  Ban,
-  CookingPot,
   Dumbbell,
 } from '../components/icone.js'
 import { GestioneEsercizi } from './GestioneEsercizi.jsx'
 import { StoricoAllenamenti } from './StoricoAllenamenti.jsx'
-import { GestioneRicette } from './GestioneRicette.jsx'
-import { CibiEsclusi } from './CibiEsclusi.jsx'
-import { StoricoSettimane } from './StoricoSettimane.jsx'
+import { OrariLavoro, GiornataTipo } from './MiaGiornata.jsx'
 import { Prodotti } from './Prodotti.jsx'
 import { StoricoSpese } from './StoricoSpese.jsx'
 import { useNav } from '../navigazione.jsx'
 import { useDati, aggiornaImpostazioni } from '../db/dati.js'
 import { VERSIONE_DATI } from '../db/migrazioni.js'
 import { formatoDimensione } from '../db/backup.js'
-import { tempoFa } from '../lib/giornata.js'
+import { tempoFa, formatoBreve } from '../lib/giornata.js'
 import { FoglioEsporta, FoglioImporta, FoglioCopie } from './Backup.jsx'
 import { AnteprimaStile } from './AnteprimaStile.jsx'
 
@@ -57,54 +53,55 @@ export function Impostazioni() {
       <Sezione titolo="My day">
         <Lista>
           <Riga
-            icona={AlarmClock}
-            coloreIcona="var(--orange)"
-            titolo="Usual wake-up time"
-            destra={
-              <input
-                type="time"
-                class="campo-ora"
-                value={impostazioni.risveglio}
-                onChange={(e) => e.currentTarget.value && aggiornaImpostazioni({ risveglio: e.currentTarget.value })}
-              />
-            }
+            icona={Briefcase}
+            coloreIcona="var(--indigo)"
+            titolo="Work days"
+            valore={`${impostazioni.lavoro.filter(Boolean).length} a week`}
+            freccia
+            onClick={() => nav.apri(OrariLavoro)}
           />
           <Riga
-            icona={Moon}
-            coloreIcona="var(--indigo)"
-            titolo="Work nights a week"
-            destra={
-              <>
-                <span class="riga-valore num">{impostazioni.nottiSettimana}</span>
-                <Stepper
-                  valore={impostazioni.nottiSettimana}
-                  min={0}
-                  max={7}
-                  onChange={(v) => aggiornaImpostazioni({ nottiSettimana: v })}
-                />
-              </>
-            }
+            icona={ListChecks}
+            coloreIcona="var(--orange)"
+            titolo="Day plan"
+            valore={`${impostazioni.blocchi.length} blocks`}
+            freccia
+            onClick={() => nav.apri(GiornataTipo)}
           />
         </Lista>
       </Sezione>
 
-      <Sezione titolo="Goals" piede="To tone up: about 95–120 g of protein a day.">
+      <Sezione titolo="Study">
         <Lista>
           <Riga
-            icona={Beef}
-            coloreIcona="var(--orange)"
-            titolo="Protein"
+            icona={BookOpen}
+            coloreIcona="var(--indigo)"
+            titolo="Reading goal"
             destra={
               <>
-                <span class="riga-valore num">{impostazioni.obiettivoProteine} g</span>
+                <span class="riga-valore num">{impostazioni.obiettivoLetturaMinuti} min</span>
                 <Stepper
-                  valore={impostazioni.obiettivoProteine}
-                  min={60}
-                  max={200}
+                  valore={impostazioni.obiettivoLetturaMinuti}
+                  min={5}
+                  max={180}
                   passo={5}
-                  onChange={(v) => aggiornaImpostazioni({ obiettivoProteine: v })}
+                  onChange={(v) => aggiornaImpostazioni({ obiettivoLetturaMinuti: v })}
                 />
               </>
+            }
+          />
+          <Riga
+            icona={GraduationCap}
+            coloreIcona="var(--indigo)"
+            titolo="IELTS exam"
+            destra={
+              <input
+                type="date"
+                class="campo-ora"
+                aria-label={impostazioni.dataIelts ? formatoBreve(impostazioni.dataIelts) : 'No date'}
+                value={impostazioni.dataIelts || ''}
+                onChange={(e) => aggiornaImpostazioni({ dataIelts: e.currentTarget.value || '' })}
+              />
             }
           />
         </Lista>
@@ -161,16 +158,7 @@ export function Impostazioni() {
 
       <Sezione titolo="Content">
         <Lista>
-          <Riga icona={BookOpen} coloreIcona="var(--orange)" titolo="Recipes" freccia onClick={() => nav.apri(GestioneRicette)} />
           <Riga icona={Dumbbell} coloreIcona="var(--pink)" titolo="Exercises" freccia onClick={() => nav.apri(GestioneEsercizi)} />
-          <Riga
-            icona={Ban}
-            coloreIcona="var(--red)"
-            titolo="Excluded foods"
-            valore={String(impostazioni.cibiEsclusi.length)}
-            freccia
-            onClick={() => nav.apri(CibiEsclusi)}
-          />
           <Riga
             icona={ShoppingBasket}
             coloreIcona="var(--green)"
@@ -190,7 +178,6 @@ export function Impostazioni() {
             freccia
             onClick={() => nav.apri(StoricoSpese, { indietro: 'Settings' })}
           />
-          <Riga icona={CookingPot} coloreIcona="var(--orange)" titolo="Recipe weeks" freccia onClick={() => nav.apri(StoricoSettimane)} />
           <Riga icona={CalendarDays} coloreIcona="var(--pink)" titolo="Workouts" freccia onClick={() => nav.apri(StoricoAllenamenti)} />
         </Lista>
       </Sezione>

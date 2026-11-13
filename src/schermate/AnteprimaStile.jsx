@@ -27,9 +27,9 @@ const TESTI = [
 
 const COLORI = [
   ['Today', 'var(--c-oggi)'],
-  ['Food', 'var(--c-cibo)'],
   ['Shopping', 'var(--c-spesa)'],
   ['Training', 'var(--c-allenamento)'],
+  ['Study', 'var(--c-studio)'],
   ['Accent', 'var(--blue)'],
   ['Error', 'var(--red)'],
 ]
@@ -138,7 +138,7 @@ export function AnteprimaStile() {
         </Lista>
       </Sezione>
 
-      <Foglio aperto={foglio} onChiudi={() => setFoglio(false)} titolo="Strength day">
+      <Foglio aperto={foglio} onChiudi={() => setFoglio(false)} titolo="Push and abs">
         <div class="tint-allenamento">
           <p class="foglio-spiegazione">
             Example bottom sheet. Close it with the X, by tapping outside or by dragging it down.

@@ -14,12 +14,12 @@ const stato = creaSegnale({
   pronto: false,
   impostazioni: { ...IMPOSTAZIONI_PREDEFINITE },
   meta: {},
-  // { "2026-10-22": { data, tipo: "lavoro" | "libero", pasti: { colazione: true, … } } }
+  // { "2026-11-13": { data, fatti: { pranzo: true, … }, inglese, lettura, peso, … } } (vedi giorno.js)
   giorni: {},
   spese: [], // liste della spesa: una "aperta" + quelle archiviate (vedi spesa.js)
   prodottiMiei: {}, // prodotti aggiunti o modificati da me, per id (vedi catalogo.js)
-  ricetteMie: {}, // ricette aggiunte, modificate o nascoste da me, per id (vedi ricette.js)
-  piani: [], // settimane pianificate (vedi piani.js)
+  ricetteMie: {}, // ricette della sezione Cibo (tolta nella 2.0): restano solo come dati salvati
+  piani: [], // settimane di ricette della sezione Cibo (solo dati salvati)
   settimaneTipo: [], // settimane salvate da riusare
   sedute: [], // allenamenti (vedi allenamento.js)
   eserciziMiei: {}, // serie/ripetizioni/sostituzioni cambiate da me, per esercizio del programma
@@ -150,12 +150,15 @@ export function scriviMeta(chiave, valore) {
   return scrivi((db) => db.put('meta', { chiave, valore }))
 }
 
-/** Aggiorna il record di un giorno (tipo, pasti…); se resta vuoto lo elimina. */
-function aggiornaGiorno(data, modifica) {
+/** C'è qualcosa da tenere? (valori vuoti, false e oggetti vuoti non contano) */
+const pieno = (v) => (v && typeof v === 'object' ? Object.values(v).some(pieno) : !!v || v === 0)
+
+/** Aggiorna il record di un giorno (vedi giorno.js); se resta vuoto lo elimina. */
+export function aggiornaGiorno(data, modifica) {
   const prima = stato.get().giorni[data] || { data }
   const record = modifica({ ...prima })
   record.aggiornato = new Date().toISOString()
-  const vuoto = !record.tipo && !Object.values(record.pasti || {}).some(Boolean)
+  const vuoto = !Object.entries(record).some(([k, v]) => k !== 'data' && k !== 'aggiornato' && pieno(v))
   stato.set((s) => {
     const giorni = { ...s.giorni }
     if (vuoto) delete giorni[data]
@@ -163,20 +166,6 @@ function aggiornaGiorno(data, modifica) {
     return { ...s, giorni }
   })
   return scrivi((db) => (vuoto ? db.delete('giorni', data) : db.put('giorni', record)))
-}
-
-/** tipo: "lavoro", "libero" oppure null per togliere il segno */
-export function segnaGiorno(data, tipo) {
-  return aggiornaGiorno(data, (g) => {
-    if (tipo) g.tipo = tipo
-    else delete g.tipo
-    return g
-  })
-}
-
-/** Segna un pasto come fatto (o no). pasto: "colazione" | "principale" | "schiscetta" | … */
-export function segnaPasto(data, pasto, fatto) {
-  return aggiornaGiorno(data, (g) => ({ ...g, pasti: { ...g.pasti, [pasto]: fatto } }))
 }
 
 function impostaMeta(dati, chiave, valore) {

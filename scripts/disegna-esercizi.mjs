@@ -152,6 +152,66 @@ const ESERCIZI = {
     tappetino: true,
     etichetta: 'hold',
   },
+  // Visti di lato larghi e stretti sembrano push-up normali: lo dice l'etichetta
+  'push-up-larghi': {
+    pose: [
+      { t: 100, h: 104, bV: 0, aV: 0, bL: 3, aL: 3, cV: -80, sV: -80, pV: 10, cL: -80, sL: -80, pL: 10 },
+      { t: 95, h: 100, bV: -55, aV: 5, bL: -53, aL: 6, cV: -84, sV: -84, pV: 6, cL: -84, sL: -84, pL: 6 },
+    ],
+    muscoli: ['petto', 'spalle'],
+    freccia: { giunto: 'spalla' },
+    tappetino: true,
+    etichetta: 'hands wide',
+  },
+  'push-up-stretti': {
+    pose: [
+      { t: 100, h: 104, bV: 0, aV: 0, bL: 3, aL: 3, cV: -80, sV: -80, pV: 10, cL: -80, sL: -80, pL: 10 },
+      { t: 95, h: 100, bV: -62, aV: 8, bL: -60, aL: 9, cV: -84, sV: -84, pV: 6, cL: -84, sL: -84, pL: 6 },
+    ],
+    muscoli: ['braccia', 'petto'],
+    freccia: { giunto: 'spalla' },
+    tappetino: true,
+    etichetta: 'hands close',
+  },
+  'hollow-hold': {
+    pose: [
+      { t: -90, h: -92, bV: -92, aV: -92, bL: -90, aL: -90, cV: 90, sV: 90, pV: 180, cL: 90, sL: 90, pL: 180 },
+      { t: -106, h: -112, bV: -102, aV: -102, bL: -100, aL: -100, cV: 106, sV: 106, pV: 196, cL: 104, sL: 104, pL: 194 },
+    ],
+    muscoli: ['addominali'],
+    freccia: { giunto: 'caviglia' },
+    tappetino: true,
+    etichetta: 'hold',
+  },
+  'sollevamento-gambe': {
+    pose: [
+      { t: -90, h: -92, bV: 92, aV: 92, bL: 90, aL: 90, cV: 95, sV: 95, pV: 180, cL: 94, sL: 94, pL: 180 },
+      { t: -90, h: -92, bV: 92, aV: 92, bL: 90, aL: 90, cV: 176, sV: 176, pV: 180, cL: 174, sL: 174, pL: 180 },
+    ],
+    muscoli: ['addominali'],
+    freccia: { giunto: 'caviglia' },
+    tappetino: true,
+  },
+  'crunch-bicicletta': {
+    pose: [
+      { t: -118, h: -108, bV: 140, aV: 140, bL: 138, aL: 138, cV: 150, sV: 60, pV: 150, cL: 100, sL: 100, pL: 190 },
+      { t: -118, h: -108, bV: 140, aV: 140, bL: 138, aL: 138, cV: 100, sV: 100, pV: 190, cL: 150, sL: 60, pL: 150 },
+    ],
+    muscoli: ['addominali'],
+    freccia: { giunto: 'ginocchio' },
+    tappetino: true,
+  },
+  'plank-laterale': {
+    pose: [
+      // braccio teso sotto la spalla: anche e piedi scesi (1), corpo in linea retta (2)
+      { vista: 'fronte', t: 134, h: 128, bV: 2, aV: 2, bL: -40, aL: -40, cV: -76, sV: -76, pV: -166, cL: -78, sL: -78, pL: -168 },
+      { vista: 'fronte', t: 114, h: 114, bV: 2, aV: 2, bL: 180, aL: 180, cV: -66, sV: -66, pV: -156, cL: -68, sL: -68, pL: -158 },
+    ],
+    muscoli: ['addominali'],
+    freccia: { giunto: 'anca' },
+    tappetino: true,
+    etichetta: 'hold',
+  },
   'stretching-quadricipiti': {
     pose: [IN_PIEDI, posa(IN_PIEDI, { cV: -5, sV: -165, pV: -100, bV: -15, aV: -15, bL: 70, aL: 80 })],
     muscoli: ['cosce'],

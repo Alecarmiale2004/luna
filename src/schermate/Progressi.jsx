@@ -20,10 +20,10 @@ export function Progressi() {
 
   return (
     <Pagina titolo="Progress" sinistra={<PulsanteIndietro etichetta="Training" onClick={nav.indietro} />}>
-      <div class="tint-forte">
+      <div class="tint-spinta">
         {conDati.length === 0 && (
           <p class="t-body c-label-2" style={{ padding: '16px 32px', textAlign: 'center' }}>
-            After your first Strength day you’ll see charts and records for every exercise here.
+            After your first Push or Legs day you’ll see charts and records for every exercise here.
           </p>
         )}
         <Sezione titolo="Personal records" piede="A record is your best set ever. Tap an exercise to see its chart.">
@@ -65,11 +65,11 @@ function DettaglioEsercizio({ id }) {
   const punti = tutto.filter((x) => x.data >= da)
   const unita = punti[0]?.unita || tutto[0]?.unita || ''
   const migliore = punti.length ? punti.reduce((m, x, i) => (x.valore > punti[m].valore ? i : m), 0) : null
-  const voce = giornata('forte').blocchi.flatMap((b) => b.voci).find((v) => v.esercizio === id)
+  const voce = ['spinta', 'gambe', 'forte'].flatMap((t) => giornata(t).blocchi.flatMap((b) => b.voci)).find((v) => v.esercizio === id)
 
   return (
     <Pagina titolo={e.nome} titoloBarra="Progress" sinistra={<PulsanteIndietro etichetta="Progress" onClick={nav.indietro} />}>
-      <div class="tint-forte">
+      <div class="tint-spinta">
         <div class="sezione">
           <Segmenti opzioni={PERIODI} valore={periodo} onChange={setPeriodo} />
           <Card>

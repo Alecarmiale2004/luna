@@ -14,7 +14,7 @@ import { useSpesa, aggiornaVoce, rimuoviVoce, spesaFatta, ripeti, aggiungi, svuo
 import { usePressione } from '../lib/pressione.js'
 import { vibra } from '../lib/tocco.js'
 import { formatoGiorno } from '../lib/giornata.js'
-import BASE_COLAZIONE from '../data/spesa-base.json'
+import SETTIMANA from '../data/spesa-settimana.json'
 import { FoglioAggiungi } from './AggiungiProdotti.jsx'
 import { StoricoSpese } from './StoricoSpese.jsx'
 import './spesa.css'
@@ -64,8 +64,12 @@ export function Spesa() {
     mostraMessaggio(n ? `${n} items added` : 'They were all on the list already')
   }
 
-  const aggiungiBase = () => {
-    const n = aggiungi(BASE_COLAZIONE.map((id) => ({ prodotto: perId[id] })).filter((e) => e.prodotto))
+  /** La mia settimana normale (src/data/spesa-settimana.json), con le quantità */
+  const aggiungiSettimana = () => {
+    vibra()
+    const n = aggiungi(
+      SETTIMANA.filter((e) => e.prodotto && perId[e.prodotto]).map((e) => ({ prodotto: perId[e.prodotto], quantita: e.quantita })),
+    )
     mostraMessaggio(n ? `${n} items added` : 'They were all on the list already')
   }
 
@@ -100,11 +104,15 @@ export function Spesa() {
             <ShoppingCart size={36} />
           </div>
           <p class="t-title2">Your list is empty</p>
-          <p class="t-subheadline c-label-2">Add what you need, or start again from your last shop.</p>
+          <p class="t-subheadline c-label-2">Add your usual week in one tap, then remove what you still have at home.</p>
           <div class="vuoto-azioni">
+            <button class="pulsante pieno" onClick={aggiungiSettimana}>
+              Add my usual week
+            </button>
+            <p class="vuoto-nota">Eggs, bread, chicken, vegetables, bananas, rice, pasta…</p>
             {ultima && (
               <>
-                <button class="pulsante pieno" onClick={ripetiUltima}>
+                <button class="pulsante tinta" onClick={ripetiUltima}>
                   Repeat last shop
                 </button>
                 <p class="vuoto-nota">
@@ -112,11 +120,8 @@ export function Spesa() {
                 </p>
               </>
             )}
-            <button class={`pulsante ${ultima ? 'tinta' : 'pieno'}`} onClick={() => setAggiungendo(true)}>
+            <button class="pulsante grigio" onClick={() => setAggiungendo(true)}>
               Add items
-            </button>
-            <button class="pulsante grigio" onClick={aggiungiBase}>
-              Add the breakfast basics
             </button>
           </div>
         </div>
@@ -156,6 +161,7 @@ export function Spesa() {
           <Sezione>
             <Lista>
               <Riga titolo="Add items" tipo="azione" onClick={() => setAggiungendo(true)} />
+              <Riga titolo="Add my usual week" tipo="azione" onClick={aggiungiSettimana} />
               {ultima && <Riga titolo="Repeat last shop" tipo="azione" onClick={ripetiUltima} />}
               <Riga titolo="Clear the list" tipo="distruttiva" onClick={svuotaLista} />
             </Lista>

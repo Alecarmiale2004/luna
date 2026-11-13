@@ -512,3 +512,26 @@
     background: #636366;
   }
 }
+
+/* ---------- Peso ---------- */
+.peso-riga {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-1);
+}
+.peso-campo {
+  width: 5.5ch;
+  font: inherit;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: var(--tr-title1, 0);
+  color: var(--label);
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+}
+.peso-riga .pulsante {
+  margin-left: auto;
+}

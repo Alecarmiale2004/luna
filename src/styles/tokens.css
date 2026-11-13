@@ -37,7 +37,7 @@
   /* ---------- Colori di accento ---------- */
   --blue: #007aff; /* accento generale */
   --indigo: #5856d6; /* Oggi */
-  --orange: #ff9500; /* Cibo */
+  --orange: #ff9500; /* Oggi */
   --green: #34c759; /* Spesa */
   --pink: #ff2d55; /* Allenamento */
   --red: #ff3b30; /* errore / elimina */
@@ -45,13 +45,15 @@
 
   /* Tipi di giornata dell'allenamento (palette verificata anche per daltonismo;
      sono sempre accompagnati da icona o nome) */
+  --c-spinta: var(--pink);
+  --c-gambe: var(--orange);
   --c-forte: var(--pink);
   --c-leggera: #1a9bb4;
   --c-mobilita: #af52de;
   --c-pausa: var(--gray);
 
-  --c-oggi: var(--indigo);
-  --c-cibo: var(--orange);
+  --c-oggi: var(--orange);
+  --c-studio: var(--indigo);
   --c-spesa: var(--green);
   --c-allenamento: var(--pink);
 
@@ -177,10 +179,12 @@
 
 /* Colore di ogni sezione */
 .tint-oggi { --tint: var(--c-oggi); }
-.tint-cibo { --tint: var(--c-cibo); }
+.tint-studio { --tint: var(--c-studio); }
 .tint-spesa { --tint: var(--c-spesa); }
 .tint-allenamento { --tint: var(--c-allenamento); }
 .tint-blue { --tint: var(--blue); }
+.tint-spinta { --tint: var(--c-spinta); }
+.tint-gambe { --tint: var(--c-gambe); }
 .tint-forte { --tint: var(--c-forte); }
 .tint-leggera { --tint: var(--c-leggera); }
 .tint-mobilita { --tint: var(--c-mobilita); }

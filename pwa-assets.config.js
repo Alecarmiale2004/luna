@@ -3,7 +3,7 @@ import { defineConfig, minimal2023Preset as preset } from '@vite-pwa/assets-gene
 
 // L'icona disegnata occupa già tutto il quadrato: niente margini bianchi.
 // iOS arrotonda gli angoli da solo.
-const pieno = { padding: 0, resizeOptions: { background: '#5E5CE6', fit: 'contain' } }
+const pieno = { padding: 0, resizeOptions: { background: '#FF9F0A', fit: 'contain' } }
 
 export default defineConfig({
   headLinkOptions: { preset: '2023' },

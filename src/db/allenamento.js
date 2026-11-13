@@ -1,7 +1,8 @@
 // Allenamento: programma, ciclo delle giornate, sedute guidate, record e statistiche.
 //
 // seduta (archivio "sedute") = {
-//   id, data: "2026-10-22", tipo: "forte" | "leggera" | "mobilita" | "pausa", posCiclo,
+//   id, data: "2026-10-22", tipo: "spinta" | "gambe" | "leggera" | "mobilita" | "pausa"
+//   (o "forte", la giornata della versione 1, solo nello storico), posCiclo,
 //   stato: "in-corso" | "fatta", inizio, fine, secondiAttivi, ultimaAttivita,
 //   passi: [passo] (copiati all'inizio: riprendendo, il piano resta lo stesso),
 //   indice (passo attuale), registrazioni: [{ passo, esercizio, serie, valore, saltato }],
@@ -15,10 +16,11 @@ import { nuovoId } from '../lib/id.js'
 import { aggiungiGiorni, giorniTra, lunediDi } from '../lib/giornata.js'
 
 export const CICLO = PROGRAMMA.ciclo
-export const TIPI = ['forte', 'leggera', 'mobilita', 'pausa']
+/** I tipi di giornata che si possono scegliere ("forte" resta solo per lo storico) */
+export const TIPI = ['spinta', 'gambe', 'leggera', 'mobilita', 'pausa']
+/** Giornate di forza: gli stessi muscoli non si allenano due giorni di fila */
+export const FORZA = ['spinta', 'gambe', 'forte']
 export const RECUPERO = PROGRAMMA.recuperoSecondi
-export const ATTESA_COLAZIONE = PROGRAMMA.attesaDopoColazioneMinuti
-export const FINIRE_ENTRO = PROGRAMMA.finireEntro
 
 const PER_ID = Object.fromEntries(ESERCIZI.map((e) => [e.id, e]))
 export const esercizio = (id) => PER_ID[id] || { id, nome: id, istruzioni: [], muscoli: '' }
@@ -78,7 +80,7 @@ export function ripristinaVoce(tipo, blocco, slot) {
 }
 
 // ---------------------------------------------------------------------------
-// Ciclo: Forte → Leggera → Forte → Leggera → Forte → Leggera → Pausa
+// Ciclo: Push → Legs → Light → Push → Legs → Light → Rest
 // ---------------------------------------------------------------------------
 
 const corrisponde = (tipoCiclo, tipo) => tipoCiclo === tipo || (tipoCiclo === 'leggera' && tipo === 'mobilita')
@@ -94,7 +96,7 @@ function posizioneProssima(sedute) {
 
 /**
  * Cosa propone l'app oggi: il prossimo tipo del ciclo, calcolato da cosa ho fatto l'ultima volta
- * (non dai giorni della settimana). Se ieri ho fatto una Forte, oggi non ne propone un'altra.
+ * (non dai giorni della settimana). Se ieri ho fatto la stessa giornata di forza, oggi propone la Leggera.
  */
 export function proposta(sedute, oggi) {
   const inCorso = sedute.find((s) => s.stato === 'in-corso') || null
@@ -102,9 +104,12 @@ export function proposta(sedute, oggi) {
   const fattaOggi = fatte.filter((s) => s.data === oggi).at(-1) || null
   const pos = posizioneProssima(sedute)
   let tipo = CICLO[pos]
-  const forteIeri = fatte.some((s) => s.tipo === 'forte' && s.data === aggiungiGiorni(oggi, -1))
-  if (tipo === 'forte' && forteIeri) tipo = 'leggera'
-  return { tipo, pos, inCorso, fattaOggi, forteIeri }
+  const ieri = fatte.filter((s) => s.data === aggiungiGiorni(oggi, -1)).map((s) => s.tipo)
+  // la stessa giornata di forza di ieri (o una Forte della versione 1, che allenava tutto)
+  const ripetuta = (t) => FORZA.includes(t) && (ieri.includes(t) || ieri.includes('forte'))
+  const forteIeri = ripetuta(tipo)
+  if (forteIeri) tipo = 'leggera'
+  return { tipo, pos, inCorso, fattaOggi, forteIeri, ripetuta }
 }
 
 export function useAllenamento(oggi) {
@@ -290,7 +295,7 @@ export const minutiSeduta = (s) => Math.round((s.secondiAttivi || 0) / 60)
 /** Esercizi con serie (forza e plank) presenti nello storico o nel programma */
 export function eserciziMisurati() {
   const ids = new Set()
-  for (const b of giornata('forte').blocchi) for (const v of b.voci) if (v.serie) ids.add(v.esercizio)
+  for (const t of ['spinta', 'gambe']) for (const b of giornata(t).blocchi) for (const v of b.voci) if (v.serie) ids.add(v.esercizio)
   for (const s of datiCorrenti().sedute) for (const p of s.passi) if (p.tipo === 'serie' || p.tipo === 'serieTempo') ids.add(p.esercizio)
   return [...ids]
 }

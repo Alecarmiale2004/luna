@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 250" role="img" aria-label="plank-laterale">
+<style>
+.sfondo{fill:#F2F2F7}.terra{stroke:#C7C7CC}.corpo{stroke:#8E8E93;fill:#8E8E93}.lontano{stroke:#C7C7CC;fill:#C7C7CC}
+.muscolo{stroke:#FF3B30;fill:#FF3B30}line,path{stroke-linecap:round;stroke-linejoin:round}line.corpo,line.lontano,line.muscolo,path.corpo{fill:none}
+.pieno{stroke:none}.freccia{fill:none;stroke:#007AFF;stroke-width:3.5}.tappetino{fill:#B9CBE4}.muro{fill:#D1D1D6}
+.num{fill:#FFFFFF;font:700 15px -apple-system,system-ui,sans-serif}.bollo{fill:#1C1C1E}.tra{fill:none;stroke:#AEAEB2;stroke-width:4}
+.etichetta{fill:#636366;font:600 13px -apple-system,system-ui,sans-serif}
+@media (prefers-color-scheme:dark){.sfondo{fill:#2C2C2E}.terra{stroke:#48484A}.corpo{stroke:#AEAEB2;fill:#AEAEB2}.lontano{stroke:#636366;fill:#636366}
+.muscolo{stroke:#FF453A;fill:#FF453A}.freccia{stroke:#0A84FF}.tappetino{fill:#3A4A63}.muro{fill:#48484A}.bollo{fill:#F2F2F7}.num{fill:#1C1C1E}
+.tra{stroke:#636366}.etichetta{fill:#AEAEB2}}</style>
+<g>
+<rect x="0" y="0" width="200" height="250" rx="18" class="sfondo"/>
+<line x1="10" y1="234" x2="190" y2="234" stroke-width="2" class="terra"/>
+<rect x="17.7" y="229" width="156.7" height="5" rx="2.5" class="tappetino"/><line x1="140.2" y1="146.5" x2="121.6" y2="168.7" stroke-width="10" class="corpo"/><line x1="121.6" y1="168.7" x2="104.9" y2="188.6" stroke-width="8" class="corpo"/><circle cx="104.9" cy="188.6" r="4.5" class="corpo pieno"/><line x1="109.8" y1="187" x2="67.8" y2="195.9" stroke-width="14" class="corpo"/><line x1="67.8" y1="195.9" x2="27.7" y2="204.5" stroke-width="10" class="corpo"/><line x1="27.7" y1="204.5" x2="26" y2="196.6" stroke-width="6" class="corpo"/><line x1="115.4" y1="192.8" x2="151.4" y2="158" stroke-width="30" class="corpo"/><line x1="151.4" y1="158" x2="157.7" y2="153.1" stroke-width="8" class="corpo"/><circle cx="166.3" cy="146.3" r="11" class="corpo pieno"/><line x1="120.9" y1="198.5" x2="79.2" y2="208.9" stroke-width="14" class="corpo"/><line x1="79.2" y1="208.9" x2="39.4" y2="218.8" stroke-width="10" class="corpo"/><line x1="39.4" y1="218.8" x2="37.5" y2="211.1" stroke-width="6" class="corpo"/><line x1="162.5" y1="169.5" x2="163.5" y2="198.5" stroke-width="10" class="corpo"/><line x1="163.5" y1="198.5" x2="164.4" y2="224.5" stroke-width="8" class="corpo"/><circle cx="164.4" cy="224.5" r="4.5" class="corpo pieno"/><line x1="120.8" y1="187.5" x2="135.2" y2="173.7" stroke-width="14.4" class="muscolo"/><path d="M100.2 200.4 Q90.3 192 89.4 179" class="freccia"/><path d="M97.5 183.9 L89.4 179 L88.5 188.4" class="freccia"/>
+<circle cx="22" cy="22" r="13" class="bollo"/><text x="22" y="27.5" text-anchor="middle" class="num">1</text>
+</g>
+<path d="M212 113 L226 125 L212 137" class="tra"/>
+<g>
+<rect x="240" y="0" width="200" height="250" rx="18" class="sfondo"/>
+<line x1="250" y1="234" x2="430" y2="234" stroke-width="2" class="terra"/>
+<rect x="259.8" y="229" width="150.8" height="5" rx="2.5" class="tappetino"/><line x1="385.7" y1="140.3" x2="385.7" y2="111.3" stroke-width="10" class="corpo"/><line x1="385.7" y1="111.3" x2="385.7" y2="85.3" stroke-width="8" class="corpo"/><circle cx="385.7" cy="85.3" r="4.5" class="corpo pieno"/><line x1="343.3" y1="167.9" x2="303.4" y2="184.1" stroke-width="14" class="corpo"/><line x1="303.4" y1="184.1" x2="265.4" y2="199.4" stroke-width="10" class="corpo"/><line x1="265.4" y1="199.4" x2="262.4" y2="192" stroke-width="6" class="corpo"/><line x1="346.5" y1="175.3" x2="392.2" y2="154.9" stroke-width="30" class="corpo"/><line x1="392.2" y1="154.9" x2="399.5" y2="151.7" stroke-width="8" class="corpo"/><circle cx="409.6" cy="147.2" r="11" class="corpo pieno"/><line x1="349.8" y1="182.6" x2="310.5" y2="200.1" stroke-width="14" class="corpo"/><line x1="310.5" y1="200.1" x2="273.1" y2="216.7" stroke-width="10" class="corpo"/><line x1="273.1" y1="216.7" x2="269.8" y2="209.4" stroke-width="6" class="corpo"/><line x1="398.7" y1="169.5" x2="399.7" y2="198.5" stroke-width="10" class="corpo"/><line x1="399.7" y1="198.5" x2="400.7" y2="224.5" stroke-width="8" class="corpo"/><circle cx="400.7" cy="224.5" r="4.5" class="corpo pieno"/><line x1="353.4" y1="172.2" x2="371.7" y2="164.1" stroke-width="14.4" class="muscolo"/><text x="426" y="30" text-anchor="end" class="etichetta">hold</text>
+<circle cx="262" cy="22" r="13" class="bollo"/><text x="262" y="27.5" text-anchor="middle" class="num">2</text>
+</g>
+</svg>

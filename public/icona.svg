@@ -1,22 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
   <defs>
-    <linearGradient id="sfondo" x1="0" y1="0" x2="0.35" y2="1">
-      <stop offset="0" stop-color="#7D7AF0"/>
-      <stop offset="0.55" stop-color="#5E5CE6"/>
-      <stop offset="1" stop-color="#3F3BB8"/>
+    <linearGradient id="sfondo" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#FFC24D"/>
+      <stop offset="0.55" stop-color="#FF9F0A"/>
+      <stop offset="1" stop-color="#F07800"/>
     </linearGradient>
-    <radialGradient id="luce" cx="0.3" cy="0.15" r="0.75">
-      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+    <radialGradient id="luce" cx="0.5" cy="0.62" r="0.55">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/>
       <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
-    <mask id="falce">
-      <rect width="1024" height="1024" fill="#000"/>
-      <circle cx="500" cy="532" r="270" fill="#fff"/>
-      <circle cx="628" cy="420" r="230" fill="#000"/>
-    </mask>
   </defs>
   <rect width="1024" height="1024" fill="url(#sfondo)"/>
   <rect width="1024" height="1024" fill="url(#luce)"/>
-  <rect width="1024" height="1024" fill="#FFFFFF" mask="url(#falce)"/>
-  <path d="M742 282 l14 38 38 14 -38 14 -14 38 -14 -38 -38 -14 38 -14 z" fill="#FFFFFF" opacity="0.9"/>
+  <!-- Sole che sorge: mezzo disco sopra l'orizzonte, tre raggi -->
+  <path d="M282 640 A230 230 0 0 1 742 640 Z" fill="#FFFFFF"/>
+  <g stroke="#FFFFFF" stroke-width="54" stroke-linecap="round" fill="none">
+    <line x1="512" y1="236" x2="512" y2="318"/>
+    <line x1="246" y1="350" x2="304" y2="404"/>
+    <line x1="778" y1="350" x2="720" y2="404"/>
+    <line x1="206" y1="722" x2="818" y2="722"/>
+  </g>
 </svg>

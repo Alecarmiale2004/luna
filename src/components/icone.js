@@ -61,6 +61,13 @@ export {
   Pause,
   SkipForward,
   Dumbbell,
+  BicepsFlexed,
+  Sunrise,
+  Briefcase,
+  Scale,
+  Languages,
+  GraduationCap,
+  ListChecks,
 } from 'lucide-preact'
 
 // Figura che corre (Lucide non ce l'ha): disegnata sulla stessa griglia 24×24, stesso tratto.

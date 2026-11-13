@@ -1,15 +1,107 @@
 {
-  "_nota": "Unico programma dell'app (04-allenamento/programma.md). Le serie/ripetizioni si possono cambiare dalle Impostazioni senza toccare questo file.",
-  "ciclo": ["forte", "leggera", "forte", "leggera", "forte", "leggera", "pausa"],
+  "_nota": "Unico programma dell'app (04-allenamento/programma.md). Le serie/ripetizioni si possono cambiare dalle Impostazioni senza toccare questo file. 'forte' è la giornata della versione 1: non è più nel ciclo, resta per lo storico.",
+  "ciclo": ["spinta", "gambe", "leggera", "spinta", "gambe", "leggera", "pausa"],
   "recuperoSecondi": 75,
-  "attesaDopoColazioneMinuti": 45,
-  "finireEntro": "18:30",
   "giornate": {
+    "spinta": {
+      "nome": "Push and abs", "breve": "Push",
+      "durata": "~50 min",
+      "minuti": 50,
+      "descrizione": "Wall handstand push-ups, three kinds of push-ups and an abs block.",
+      "blocchi": [
+        {
+          "id": "riscaldamento",
+          "nome": "Warm-up",
+          "voci": [
+            { "esercizio": "marcia-sul-posto", "secondi": 60 },
+            { "esercizio": "circonduzioni-braccia", "secondi": 60, "nota": "30 s forwards + 30 s backwards" },
+            { "esercizio": "rotazioni-polsi-spalle", "secondi": 30 },
+            { "esercizio": "push-up-ginocchia", "ripetizioni": 8, "nota": "easy, to warm up your shoulders" },
+            { "esercizio": "passi-laterali", "secondi": 60 }
+          ]
+        },
+        {
+          "id": "allenamento",
+          "nome": "Workout",
+          "voci": [
+            { "esercizio": "flessioni-verticale-muro", "serie": 4, "min": 3, "max": 8, "nota": "as many as you can do well, leaving 1–2 in the tank", "progressione": "1 more rep per set, or lower yourself more slowly" },
+            { "esercizio": "push-up-larghi", "serie": 3, "min": 8, "max": 12, "progressione": "1–2 more reps, or 3 seconds down" },
+            { "esercizio": "push-up", "serie": 3, "min": 8, "max": 15, "progressione": "1–2 more reps, or 3 seconds down" },
+            { "esercizio": "push-up-stretti", "serie": 3, "min": 6, "max": 12, "nota": "on your knees if needed", "progressione": "1–2 more reps" }
+          ]
+        },
+        {
+          "id": "addominali",
+          "nome": "Abs",
+          "voci": [
+            { "esercizio": "hollow-hold", "serie": 3, "minSecondi": 15, "maxSecondi": 30, "progressione": "+5 s per week, up to 45 s" },
+            { "esercizio": "sollevamento-gambe", "serie": 3, "min": 8, "max": 12, "progressione": "Lower your legs more slowly (3 seconds)" },
+            { "esercizio": "plank", "serie": 3, "minSecondi": 30, "maxSecondi": 60, "progressione": "+10 s per week, up to 90 s" }
+          ]
+        },
+        {
+          "id": "defaticamento",
+          "nome": "Cool-down",
+          "voci": [
+            { "esercizio": "stretching-petto-muro", "secondi": 60, "nota": "30 s per side" },
+            { "esercizio": "stretching-dorsali", "secondi": 60, "nota": "30 s per side" },
+            { "esercizio": "posizione-bambino", "secondi": 60 }
+          ]
+        }
+      ]
+    },
+    "gambe": {
+      "nome": "Legs, back and abs", "breve": "Legs",
+      "durata": "~45 min",
+      "minuti": 45,
+      "descrizione": "Squats, lunges, glutes and back, with a second abs block.",
+      "blocchi": [
+        {
+          "id": "riscaldamento",
+          "nome": "Warm-up",
+          "voci": [
+            { "esercizio": "marcia-sul-posto", "secondi": 60 },
+            { "esercizio": "rotazioni-bacino", "secondi": 30 },
+            { "esercizio": "squat-meta-ampiezza", "ripetizioni": 10 },
+            { "esercizio": "passi-laterali", "secondi": 60 }
+          ]
+        },
+        {
+          "id": "allenamento",
+          "nome": "Workout",
+          "voci": [
+            { "esercizio": "squat", "serie": 3, "min": 12, "max": 15, "progressione": "Squat with a 2-second pause at the bottom" },
+            { "esercizio": "affondi-indietro", "serie": 3, "min": 8, "max": 10, "perLato": true, "progressione": "More reps and a slower descent" },
+            { "esercizio": "ponte-glutei", "serie": 3, "min": 12, "max": 15, "progressione": "Hold 2 seconds at the top" },
+            { "esercizio": "superman", "serie": 3, "min": 10, "max": 12, "progressione": "1–2 more reps" }
+          ]
+        },
+        {
+          "id": "addominali",
+          "nome": "Abs",
+          "voci": [
+            { "esercizio": "crunch", "serie": 3, "min": 15, "max": 20, "progressione": "More reps, up to 25" },
+            { "esercizio": "crunch-bicicletta", "serie": 3, "min": 16, "max": 24, "nota": "count both sides", "progressione": "Slower, and touch elbow to knee" },
+            { "esercizio": "plank-laterale", "serie": 3, "minSecondi": 15, "maxSecondi": 30, "nota": "switch side every set", "progressione": "+5 s per week, up to 45 s" }
+          ]
+        },
+        {
+          "id": "defaticamento",
+          "nome": "Cool-down",
+          "voci": [
+            { "esercizio": "stretching-quadricipiti", "secondi": 60, "nota": "30 s per leg" },
+            { "esercizio": "stretching-femorali", "secondi": 30 },
+            { "esercizio": "flessori-anca", "secondi": 60, "nota": "30 s per side" },
+            { "esercizio": "stretching-glutei", "secondi": 60, "nota": "30 s per side" }
+          ]
+        }
+      ]
+    },
     "forte": {
-      "nome": "Strength",
+      "nome": "Strength (old)", "breve": "Strength",
       "durata": "~40–45 min",
       "minuti": 45,
-      "descrizione": "Warm-up, the 8 strength exercises (3 sets) and cool-down.",
+      "descrizione": "The full-body day of the first version, kept for your history.",
       "blocchi": [
         {
           "id": "riscaldamento",
@@ -51,7 +143,7 @@
       ]
     },
     "leggera": {
-      "nome": "Light",
+      "nome": "Light", "breve": "Light",
       "durata": "~40 min",
       "minuti": 40,
       "descrizione": "A brisk walk outdoors and 10 minutes of mobility.",
@@ -72,7 +164,7 @@
       ]
     },
     "mobilita": {
-      "nome": "Mobility",
+      "nome": "Mobility", "breve": "Mobility",
       "durata": "~15 min",
       "minuti": 15,
       "descrizione": "Mobility and stretching only: instead of Light when you're tired or it's raining.",
@@ -102,10 +194,10 @@
       ]
     },
     "pausa": {
-      "nome": "Rest",
+      "nome": "Rest", "breve": "Rest",
       "durata": "—",
       "minuti": 0,
-      "descrizione": "Rest day: muscles grow while you recover. Tonight's shift is enough.",
+      "descrizione": "Rest day: muscles grow while you recover.",
       "blocchi": []
     }
   }

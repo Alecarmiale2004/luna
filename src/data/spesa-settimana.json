@@ -1,0 +1,19 @@
+[
+  { "_nota": "La mia settimana normale (Spesa → Add my usual week): colazione fissa, pollo e verdure a pranzo, pasta o pollo a cena, panino prima del lavoro, 2 banane al giorno. Le cose di dispensa (latte, burro, miele, olio, aglio…) si aggiungono quando finiscono." },
+  { "prodotto": "uova", "quantita": "2 packs (10 eggs)" },
+  { "prodotto": "pane-integrale", "quantita": "1 pack (14 slices)" },
+  { "prodotto": "actimel", "quantita": "1 pack (8 bottles)" },
+  { "prodotto": "banane", "quantita": "14 bananas" },
+  { "prodotto": "petto-pollo", "quantita": "7 packs (~300 g each)" },
+  { "prodotto": "prosciutto", "quantita": "2 packs" },
+  { "prodotto": "tonno", "quantita": "3 cans" },
+  { "prodotto": "broccoli", "quantita": "2 heads" },
+  { "prodotto": "zucchine", "quantita": "2 pieces" },
+  { "prodotto": "peperoni", "quantita": "3 pieces" },
+  { "prodotto": "pomodorini", "quantita": "1 tray" },
+  { "prodotto": "fagiolini", "quantita": "1 bag" },
+  { "prodotto": "riso", "quantita": "1 pack (1 kg)" },
+  { "prodotto": "penne", "quantita": "1 pack (500 g)" },
+  { "prodotto": "passata", "quantita": "1 bottle" },
+  { "prodotto": "pesto", "quantita": "1 jar" }
+]

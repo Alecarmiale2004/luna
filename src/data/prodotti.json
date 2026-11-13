@@ -11,12 +11,17 @@
   { "id": "mele", "nome": "Apples", "dk": "Æbler", "reparto": "frutta-verdura", "tipo": "fresco", "proteine100": 0.3, "grammiPezzo": 150, "confezione": { "quantita": 1, "unita": "pz", "nome": "apple", "plurale": "apples" } },
 
   { "id": "pane-toast", "nome": "Sandwich bread", "dk": "Toastbrød", "reparto": "pane", "tipo": "fresco", "proteine100": 8.5, "grammiPezzo": 25, "confezione": { "quantita": 14, "unita": "pz", "descrizione": "14 slices" } },
+  { "id": "pane-integrale", "nome": "Whole-wheat toast bread", "dk": "Fuldkornstoastbrød", "reparto": "pane", "tipo": "fresco", "proteine100": 10, "grammiPezzo": 25, "confezione": { "quantita": 14, "unita": "pz", "descrizione": "14 slices" } },
 
   { "id": "petto-pollo", "nome": "Chicken breast", "dk": "Kyllingebryst / kyllingebrystfilet", "reparto": "carne", "tipo": "fresco", "proteine100": 23, "confezione": { "quantita": 300, "unita": "g", "descrizione": "~300 g each" } },
   { "id": "macinato-manzo", "nome": "Lean minced beef", "dk": "Hakket oksekød (4–7% or 8–12%)", "reparto": "carne", "tipo": "fresco", "proteine100": 20, "confezione": { "quantita": 500, "unita": "g", "descrizione": "500 g" } },
   { "id": "tacchino-macinato", "nome": "Minced turkey", "dk": "Hakket kalkun", "reparto": "carne", "tipo": "fresco", "proteine100": 20, "confezione": { "quantita": 450, "unita": "g", "descrizione": "~450 g" } },
+  { "id": "prosciutto", "nome": "Sliced ham", "dk": "Skinke (pålæg)", "reparto": "carne", "tipo": "fresco", "proteine100": 18, "confezione": { "quantita": 100, "unita": "g", "nome": "pack", "plurale": "packs", "descrizione": "~100 g" } },
 
   { "id": "uova", "nome": "Eggs", "dk": "Æg", "reparto": "latticini", "tipo": "fresco", "proteine100": 12.5, "grammiPezzo": 60, "confezione": { "quantita": 10, "unita": "pz", "descrizione": "10 eggs" } },
+  { "id": "actimel", "nome": "Actimel", "dk": "Actimel", "reparto": "latticini", "tipo": "fresco", "proteine100": 2.7, "confezione": { "quantita": 8, "unita": "pz", "nome": "pack", "plurale": "packs", "descrizione": "8 bottles" } },
+  { "id": "latte", "nome": "Skimmed milk (0.1%)", "dk": "Skummetmælk", "reparto": "latticini", "tipo": "fresco", "proteine100": 3.5, "confezione": { "quantita": 1000, "unita": "g", "nome": "carton", "plurale": "cartons", "descrizione": "1 litre" } },
+  { "id": "burro", "nome": "Butter", "dk": "Smør", "reparto": "latticini", "tipo": "dispensa" },
   { "id": "yogurt-bianco", "nome": "Plain yoghurt", "dk": "Yoghurt naturel", "reparto": "latticini", "tipo": "fresco", "proteine100": 3.5, "confezione": { "quantita": 1000, "unita": "g", "descrizione": "1 kg" } },
   { "id": "yogurt-vaniglia", "nome": "Vanilla yoghurt", "dk": "Vaniljeyoghurt", "reparto": "latticini", "tipo": "fresco", "proteine100": 3.2, "confezione": { "quantita": 1000, "unita": "g", "descrizione": "1 kg" } },
   { "id": "parmigiano", "nome": "Parmesan", "dk": "Parmesan", "reparto": "latticini", "tipo": "fresco", "proteine100": 33 },
@@ -26,6 +31,8 @@
   { "id": "riso", "nome": "Rice", "dk": "Ris", "reparto": "dispensa", "tipo": "dispensa", "proteine100": 7, "confezione": { "quantita": 1000, "unita": "g", "nome": "pack", "plurale": "packs", "descrizione": "1 kg" } },
   { "id": "tonno", "nome": "Tuna in water", "dk": "Tun i vand", "reparto": "dispensa", "tipo": "dispensa", "proteine100": 25, "grammiPezzo": 120, "confezione": { "quantita": 1, "unita": "pz", "nome": "can", "plurale": "cans", "descrizione": "~120 g drained" } },
   { "id": "passata", "nome": "Tomato passata", "dk": "Passata / hakkede tomater", "reparto": "dispensa", "tipo": "dispensa", "proteine100": 1.3, "confezione": { "quantita": 500, "unita": "g", "nome": "bottle", "plurale": "bottles", "descrizione": "500 g" } },
+  { "id": "pesto", "nome": "Pesto", "dk": "Pesto", "reparto": "dispensa", "tipo": "dispensa", "confezione": { "quantita": 1, "unita": "pz", "nome": "jar", "plurale": "jars", "descrizione": "~190 g" } },
+  { "id": "miele", "nome": "Honey", "dk": "Honning", "reparto": "dispensa", "tipo": "dispensa" },
   { "id": "olive", "nome": "Olives", "dk": "Oliven", "reparto": "dispensa", "tipo": "dispensa" },
   { "id": "olio", "nome": "Olive oil", "dk": "Olivenolie", "reparto": "dispensa", "tipo": "dispensa" },
   { "id": "salsa-soia", "nome": "Soy sauce", "dk": "Sojasauce", "reparto": "dispensa", "tipo": "dispensa" },

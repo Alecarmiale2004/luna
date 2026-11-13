@@ -1,11 +1,11 @@
-// Sezione Allenamento: giornata proposta dal ciclo, i 4 tipi di giornata, Progressi e Ritmo.
+// Sezione Allenamento: giornata proposta dal ciclo, i tipi di giornata, Progressi, Ritmo e Peso.
 import { useRef, useState } from 'preact/hooks'
 import { Pagina } from '../components/Pagina.jsx'
 import { Card } from '../components/Card.jsx'
 import { Sezione, Lista, Riga } from '../components/Lista.jsx'
 import { Foglio } from '../components/Foglio.jsx'
 import { chiediConferma, mostraMessaggio } from '../components/Avvisi.jsx'
-import { Clock, Check, ChartLine, CalendarCheck, Play, TriangleAlert } from '../components/icone.js'
+import { Clock, Check, ChartLine, CalendarCheck, Play, TriangleAlert, Scale } from '../components/icone.js'
 import { useNav } from '../navigazione.jsx'
 import PROGRAMMA from '../data/programma.json'
 import {
@@ -26,12 +26,14 @@ import { useOggi, lunediDi } from '../lib/giornata.js'
 import { INFO_TIPO, nomeTipo, avviaAllenamento, riprendiAllenamento, useSuggerimentoOrario } from './allenamentoComune.jsx'
 import { Progressi } from './Progressi.jsx'
 import { Ritmo } from './Ritmo.jsx'
+import { Peso, testoPeso } from './Peso.jsx'
+import { storicoPeso } from '../db/giorno.js'
 
 export function Allenamento() {
   const nav = useNav()
   const oggi = useOggi()
-  const { sedute } = useDati()
-  const { tipo, pos, inCorso, fattaOggi, forteIeri } = useAllenamento(oggi)
+  const { sedute, giorni } = useDati()
+  const { tipo, pos, inCorso, fattaOggi, forteIeri, ripetuta } = useAllenamento(oggi)
   const [aperto, setAperto] = useState(null) // tipo del foglio aperto
   const suggerimento = useSuggerimentoOrario()
   const minuti = minutiSettimana(sedute, lunediDi(oggi))
@@ -105,7 +107,7 @@ export function Allenamento() {
               {forteIeri && !fattaOggi && (
                 <p class="suggerimento-orario">
                   <TriangleAlert size={18} color="var(--orange)" />
-                  Yesterday was a Strength day: let your muscles recover today.
+                  Yesterday you trained the same muscles: today a Light day lets them recover.
                 </p>
               )}
               {!fattaOggi && (
@@ -118,7 +120,7 @@ export function Allenamento() {
         </Card>
       </div>
 
-      {/* ---------- I 4 tipi di giornata ---------- */}
+      {/* ---------- I tipi di giornata ---------- */}
       <Sezione titolo="Day types" piede="You can always pick a different type from the suggested one.">
         <div class="tipi">
           {TIPI.map((t) => {
@@ -144,7 +146,7 @@ export function Allenamento() {
         <Lista>
           <Riga
             icona={ChartLine}
-            coloreIcona="var(--c-forte)"
+            coloreIcona="var(--c-spinta)"
             titolo="Progress"
             sottotitolo="Charts and records for every exercise"
             freccia
@@ -158,10 +160,18 @@ export function Allenamento() {
             freccia
             onClick={() => nav.apri(Ritmo)}
           />
+          <Riga
+            icona={Scale}
+            coloreIcona="var(--blue)"
+            titolo="Weight"
+            sottotitolo={testoPeso(storicoPeso(giorni))}
+            freccia
+            onClick={() => nav.apri(Peso)}
+          />
         </Lista>
       </Sezione>
 
-      <FoglioGiornata tipo={aperto} forteIeri={forteIeri} oggi={oggi} bloccato={!!inCorso} onChiudi={() => setAperto(null)} />
+      <FoglioGiornata tipo={aperto} ripetuta={ripetuta} oggi={oggi} bloccato={!!inCorso} onChiudi={() => setAperto(null)} />
     </Pagina>
   )
 }
@@ -181,14 +191,14 @@ function Ciclo({ pos }) {
       </div>
       <div class="ciclo-legenda">
         <span>Cycle: day {pos + 1} of {CICLO.length}</span>
-        <span>{CICLO.map((t) => nomeTipo(t)[0]).join(' · ')}</span>
+        <span>{CICLO.map((t) => PROGRAMMA.giornate[t].breve).join(' · ')}</span>
       </div>
     </>
   )
 }
 
 /** Foglio dal basso con il dettaglio di una giornata e il pulsante "Inizia" */
-function FoglioGiornata({ tipo, forteIeri, oggi, bloccato, onChiudi }) {
+function FoglioGiornata({ tipo, ripetuta, oggi, bloccato, onChiudi }) {
   const ultimo = useRef(tipo)
   if (tipo) ultimo.current = tipo
   const t = tipo || ultimo.current
@@ -214,9 +224,9 @@ function FoglioGiornata({ tipo, forteIeri, oggi, bloccato, onChiudi }) {
         <p class="foglio-spiegazione" style={{ marginTop: 12 }}>
           <strong>{g.durata}</strong> · {g.descrizione}
         </p>
-        {t === 'forte' && forteIeri && (
+        {ripetuta(t) && (
           <p class="avviso-esclusi" style={{ color: 'var(--orange)', background: 'color-mix(in srgb, var(--orange) 12%, transparent)' }}>
-            <TriangleAlert size={18} /> Yesterday was a Strength day: the same muscles need about 48 hours to recover.
+            <TriangleAlert size={18} /> Yesterday you trained the same muscles: they need about 48 hours to recover.
           </p>
         )}
         {g.blocchi.map((b) => (

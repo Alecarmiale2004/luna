@@ -1,6 +1,8 @@
-# Luna
+# Daily Life
 
-App personale per iPhone (PWA) per gestire **spesa, cibo e allenamento**, pensata per il turno di notte.
+App personale per iPhone (PWA): **la giornata a blocchi da spuntare, spesa, allenamento e studio** (IELTS e lettura).
+Dalla 2.0.0 (13/11/2026) niente più turno di notte né sezione Cibo; prima si chiamava **Luna**: l'indirizzo
+(`/luna/`) e il nome del database (`luna`) restano quelli, perché cambiarli farebbe perdere i dati sul telefono.
 Interfaccia in **inglese** (decisione del 25/10/2026); i prodotti della spesa mostrano anche il nome danese.
 Il contesto completo (profilo, ricette, prodotti, programma, stile) è nella cartella superiore `../`.
 
@@ -29,7 +31,7 @@ il codice non va toccato. Attenzione: `npm run esercizi` le riscrive tutte.
 ```
 src/
   config.js          nome dell'app e valori predefiniti delle impostazioni
-  App.jsx            avvio, tab bar con le 4 sezioni, avviso di aggiornamento
+  App.jsx            avvio, tab bar con le 4 sezioni (Today, Shopping, Training, Study), avviso di aggiornamento
   navigazione.jsx    tab bar e schermate che entrano da destra (con gesto "indietro")
   aggiornamenti.js   service worker: offline + avviso "Nuova versione disponibile"
   styles/
@@ -37,12 +39,12 @@ src/
     base.css         regole di base da "app" su iPhone
     components.css   card, liste, tab bar, fogli dal basso, anelli, cerchi di spunta…
   components/        componenti riutilizzabili (Pagina, Card, Lista, Foglio, Anello, Spunta, Avvisi, icone)
-  schermate/         Oggi, Spesa (+ Aggiungi, Storico, Prodotti), Cibo (+ Ricetta, Settimana, GestioneRicette,
-                     CibiEsclusi, StoricoSettimane), Allenamento (+ Guidato, Progressi, Ritmo,
-                     GestioneEsercizi, StoricoAllenamenti), Impostazioni, Backup, Anteprima dello stile
+  schermate/         Oggi (giornata a blocchi + lavoro di sera), Spesa (+ Aggiungi, Storico, Prodotti),
+                     Allenamento (+ Guidato, Progressi, Ritmo, Peso, GestioneEsercizi, StoricoAllenamenti),
+                     Studio (IELTS, inglese, lettura), Impostazioni (+ MiaGiornata: orari e blocchi), Backup
   data/              CONTENUTI modificabili: prodotti.json (con confezioni e proteine), reparti.json,
-                     ricette.json, blocchi.json (cosa si può scambiare), pasti.json (schema dal risveglio),
-                     spesa-base.json, programma.json (giornate e ciclo), esercizi.json (nomi e istruzioni)
+                     spesa-settimana.json (la mia settimana normale), programma.json (giornate e ciclo),
+                     esercizi.json (nomi e istruzioni). La giornata tipo e i giorni di lavoro sono in config.js
   db/
     database.js      archivi di IndexedDB (VERSIONE_STRUTTURA)
     migrazioni.js    formato dei dati (VERSIONE_DATI) e migrazioni
@@ -50,12 +52,9 @@ src/
     backup.js        esporta / importa il file JSON
     catalogo.js      prodotti di base + i miei prodotti/modifiche
     spesa.js         lista aperta, "Spesa fatta", storico, "Ripeti", dispensa finita
-    ricette.js       ricette di base + le mie, scambio dei blocchi, cibi esclusi
-    piani.js         settimana di ricette, cucinate, settimane tipo
-    allenamento.js   programma (+ mie modifiche), ciclo F-L-F-L-F-L-P, sedute guidate, record, statistiche
-  lib/pasti.js       schema dei pasti dal risveglio e dal turno, proteine del giorno
+    giorno.js        lavoro di sera, blocchi spuntati, inglese (giorni di fila), timer della lettura, peso
+    allenamento.js   programma (+ mie modifiche), ciclo Push-Legs-Light-Push-Legs-Light-Rest, sedute guidate, record
   lib/suoni.js       bip a fine timer, schermo acceso durante l'allenamento
-  lib/generaSpesa.js dalla settimana alla lista: somma, colazione ×7, confezioni, dispensa, 2 giri
   lib/               date, piccoli strumenti
 public/              icone (e in futuro immagini/esercizi/)
 ```
@@ -72,7 +71,7 @@ public/              icone (e in futuro immagini/esercizi/)
 ## Date
 L'app usa sempre la **data del calendario**: dopo mezzanotte è già il giorno dopo
 (scelta di Alessandro, al posto della "giornata logica" dal risveglio al sonno).
-Un giorno segnato con la luna significa "turno la notte che inizia quel giorno alle 23:00".
+I giorni di lavoro (di sera) vengono dagli orari della settimana; un singolo giorno si cambia dalla schermata Today.
 
 ## Pubblicazione (GitHub Pages)
 Il workflow `.github/workflows/pubblica.yml` pubblica l'app a ogni push su `main`.

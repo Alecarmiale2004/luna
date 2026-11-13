@@ -10,7 +10,9 @@
 // quindi un backup vecchio si può sempre reimportare.
 // Prima di ogni migrazione l'app salva da sola una copia di sicurezza.
 
-export const VERSIONE_DATI = 4
+import PROGRAMMA from '../data/programma.json'
+
+export const VERSIONE_DATI = 5
 
 // Cibi esclusi predefiniti della versione italiana → inglese (migrazione 2)
 const ESCLUSI_IN_INGLESE = {
@@ -136,6 +138,32 @@ export const MIGRAZIONI = {
       ...l,
       voci: (l.voci || []).map((v) => (v.quantita ? { ...v, quantita: quantitaInInglese(v.quantita) } : v)),
     }))
+    return dati
+  },
+
+  // 5 — Nuova routine (versione 2.0.0, novembre 2026): niente più turni di notte né sezione Cibo.
+  // I giorni segnati come notte di lavoro/libera non decidono più niente: il segno resta,
+  // rinominato `turnoNotte`, e i giorni di lavoro (di sera) arrivano dagli orari della settimana.
+  // Le serie/ripetizioni che avevo cambiato nella giornata Forte valgono anche per le nuove
+  // giornate (Push e Legs) che hanno lo stesso esercizio nello stesso blocco.
+  // Ricette, settimane e liste restano salvate (anche nei backup), solo non si vedono più.
+  5: (dati) => {
+    dati.giorni = (dati.giorni || []).map(({ tipo, ...g }) => (tipo ? { ...g, turnoNotte: tipo } : g))
+    const esercizi = dati.esercizi || []
+    const ids = new Set(esercizi.map((e) => e.id))
+    for (const e of [...esercizi]) {
+      const [tipo, blocco, slot] = e.id.split('.')
+      if (tipo !== 'forte') continue
+      for (const nuovo of ['spinta', 'gambe']) {
+        const id = `${nuovo}.${blocco}.${slot}`
+        const esiste = PROGRAMMA.giornate[nuovo]?.blocchi.some((b) => b.id === blocco && b.voci.some((v) => v.esercizio === slot))
+        if (esiste && !ids.has(id)) {
+          esercizi.push({ ...e, id })
+          ids.add(id)
+        }
+      }
+    }
+    dati.esercizi = esercizi
     return dati
   },
 }

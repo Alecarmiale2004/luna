@@ -174,3 +174,132 @@
   gap: var(--sp-2);
   margin-top: var(--sp-4);
 }
+
+/* ---------- Lavoro di oggi ---------- */
+.turno-inizio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-3);
+}
+.turno-inizio .segmenti {
+  margin: 0;
+  width: 140px;
+}
+/* giorno cambiato rispetto agli orari della settimana */
+.giorno-icona.cambiato {
+  box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 3.5px var(--tint);
+}
+
+/* ---------- La giornata ---------- */
+.blocchi {
+  display: flex;
+  flex-direction: column;
+  margin: 0 calc(-1 * var(--sp-2));
+}
+.blocco {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 52px;
+  padding: 4px var(--sp-2);
+  border-radius: var(--r-small);
+  position: relative;
+}
+.blocco + .blocco::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: calc(var(--sp-2) + 46px + var(--sp-2) + 44px + var(--sp-2));
+  right: var(--sp-2);
+  border-top: 0.5px solid var(--separator);
+}
+.blocco.attuale {
+  background: color-mix(in srgb, var(--tint) 13%, transparent);
+}
+.blocco.attuale::before,
+.blocco.attuale + .blocco::before {
+  border-top-color: transparent;
+}
+.blocco-ora {
+  width: 46px;
+  flex-shrink: 0;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: var(--tr-15);
+  color: var(--label-2);
+}
+.blocco.attuale .blocco-ora {
+  color: var(--tint);
+  font-weight: 600;
+}
+.blocco-icona-lavoro {
+  width: 28px;
+  height: 28px;
+  margin: 0 8px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1.5px dashed var(--gray-3);
+  color: var(--label-2);
+}
+.blocco-testi {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 6px 0;
+}
+.blocco-testi:disabled {
+  opacity: 1;
+}
+.blocco-nome {
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: var(--tr-17);
+}
+.blocco.fatto .blocco-nome {
+  color: var(--label-2);
+}
+.blocco.lavoro .blocco-nome {
+  color: var(--label-2);
+  font-style: normal;
+}
+.blocco-nota {
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: var(--tr-13);
+  color: var(--label-2);
+}
+.blocco-adesso {
+  margin-top: 3px;
+  padding: 1px 8px;
+  border-radius: 9px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--tint);
+}
+.blocco-azione {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--tint);
+  transition: transform var(--dur-fast) var(--ease-ios);
+}
+.blocco-azione:active {
+  transform: scale(0.9);
+}
+.blocco-freccia {
+  flex-shrink: 0;
+  color: var(--gray-3);
+}
