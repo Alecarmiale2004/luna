@@ -103,6 +103,7 @@ const ESERCIZI = {
     muscoli: ['petto', 'braccia'],
     freccia: { giunto: 'spalla' },
     tappetino: true,
+    mani: 'normali',
   },
   'push-up-ginocchia': {
     pose: [
@@ -152,7 +153,7 @@ const ESERCIZI = {
     tappetino: true,
     etichetta: 'hold',
   },
-  // Visti di lato larghi e stretti sembrano push-up normali: lo dice l'etichetta
+  // Visti di lato larghi, normali e stretti sono uguali: il terzo riquadro (dall'alto) mostra le mani
   'push-up-larghi': {
     pose: [
       { t: 100, h: 104, bV: 0, aV: 0, bL: 3, aL: 3, cV: -80, sV: -80, pV: 10, cL: -80, sL: -80, pL: 10 },
@@ -161,7 +162,7 @@ const ESERCIZI = {
     muscoli: ['petto', 'spalle'],
     freccia: { giunto: 'spalla' },
     tappetino: true,
-    etichetta: 'hands wide',
+    mani: 'larghe',
   },
   'push-up-stretti': {
     pose: [
@@ -171,7 +172,7 @@ const ESERCIZI = {
     muscoli: ['braccia', 'petto'],
     freccia: { giunto: 'spalla' },
     tappetino: true,
-    etichetta: 'hands close',
+    mani: 'strette',
   },
   'hollow-hold': {
     pose: [
@@ -528,8 +529,36 @@ ${attrezzi(k, es, x0)}${figura(k, es)}${extra}
 </g>`
 }
 
+// Terzo riquadro dei push-up: busto visto dall'alto e posizione delle mani rispetto alle spalle
+const MANI = {
+  larghe: { dx: 76, y: 112, testo: 'hands wide' },
+  normali: { dx: 48, y: 112, testo: 'hands normal' },
+  strette: { dx: 9, y: 132, testo: 'hands close' },
+}
+function pannelloMani(tipo, x0) {
+  const m = MANI[tipo]
+  const c = x0 + PANNELLO.l / 2
+  const spalla = 30
+  const braccio = (lato) => {
+    const sx = c + lato * spalla
+    const mx = c + lato * m.dx
+    return `<line x1="${sx}" y1="98" x2="${mx}" y2="${m.y}" stroke-width="${S.braccio}" class="corpo"/>`
+  }
+  const mano = (lato) => `<rect x="${c + lato * m.dx - 8}" y="${m.y - 11}" width="16" height="22" rx="7" class="muscolo pieno"/>`
+  return `<g>
+<rect x="${x0}" y="0" width="${PANNELLO.l}" height="${PANNELLO.a}" rx="18" class="sfondo"/>
+<line x1="${c - spalla}" y1="60" x2="${c - spalla}" y2="220" stroke-width="2" stroke-dasharray="5 6" class="terra"/>
+<line x1="${c + spalla}" y1="60" x2="${c + spalla}" y2="220" stroke-width="2" stroke-dasharray="5 6" class="terra"/>
+<rect x="${c - spalla - 4}" y="88" width="${2 * spalla + 8}" height="120" rx="26" class="corpo pieno"/>
+<circle cx="${c}" cy="70" r="15" class="corpo pieno"/>
+${braccio(-1)}${braccio(1)}${mano(-1)}${mano(1)}
+<text x="${c}" y="240" text-anchor="middle" class="etichetta">${m.testo}</text>
+<circle cx="${x0 + 22}" cy="22" r="13" class="bollo"/><text x="${x0 + 22}" y="27.5" text-anchor="middle" class="num">↓</text>
+</g>`
+}
+
 function disegna(id, es) {
-  const larghezza = PANNELLO.l * 2 + 40
+  const larghezza = PANNELLO.l * (es.mani ? 3 : 2) + (es.mani ? 80 : 40)
   const c1 = es.muro ? PANNELLO.l / 2 - 10 : PANNELLO.l / 2
   const k1 = posiziona(scheletro(es.pose[0]), es, c1)
   const x2 = PANNELLO.l + 40
@@ -544,6 +573,7 @@ function disegna(id, es) {
 ${pannello(k1, es, 0, 1, es.freccia ? freccia(k1, k2qui, es.freccia) : '')}
 <path d="M${PANNELLO.l + 12} ${PANNELLO.a / 2 - 12} L${PANNELLO.l + 26} ${PANNELLO.a / 2} L${PANNELLO.l + 12} ${PANNELLO.a / 2 + 12}" class="tra"/>
 ${pannello(k2, es, x2, 2, etichetta)}
+${es.mani ? `${pannelloMani(es.mani, 2 * PANNELLO.l + 80)}` : ''}
 </svg>
 `
 }

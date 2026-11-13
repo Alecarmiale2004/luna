@@ -3,7 +3,7 @@ import { useEffect, useState } from 'preact/hooks'
 import { BicepsFlexed, Flame, Dumbbell, Footprints, Feather, Bed } from '../components/icone.js'
 import { useDati } from '../db/dati.js'
 import PROGRAMMA from '../data/programma.json'
-import { iniziaSeduta, segnaPausa } from '../db/allenamento.js'
+import { iniziaSeduta, segnaPausa, ripristinaEsercizi } from '../db/allenamento.js'
 import { creaSegnale } from '../lib/segnale.js'
 import { sbloccaAudio } from '../lib/suoni.js'
 import { vibra } from '../lib/tocco.js'
@@ -32,6 +32,7 @@ export function avviaAllenamento(tipo, data) {
 
 export function riprendiAllenamento(id) {
   sbloccaAudio()
+  ripristinaEsercizi(id)
   sedutaAperta.set(id)
 }
 

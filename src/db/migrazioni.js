@@ -11,8 +11,9 @@
 // Prima di ogni migrazione l'app salva da sola una copia di sicurezza.
 
 import PROGRAMMA from '../data/programma.json'
+import ESERCIZI from '../data/esercizi.json'
 
-export const VERSIONE_DATI = 5
+export const VERSIONE_DATI = 6
 
 // Cibi esclusi predefiniti della versione italiana → inglese (migrazione 2)
 const ESCLUSI_IN_INGLESE = {
@@ -164,6 +165,23 @@ export const MIGRAZIONI = {
       }
     }
     dati.esercizi = esercizi
+    return dati
+  },
+
+  // 6 — Niente più versioni facili (versione 2.2.0, richiesta di Alessandro del 13/11/2026):
+  // se nelle Impostazioni un esercizio era stato sostituito con la sua versione facile
+  // (es. verticale statica al posto delle flessioni al muro), torna quello del programma.
+  // Le sedute in corso vengono sistemate quando si riprendono (ripristinaEsercizi).
+  6: (dati) => {
+    const facile = Object.fromEntries(ESERCIZI.filter((e) => e.versioneFacile).map((e) => [e.id, e.versioneFacile]))
+    dati.esercizi = (dati.esercizi || [])
+      .map((e) => {
+        const slot = e.id.split('.')[2]
+        if (!e.sostituto || facile[slot] !== e.sostituto) return e
+        const { sostituto: _, ...resto } = e
+        return resto
+      })
+      .filter((e) => Object.keys(e).length > 1) // solo { id }: non c'è più niente di cambiato
     return dati
   },
 }

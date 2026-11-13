@@ -248,6 +248,21 @@ export function completaPasso(id, valore = null, { saltato = false } = {}) {
   })
 }
 
+/** Esercizio "facile" che sostituiva quello del programma (la versione facile non esiste più) */
+const eFacile = (p) => !!p && p.esercizio !== p.slot && esercizio(p.slot).versioneFacile === p.esercizio
+
+/**
+ * Rimette gli esercizi veri del programma al posto delle versioni facili scelte nella 2.0
+ * (dal passo `da` in poi). Il resto della seduta non cambia.
+ */
+export function ripristinaEsercizi(id, da = sedutaDaId(id)?.indice ?? 0) {
+  const s = sedutaDaId(id)
+  if (!s || !s.passi.some((p, i) => i >= da && eFacile(p))) return
+  const nuovi = creaPassi(s.tipo)
+  const passi = s.passi.map((p, i) => (i >= da && eFacile(p) && nuovi[i]?.slot === p.slot ? nuovi[i] : p))
+  return salva({ ...s, passi, timer: null })
+}
+
 /**
  * Torna al passo precedente (anche dal recupero): toglie quello che avevo registrato
  * e lo rimette come valore di partenza, così posso correggerlo o rifarlo.
@@ -258,7 +273,7 @@ export function tornaIndietro(id) {
   const indice = s.indice - 1
   const registrazione = s.registrazioni.filter((r) => r.passo === indice).at(-1)
   const passi = s.passi.map((p, i) => (i === indice && registrazione?.valore != null ? { ...p, valore: registrazione.valore } : p))
-  return salva({
+  salva({
     ...s,
     passi,
     indice,
@@ -266,6 +281,7 @@ export function tornaIndietro(id) {
     recuperoFine: null,
     timer: null,
   })
+  return ripristinaEsercizi(id, indice)
 }
 
 export function terminaSeduta(id) {
